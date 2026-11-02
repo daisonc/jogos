@@ -1,0 +1,1042 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teia do Murilo</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; user-select: none; -webkit-user-select: none; overscroll-behavior: none; }
+  #palco { display: block; width: min(100vw, calc(100vh * 1.77778)); height: min(100vh, calc(100vw * 0.5625)); background: #000; cursor: default; touch-action: none; overflow: hidden; }
+</style>
+</head>
+<body>
+<svg id="palco" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ceu-telhados" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6B4E8F"/>
+      <stop offset="0.46" stop-color="#F08A5D"/>
+      <stop offset="1" stop-color="#FFD08A"/>
+    </linearGradient>
+    <linearGradient id="ceu-parque" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6FB7E8"/>
+      <stop offset="1" stop-color="#E4F6FB"/>
+    </linearGradient>
+    <linearGradient id="ceu-rua" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7FC8D4"/>
+      <stop offset="1" stop-color="#EAF6F3"/>
+    </linearGradient>
+    <radialGradient id="sol">
+      <stop offset="0" stop-color="#FFF8DC"/>
+      <stop offset="0.55" stop-color="#FFE3A8"/>
+      <stop offset="1" stop-color="#FFC97E"/>
+    </radialGradient>
+    <radialGradient id="brilho-sol">
+      <stop offset="0" stop-color="#FFE3A8" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFE3A8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo-estrela">
+      <stop offset="0" stop-color="#FFD166" stop-opacity="0.85"/>
+      <stop offset="0.45" stop-color="#FFD166" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#FFD166" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="nevoa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD9A0" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#FFD9A0" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/>
+    </linearGradient>
+    <path id="estrela" d="M0 -26 L6.47 -8.9 L24.73 -8.03 L10.46 3.4 L15.28 21.03 L0 11 L-15.28 21.03 L-10.46 3.4 L-24.73 -8.03 L-6.47 -8.9 Z"/>
+  </defs>
+
+  <g id="cenario"></g>
+
+  <g id="duende" opacity="0">
+    <path fill="none" stroke="#FFF2DD" stroke-width="3" stroke-linecap="round" opacity="0.28" d="M-66 8 L-96 12 M-60 22 L-84 28"/>
+    <path fill="#3B2A5A" stroke="#1B1420" stroke-width="3" stroke-linejoin="round" d="M-62 8 Q-34 -16 -10 -2 L0 12 L10 -2 Q34 -16 62 8 Q38 22 10 20 L0 30 L-10 20 Q-38 22 -62 8 Z"/>
+    <path fill="#6A4C93" opacity="0.9" d="M-44 8 Q-24 0 -8 6 L0 16 L-8 18 Q-28 16 -44 8 Z"/>
+    <path fill="#6FAE4E" stroke="#1B1420" stroke-width="2.5" d="M-9 2 Q0 -4 9 2 L11 24 Q0 30 -11 24 Z"/>
+    <path fill="#7BC043" stroke="#1B1420" stroke-width="2" d="M-4 6 Q-30 12 -42 30 Q-18 26 -6 18 Z"/>
+    <path fill="none" stroke="#1B1420" stroke-width="5" stroke-linecap="round" d="M-6 24 L-10 30 M6 24 L10 30"/>
+    <path fill="none" stroke="#6FAE4E" stroke-width="2.5" stroke-linecap="round" d="M-6 24 L-10 30 M6 24 L10 30"/>
+    <circle cx="0" cy="-8" r="10" fill="#6FAE4E" stroke="#1B1420" stroke-width="2.5"/>
+    <path fill="#5A963E" stroke="#1B1420" stroke-width="2" stroke-linejoin="round" d="M-10 -12 Q0 -30 10 -12 Q0 -6 -10 -12 Z"/>
+    <path fill="none" stroke="#1B1420" stroke-width="4.5" stroke-linecap="round" d="M-8 2 L-20 6 M8 2 L20 6"/>
+    <path fill="none" stroke="#6FAE4E" stroke-width="2" stroke-linecap="round" d="M-8 2 L-20 6 M8 2 L20 6"/>
+    <rect x="12" y="10" width="13" height="15" rx="4" fill="#8B5A3C" stroke="#1B1420" stroke-width="2" transform="rotate(8 18 17)"/>
+  </g>
+
+  <g id="cordas">
+    <line id="linha-teia" x1="0" y1="0" x2="1" y2="0" stroke="#F4EEE2" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity="0"/>
+    <line id="corda-alvo" x1="0" y1="0" x2="1" y2="0" stroke="#F8F1E3" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity="0"/>
+  </g>
+
+  <g id="heroi">
+    <path fill="none" stroke="#1B1420" stroke-width="19" stroke-linecap="round" stroke-linejoin="round" d="M1 4 C7 18 13 34 17 52 M49 126 C55 142 57 156 56 168 M17 176 C13 194 10 208 8 218 M35 176 C39 194 42 208 43 218"/>
+    <path fill="none" stroke="#31549F" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" d="M1 4 C7 18 13 34 17 52 M49 126 C55 142 57 156 56 168 M17 176 C13 194 10 208 8 218 M35 176 C39 194 42 208 43 218"/>
+    <path fill="none" stroke="#1B1420" stroke-width="21" stroke-linecap="round" d="M7 216 L6 227 M44 216 L45 227"/>
+    <path fill="none" stroke="#E23B4E" stroke-width="15" stroke-linecap="round" d="M7 216 L6 227 M44 216 L45 227"/>
+    <path fill="#E23B4E" stroke="#1B1420" stroke-width="4" stroke-linejoin="round" d="M8 120 Q5 113 13 111 L40 111 Q48 113 45 121 L42 169 Q41 177 33 177 L18 177 Q11 177 10 169 Z"/>
+    <path fill="none" stroke="#1B1420" stroke-width="1.5" opacity="0.42" d="M13 124 Q26 118 40 124 M11 138 Q26 132 42 138 M10 152 Q26 146 43 152 M15 166 Q26 160 38 166 M26 114 L26 176 M19 116 L15 175 M33 116 L37 175"/>
+    <path fill="none" stroke="#1B1420" stroke-width="2" stroke-linecap="round" d="M26 139 L26 150 M22 141 L16 137 M30 141 L36 137 M22 147 L16 151 M30 147 L36 151"/>
+    <circle cx="25" cy="92" r="38" fill="#E23B4E" stroke="#1B1420" stroke-width="4"/>
+    <path fill="none" stroke="#1B1420" stroke-width="1.8" opacity="0.5" d="M25 55 L25 129 M-9 78 Q25 69 59 78 M-12 92 Q25 83 62 92 M-9 106 Q25 97 59 106 M6 62 Q25 70 44 62 M4 120 Q25 112 46 120"/>
+    <ellipse cx="10" cy="88" rx="12" ry="16.5" transform="rotate(-16 10 88)" fill="#F8F5FF" stroke="#1B1420" stroke-width="2"/>
+    <ellipse cx="40" cy="88" rx="12" ry="16.5" transform="rotate(16 40 88)" fill="#F8F5FF" stroke="#1B1420" stroke-width="2"/>
+    <circle cx="57" cy="173" r="8.5" fill="#E23B4E" stroke="#1B1420" stroke-width="3"/>
+    <circle cx="0" cy="0" r="8.5" fill="#E23B4E" stroke="#1B1420" stroke-width="3"/>
+  </g>
+
+  <g id="alvo"></g>
+
+  <g id="efeitos">
+    <path id="splat" fill="#FFFDF5" opacity="0" d="M0 -17 L4 -5 L16 -5 L6 2 L10 15 L0 7 L-10 15 L-6 2 L-16 -5 L-4 -5 Z"/>
+    <g id="faiscas" fill="#FFF3C4">
+      <path opacity="0" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2 Z"/>
+      <path opacity="0" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2 Z"/>
+      <path opacity="0" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2 Z"/>
+      <path opacity="0" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2 Z"/>
+      <path opacity="0" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2 Z"/>
+    </g>
+  </g>
+
+  <g id="estrelas">
+    <circle class="halo" cx="888" cy="1038" r="36" fill="url(#halo-estrela)" opacity="0"/>
+    <circle class="halo" cx="960" cy="1038" r="36" fill="url(#halo-estrela)" opacity="0"/>
+    <circle class="halo" cx="1032" cy="1038" r="36" fill="url(#halo-estrela)" opacity="0"/>
+    <use class="estrela" href="#estrela" transform="translate(888 1038)" fill="#FFD166" stroke="#2A1A3A" stroke-width="2.5" opacity="0.36"/>
+    <use class="estrela" href="#estrela" transform="translate(960 1038)" fill="#FFD166" stroke="#2A1A3A" stroke-width="2.5" opacity="0.36"/>
+    <use class="estrela" href="#estrela" transform="translate(1032 1038)" fill="#FFD166" stroke="#2A1A3A" stroke-width="2.5" opacity="0.36"/>
+  </g>
+
+  <g id="confete"></g>
+  <rect id="flash" width="1920" height="1080" fill="#FFE9B0" opacity="0"/>
+</svg>
+
+<template id="tpl-cena-telhados">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect width="1920" height="1080" fill="url(#ceu-telhados)"/>
+      <circle cx="1010" cy="700" r="330" fill="url(#brilho-sol)"/>
+      <circle cx="1010" cy="700" r="148" fill="url(#sol)"/>
+      <path fill="none" stroke="#3B2347" stroke-width="3" stroke-linecap="round" opacity="0.55" d="M748 246 q10 -9 20 0 q10 -9 20 0 M808 212 q9 -8 18 0 q9 -8 18 0 M690 300 q8 -7 16 0 q8 -7 16 0"/>
+      <g fill="#FFD9BC" opacity="0.9">
+        <path opacity="0.33" d="M90 208 C120 184 170 180 200 196 C230 170 290 170 320 194 C360 180 410 190 422 208 C438 214 430 224 410 224 L110 224 C90 224 82 216 90 208 Z"/>
+        <path opacity="0.38" d="M1120 238 C1152 212 1206 208 1240 226 C1272 198 1334 198 1366 224 C1408 210 1462 220 1476 240 C1494 248 1484 258 1462 258 L1142 258 C1120 258 1112 248 1120 238 Z"/>
+        <path opacity="0.22" d="M620 396 C646 378 686 376 710 388 C734 368 780 368 804 386 C836 376 872 384 882 398 C896 404 888 412 872 412 L636 412 C620 412 614 404 620 396 Z"/>
+        <path opacity="0.30" d="M1570 330 C1594 312 1632 310 1654 322 C1676 304 1718 304 1740 320 C1768 312 1798 318 1808 330 C1820 336 1812 344 1798 344 L1584 344 C1570 344 1564 338 1570 330 Z"/>
+      </g>
+      <rect x="0" y="700" width="1920" height="200" fill="url(#nevoa)"/>
+      <path class="skyline-distante" fill="#9A5F7D" opacity="0.62"/>
+      <path class="skyline-media" fill="#704368" opacity="0.92"/>
+      <path fill="#2B1B3D" d="M0 1080 L0 902 L84 902 L84 872 L232 872 L232 898 L420 898 L420 852 L560 852 L560 908 L622 908 L622 1080 Z"/>
+      <path fill="#2B1B3D" d="M1400 1080 L1400 422 L1442 422 L1442 362 L1522 362 L1522 302 L1602 302 L1602 382 L1722 382 L1722 342 L1842 342 L1842 402 L1920 402 L1920 1080 Z"/>
+      <rect x="112" y="792" width="52" height="82" fill="#2B1B3D"/>
+      <path fill="#2B1B3D" d="M330 892 L344 838 L338 838 L338 788 Q338 774 352 774 L408 774 Q422 774 422 788 L422 838 L416 838 L430 892 Z"/>
+      <path fill="#2B1B3D" d="M352 774 L380 736 L408 774 Z"/>
+      <g fill="#FFC77D" opacity="0.42">
+        <rect x="1472" y="452" width="15" height="22" rx="2"/>
+        <rect x="1512" y="452" width="15" height="22" rx="2"/>
+        <rect x="1472" y="514" width="15" height="22" rx="2"/>
+        <rect x="1552" y="514" width="15" height="22" rx="2"/>
+        <rect x="1626" y="438" width="15" height="22" rx="2"/>
+        <rect x="1668" y="500" width="15" height="22" rx="2"/>
+        <rect x="1772" y="430" width="15" height="22" rx="2"/>
+        <rect x="1812" y="496" width="15" height="22" rx="2"/>
+      </g>
+      <path fill="none" stroke="#2B1B3D" stroke-width="9" stroke-linecap="round" d="M1402 408 L1296 394"/>
+      <circle cx="1298" cy="394" r="7" fill="#2B1B3D"/>
+      <path fill="#20142D" d="M0 1080 L0 1052 L300 1052 L322 1024 L1598 1024 L1620 1052 L1920 1052 L1920 1080 Z"/>
+      <path fill="none" stroke="#3E2A50" stroke-width="2" opacity="0.75" d="M322 1024 L1598 1024"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-cena-parque">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect width="1920" height="1080" fill="url(#ceu-parque)"/>
+      <circle cx="1540" cy="250" r="240" fill="url(#brilho-sol)"/>
+      <circle cx="1540" cy="250" r="86" fill="#FFF6CC"/>
+      <g fill="#FFFFFF">
+        <path opacity="0.62" d="M120 190 C150 162 210 158 246 178 C280 150 344 150 378 176 C420 160 470 172 486 194 C506 200 496 214 470 214 L142 214 C118 214 108 202 120 190 Z"/>
+        <path opacity="0.72" d="M660 130 C686 106 736 102 766 120 C794 96 848 96 878 118 C914 104 958 114 972 134 C990 140 981 152 958 152 L680 152 C658 152 650 142 660 130 Z"/>
+        <path opacity="0.5" d="M1140 232 C1164 210 1210 206 1238 222 C1264 200 1314 200 1342 220 C1376 208 1416 216 1428 234 C1444 240 1436 250 1416 250 L1158 250 C1138 250 1131 242 1140 232 Z"/>
+      </g>
+      <path fill="#8FC98A" opacity="0.55" d="M0 760 Q240 680 480 742 T960 720 T1440 756 T1920 726 L1920 1080 L0 1080 Z"/>
+      <path fill="#7CC66B" d="M0 860 Q480 840 960 862 T1920 856 L1920 1080 L0 1080 Z"/>
+      <path fill="#6DB55C" opacity="0.7" d="M0 940 Q500 910 960 936 T1920 924 L1920 1080 L0 1080 Z"/>
+      <path fill="#E8D8AE" d="M800 1080 Q860 980 1010 952 Q1140 928 1170 880 L1240 888 Q1200 944 1060 972 Q930 1000 880 1080 Z"/>
+      <path fill="#8B5A2B" d="M1218 890 L1246 890 L1262 620 L1234 610 Z"/>
+      <g fill="#4E9E4A">
+        <circle cx="1210" cy="545" r="130"/>
+        <circle cx="1310" cy="580" r="95" fill="#5CB356"/>
+        <circle cx="1100" cy="590" r="90" fill="#5CB356"/>
+        <circle cx="1225" cy="480" r="100" fill="#6BC463"/>
+      </g>
+      <path fill="none" stroke="#7A4B26" stroke-width="14" stroke-linecap="round" d="M1260 500 Q1360 470 1450 380"/>
+      <path fill="none" stroke="#7A4B26" stroke-width="8" stroke-linecap="round" d="M1450 380 L1470 350"/>
+      <g fill="#4E9E4A">
+        <circle cx="250" cy="760" r="70"/>
+        <circle cx="520" cy="790" r="55"/>
+        <circle cx="900" cy="800" r="45"/>
+      </g>
+      <path fill="#6B4226" d="M244 820 L256 820 L256 880 L244 880 Z M514 836 L526 836 L526 880 L514 880 Z M894 840 L906 840 L906 880 L894 880 Z"/>
+      <ellipse cx="280" cy="246" rx="18" ry="22" fill="#FFD166"/>
+      <ellipse cx="360" cy="186" rx="15" ry="18" fill="#B39DDB"/>
+      <ellipse cx="600" cy="158" rx="20" ry="24" fill="#4ECDC4"/>
+      <path fill="none" stroke="#F8F1E3" stroke-width="1.6" opacity="0.8" d="M280 268 Q274 284 280 298 M360 204 Q366 218 360 230 M600 182 Q606 198 600 212"/>
+      <rect x="640" y="800" width="120" height="14" rx="4" fill="#B07A4A"/>
+      <rect x="628" y="838" width="144" height="14" rx="4" fill="#C98A5B"/>
+      <path fill="none" stroke="#7A4B26" stroke-width="8" stroke-linecap="round" d="M642 852 L642 892 M758 852 L758 892"/>
+      <ellipse cx="950" cy="866" rx="55" ry="30" fill="#4E9E4A" opacity="0.9"/>
+      <ellipse cx="1010" cy="874" rx="40" ry="24" fill="#5CB356" opacity="0.9"/>
+      <circle cx="700" cy="900" r="5" fill="#FFD166"/>
+      <circle cx="730" cy="914" r="5" fill="#F26D5B"/>
+      <circle cx="680" cy="922" r="5" fill="#FFD166"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-cena-rua">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect width="1920" height="1080" fill="url(#ceu-rua)"/>
+      <path fill="#FFFFFF" opacity="0.55" d="M160 180 C186 156 236 152 266 170 C294 146 348 146 378 168 C414 154 458 164 472 184 C490 190 481 202 458 202 L180 202 C158 202 150 192 160 180 Z M760 132 C784 110 830 106 858 122 C884 100 934 100 962 120 C996 108 1036 116 1048 134 C1064 140 1056 150 1036 150 L778 150 C758 150 751 142 760 132 Z M1240 210 C1262 190 1304 186 1330 202 C1354 182 1400 182 1426 200 C1458 188 1494 196 1506 212 C1520 218 1512 228 1494 228 L1256 228 C1238 228 1232 220 1240 210 Z"/>
+      <rect x="90" y="520" width="340" height="340" fill="#F2C14E"/>
+      <path fill="#D95D39" d="M60 520 L250 420 L460 520 Z"/>
+      <rect x="220" y="740" width="64" height="120" rx="6" fill="#6B4E3D"/>
+      <path fill="#BDE0FE" stroke="#FFF4E0" stroke-width="5" stroke-linejoin="round" d="M130 580 h64 v64 h-64 Z M330 580 h64 v64 h-64 Z"/>
+      <rect x="480" y="560" width="330" height="300" fill="#E07A5F"/>
+      <path fill="#3D405B" d="M450 560 L645 470 L840 560 Z"/>
+      <rect x="610" y="750" width="58" height="110" rx="6" fill="#5B3A2E"/>
+      <path fill="#BDE0FE" stroke="#FFF4E0" stroke-width="5" stroke-linejoin="round" d="M520 610 h56 v56 h-56 Z M720 610 h56 v56 h-56 Z"/>
+      <rect x="860" y="540" width="320" height="320" fill="#81B29A"/>
+      <path fill="#5A3E36" d="M830 540 L1020 450 L1210 540 Z"/>
+      <rect x="990" y="740" width="60" height="120" rx="6" fill="#4A3B32"/>
+      <path fill="#BDE0FE" stroke="#FFF4E0" stroke-width="5" stroke-linejoin="round" d="M900 590 h56 v56 h-56 Z M1080 590 h56 v56 h-56 Z"/>
+      <rect x="1220" y="800" width="700" height="112" fill="#C9B79C"/>
+      <rect x="0" y="860" width="1920" height="52" fill="#D9D4CC"/>
+      <rect x="0" y="912" width="1920" height="10" fill="#B8B2A8"/>
+      <rect x="0" y="922" width="1920" height="158" fill="#6E6E76"/>
+      <path fill="none" stroke="#F5F0E6" stroke-width="9" stroke-dasharray="52 38" opacity="0.75" d="M0 1004 L1920 1004"/>
+      <path fill="#4C7FB5" stroke="#2A1A3A" stroke-width="3" d="M160 992 Q158 948 194 942 L400 942 Q434 948 432 992 L432 1010 L160 1010 Z"/>
+      <path fill="#3A6492" stroke="#2A1A3A" stroke-width="3" d="M204 942 L224 900 L372 900 L394 942 Z"/>
+      <path fill="#2B2B33" d="M180 1008 a20 20 0 1 0 40 0 a20 20 0 1 0 -40 0 M372 1008 a20 20 0 1 0 40 0 a20 20 0 1 0 -40 0"/>
+      <path fill="#D64545" stroke="#2A1A3A" stroke-width="3" d="M1240 934 Q1238 890 1274 884 L1478 884 Q1512 890 1510 934 L1510 956 L1240 956 Z"/>
+      <path fill="#B53434" stroke="#2A1A3A" stroke-width="3" d="M1280 884 L1302 838 L1442 838 L1464 884 Z"/>
+      <path fill="#BDE0FE" opacity="0.9" d="M1300 878 L1314 848 L1424 848 L1440 878 Z"/>
+      <path fill="#2B2B33" d="M1262 956 a22 22 0 1 0 44 0 a22 22 0 1 0 -44 0 M1444 956 a22 22 0 1 0 44 0 a22 22 0 1 0 -44 0"/>
+      <path fill="#8A8A94" d="M1280 956 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M1462 956 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/>
+      <path fill="#3A3A44" d="M1596 420 L1604 420 L1612 930 L1592 930 Z"/>
+      <path fill="#3A3A44" d="M1570 420 Q1600 390 1630 420 L1616 438 L1584 438 Z"/>
+      <circle cx="1600" cy="430" r="12" fill="#FFE9A8" opacity="0.9"/>
+      <path fill="#6B4226" d="M1744 880 L1756 880 L1756 660 L1744 660 Z"/>
+      <circle cx="1750" cy="600" r="100" fill="#4E9E4A"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-alvo-telhados">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <path fill="#FFF2DD" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-18 -34 L-13 -56 L2 -40 Z M18 -34 L13 -56 L-2 -40 Z"/>
+      <path fill="#F3B7A3" d="M-14 -37 L-11 -49 L-2 -40 Z M14 -37 L11 -49 L2 -40 Z"/>
+      <path fill="#FFF2DD" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-23 14 Q-26 40 -14 44 L14 44 Q26 40 23 14 L19 -8 Q10 -18 0 -18 Q-10 -18 -19 -8 Z"/>
+      <circle cx="0" cy="-22" r="23" fill="#FFF2DD" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="none" stroke="#E8A87C" stroke-width="3" stroke-linecap="round" d="M-23 -30 L-16 -33 M-24 -22 L-17 -24 M23 -30 L16 -33 M24 -22 L17 -24"/>
+      <path fill="none" stroke="#E8A87C" stroke-width="2.6" stroke-linecap="round" d="M-12 4 L-16 12 M-4 8 L-6 17 M12 4 L16 12 M4 8 L6 17"/>
+      <ellipse cx="-8" cy="-26" rx="4.6" ry="6.2" fill="#2A1A3A"/>
+      <ellipse cx="8" cy="-26" rx="4.6" ry="6.2" fill="#2A1A3A"/>
+      <circle cx="-6.6" cy="-28" r="1.5" fill="#FFFDF7"/>
+      <circle cx="9.4" cy="-28" r="1.5" fill="#FFFDF7"/>
+      <path fill="#F3A0A0" d="M0 -15 L-3.5 -19 L3.5 -19 Z"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="2" stroke-linecap="round" d="M0 -15 L0 -12 M0 -12 Q-4 -8 -7 -10 M0 -12 Q4 -8 7 -10"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="1.6" stroke-linecap="round" opacity="0.7" d="M-24 -18 L-38 -23 M-24 -13 L-38 -12 M24 -18 L38 -23 M24 -13 L38 -12"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="8" stroke-linecap="round" d="M20 30 Q38 34 36 18 Q35 8 44 6"/>
+      <path fill="none" stroke="#E8A87C" stroke-width="2.4" stroke-linecap="round" opacity="0.8" d="M-12 44 Q-12 48 -8 48 M12 44 Q12 48 8 48"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-alvo-parque">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="0" cy="0" rx="34" ry="42" fill="#E84A5F" stroke="#2A1A3A" stroke-width="3"/>
+      <ellipse cx="-12" cy="-14" rx="9" ry="14" fill="#FF9AA2" opacity="0.85" transform="rotate(-18 -12 -14)"/>
+      <path fill="#C43A4E" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-7 40 L7 40 L0 52 Z"/>
+      <path fill="none" stroke="#F8F1E3" stroke-width="2" opacity="0.8" d="M0 52 Q-8 58 0 64 Q8 70 0 76"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-alvo-rua">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <path fill="#C98A5B" stroke="#2A1A3A" stroke-width="3" d="M-19 8 Q-22 34 0 44 Q22 34 19 8 Q10 -2 0 -2 Q-10 -2 -19 8 Z"/>
+      <circle cx="0" cy="-24" r="20" fill="#E0A878" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="#8B5A3C" stroke="#2A1A3A" stroke-width="2.5" d="M-18 -38 Q-30 -28 -24 -10 Q-14 -16 -12 -32 Z"/>
+      <path fill="#8B5A3C" stroke="#2A1A3A" stroke-width="2.5" d="M18 -38 Q30 -28 24 -10 Q14 -16 12 -32 Z"/>
+      <ellipse cx="0" cy="-14" rx="10" ry="8" fill="#F6E3D0"/>
+      <ellipse cx="0" cy="-18" rx="4" ry="3" fill="#2A1A3A"/>
+      <circle cx="-7" cy="-29" r="2.4" fill="#2A1A3A"/>
+      <circle cx="7" cy="-29" r="2.4" fill="#2A1A3A"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="1.8" stroke-linecap="round" d="M0 -15 L0 -11 M0 -11 Q-4 -7 -7 -9 M0 -11 Q4 -7 7 -9"/>
+      <path fill="#F26D6B" d="M0 -8 Q-4 -2 0 1 Q4 -2 0 -8 Z"/>
+      <path fill="none" stroke="#C98A5B" stroke-width="7" stroke-linecap="round" d="M19 10 Q34 6 32 -8"/>
+      <path fill="#E84A5F" d="M-14 2 Q0 8 14 2 L14 8 Q0 14 -14 8 Z"/>
+      <ellipse cx="-11" cy="43" rx="7" ry="4" fill="#E0A878" stroke="#2A1A3A" stroke-width="2"/>
+      <ellipse cx="11" cy="43" rx="7" ry="4" fill="#E0A878" stroke="#2A1A3A" stroke-width="2"/>
+    </g>
+  </svg>
+</template>
+
+<!-- TEMPLATES -->
+
+<script>
+'use strict';
+(() => {
+  const W = 1920, H = 1080;
+  const S = Object.freeze({ ESPERANDO:'esperando', TEIA:'teia', BALANCO:'balanco', RESGATE:'resgate', VOLTA:'volta', FESTA:'festa' });
+  const T = Object.freeze({ teia:250, resgate:500, volta:600, festa:3000, pausaAlvo:400, brilho:420 });
+  const BALANCOS = [1500, 1380, 1620];
+  const RAIO = 220;
+  const TERCO = { x1: W*0.3, x2: W*0.7, y1: H*0.25, y2: H*0.75 };
+
+  // Cada cenÃ¡rio Ã© dados: arte (template), posiÃ§Ãµes, corda e rota do Duende.
+  // Regra de L7/US4: |duende.x0 - heroi.x| >= 0.6 * 1920 = 1152.
+  const CENARIOS = [
+    {
+      id: 'telhados',
+      ancorAlvo: { x: 1300, y: 396 },
+      centroAlvo: { x: 8, y: 124 },
+      heroi: { x: 430, y: 250 },
+      cordaAlvo: { x: 0, y: -52 },
+      duende: { x0: 1600, y0: 190, x1: 2050, y1: 130, dur: 1800, escala: 1 },
+      som: 'miau',
+    },
+    {
+      id: 'parque',
+      ancorAlvo: { x: 1450, y: 380 },
+      centroAlvo: { x: 4, y: 120 },
+      heroi: { x: 360, y: 280 },
+      cordaAlvo: { x: 0, y: -40 },
+      duende: { x0: 1580, y0: 210, x1: 2040, y1: 150, dur: 1800, escala: 1 },
+      som: 'ploc',
+    },
+    {
+      id: 'rua',
+      ancorAlvo: { x: 1320, y: 838 },
+      centroAlvo: { x: 0, y: -44 },
+      heroi: { x: 430, y: 300 },
+      cordaAlvo: null,
+      duende: { x0: 1600, y0: 180, x1: 2050, y1: 120, dur: 1800, escala: 1 },
+      som: 'latido',
+    },
+  ];
+
+  const clamp01 = t => t < 0 ? 0 : t > 1 ? 1 : t;
+  const lerp = (a,b,t) => a + (b-a)*t;
+  const easeOutCubic = t => 1 - Math.pow(1-t, 3);
+  const easeInOutCubic = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+  const easeOutBack = t => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3*Math.pow(t-1,3) + c1*Math.pow(t-1,2); };
+  const bez = (a,b,c,t) => (1-t)*(1-t)*a + 2*(1-t)*t*b + t*t*c;
+  const $ = id => document.getElementById(id);
+
+  function girar(px, py, deg) {
+    const r = deg * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
+    return { x: px*c - py*s, y: px*s + py*c };
+  }
+  function pontoLocal(lx, ly, hx, hy, rot) {
+    const p = girar(lx, ly, rot);
+    return { x: hx + p.x, y: hy + p.y };
+  }
+  function mulberry32(a) {
+    return function() {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  // ---------- Ã¡udio: 100% sintetizado, sem arquivo e sem rede ----------
+  const Som = (() => {
+    let ctx = null, mestre = null, ruido = null, timer = null;
+    let proxNota = 0, notaIdx = 0;
+    const MELODIA = [880, 1108.73, 1318.51, 1760, 1318.51, 1108.73, 987.77, 880];
+    const PASSO = 0.9;
+
+    function criarRuido(c) {
+      const b = c.createBuffer(1, Math.floor(c.sampleRate * 0.7), c.sampleRate);
+      const d = b.getChannelData(0);
+      let s = 0x2F6E2B1;
+      for (let i = 0; i < d.length; i++) {
+        s ^= s << 13; s ^= s >>> 17; s ^= s << 5;
+        d[i] = ((s >>> 0) / 4294967296) * 2 - 1;
+      }
+      return b;
+    }
+    function envelope(g, t0, pico, ataque, dur) {
+      const p = Math.max(0.0002, pico);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(p, t0 + Math.max(0.002, ataque));
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    }
+    function nota(t0, f, pico, dur, tipo) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = tipo || 'sine';
+      o.frequency.value = f;
+      const g = ctx.createGain();
+      envelope(g, t0, pico, Math.min(0.03, dur * 0.25), dur);
+      o.connect(g); g.connect(mestre);
+      o.start(t0); o.stop(t0 + dur + 0.05);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function ruidoFonte() {
+      const src = ctx.createBufferSource();
+      src.buffer = ruido;
+      src.loop = true;
+      return src;
+    }
+    function iniciarPad() {
+      const f = ctx.createBiquadFilter();
+      f.type = 'lowpass'; f.frequency.value = 650; f.Q.value = 0.5;
+      const g = ctx.createGain(); g.gain.value = 0.05;
+      f.connect(g); g.connect(mestre);
+      [110, 164.81, 220].forEach((fr, i) => {
+        const o = ctx.createOscillator();
+        o.type = i === 2 ? 'sine' : 'triangle';
+        o.frequency.value = fr;
+        o.detune.value = i === 0 ? -5 : i === 1 ? 5 : 0;
+        o.connect(f); o.start();
+      });
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.05;
+      const lg = ctx.createGain(); lg.gain.value = 160;
+      lfo.connect(lg); lg.connect(f.frequency); lfo.start();
+    }
+    function agendar() {
+      if (!ctx || ctx.state !== 'running') return;
+      const limite = ctx.currentTime + 2;
+      while (proxNota < limite) {
+        nota(proxNota, MELODIA[notaIdx % MELODIA.length], 0.07, 1.6, 'sine');
+        proxNota += PASSO;
+        notaIdx++;
+      }
+    }
+    function novoContexto() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try {
+        const c = new AC();
+        const m = c.createGain();
+        m.gain.value = 0.251; // -12 dBFS
+        const l = c.createDynamicsCompressor();
+        l.threshold.value = -6;
+        l.knee.value = 0;
+        l.ratio.value = 20;
+        l.attack.value = 0.003;
+        l.release.value = 0.25;
+        m.connect(l); l.connect(c.destination);
+        ctx = c; mestre = m;
+        ruido = criarRuido(c);
+        iniciarPad();
+        proxNota = c.currentTime + 1.2;
+        timer = setInterval(agendar, 500);
+        return c;
+      } catch (e) {
+        return null;
+      }
+    }
+    function destravar() {
+      if (!ctx && !novoContexto()) return;
+      if (ctx.state === 'suspended') {
+        const p = ctx.resume();
+        if (p && p.catch) p.catch(() => {});
+      }
+    }
+    function agora() { return ctx ? ctx.currentTime : 0; }
+
+    function teia() {
+      if (!ctx) return;
+      const t0 = agora();
+      const src = ruidoFonte();
+      const f = ctx.createBiquadFilter();
+      f.type = 'highpass'; f.frequency.value = 2600; f.Q.value = 0.7;
+      const g = ctx.createGain();
+      envelope(g, t0, 0.55, 0.006, 0.09);
+      src.connect(f); f.connect(g); g.connect(mestre);
+      src.start(t0); src.stop(t0 + 0.12);
+      src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function balanco() {
+      if (!ctx) return;
+      const t0 = agora();
+      const src = ruidoFonte();
+      const f = ctx.createBiquadFilter();
+      f.type = 'bandpass'; f.Q.value = 0.8;
+      f.frequency.setValueAtTime(380, t0);
+      f.frequency.exponentialRampToValueAtTime(1500, t0 + 0.5);
+      f.frequency.exponentialRampToValueAtTime(520, t0 + 1.05);
+      const g = ctx.createGain();
+      envelope(g, t0, 0.6, 0.24, 1.15);
+      src.connect(f); f.connect(g); g.connect(mestre);
+      src.start(t0); src.stop(t0 + 1.18);
+      src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function pop(t0) {
+      if (!ctx) return;
+      const q = t0 ?? agora();
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(480, q);
+      o.frequency.exponentialRampToValueAtTime(170, q + 0.12);
+      const g = ctx.createGain();
+      envelope(g, q, 0.45, 0.006, 0.14);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.16);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function miau(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(760, q);
+      o.frequency.exponentialRampToValueAtTime(1080, q + 0.07);
+      o.frequency.exponentialRampToValueAtTime(820, q + 0.2);
+      o.frequency.exponentialRampToValueAtTime(690, q + 0.34);
+      const f = ctx.createBiquadFilter();
+      f.type = 'lowpass'; f.frequency.value = 2600;
+      const g = ctx.createGain();
+      envelope(g, q, 0.38, 0.02, 0.38);
+      o.connect(f); f.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.4);
+      o.onended = () => { try { o.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function ploc(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(300, q);
+      o.frequency.exponentialRampToValueAtTime(95, q + 0.09);
+      const g = ctx.createGain();
+      envelope(g, q, 0.45, 0.005, 0.11);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.13);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function latido(q) {
+      if (!ctx) return;
+      for (let i = 0; i < 2; i++) {
+        const t0 = q + i * 0.14;
+        const o = ctx.createOscillator();
+        o.type = 'square';
+        o.frequency.setValueAtTime(260, t0);
+        o.frequency.exponentialRampToValueAtTime(150, t0 + 0.07);
+        const f = ctx.createBiquadFilter();
+        f.type = 'lowpass'; f.frequency.value = 950;
+        const g = ctx.createGain();
+        envelope(g, t0, 0.32, 0.005, 0.08);
+        o.connect(f); f.connect(g); g.connect(mestre);
+        o.start(t0); o.stop(t0 + 0.1);
+        o.onended = () => { try { o.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+      }
+    }
+    function ihihi() {
+      if (!ctx) return;
+      const base = agora();
+      [1250, 1550, 1900].forEach((fr, i) => {
+        const t0 = base + i * 0.065;
+        const o = ctx.createOscillator();
+        o.type = 'square';
+        o.frequency.setValueAtTime(fr, t0);
+        o.frequency.exponentialRampToValueAtTime(fr * 1.08, t0 + 0.05);
+        const f = ctx.createBiquadFilter();
+        f.type = 'lowpass'; f.frequency.value = 4600;
+        const g = ctx.createGain();
+        envelope(g, t0, 0.16, 0.004, 0.062);
+        o.connect(f); f.connect(g); g.connect(mestre);
+        o.start(t0); o.stop(t0 + 0.08);
+        o.onended = () => { try { o.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+      });
+    }
+    function festa() {
+      if (!ctx) return;
+      const q = agora() + 0.02;
+      const NOTAS = [523.25, 659.25, 783.99, 1046.5, 1318.51, 1046.5, 783.99, 1046.5];
+      nota(q, 261.63, 0.2, 0.8, 'sine');
+      NOTAS.forEach((f, i) => {
+        const t0 = q + i * 0.16;
+        nota(t0, f, 0.15, 0.44, 'triangle');
+        nota(t0, f * 2, 0.045, 0.3, 'sine');
+      });
+    }
+    function resgate(som) {
+      if (!ctx) return;
+      const q = agora() + 0.01;
+      pop(q);
+      if (som === 'miau') miau(q + 0.07);
+      else if (som === 'ploc') ploc(q + 0.07);
+      else if (som === 'latido') latido(q + 0.07);
+    }
+    return { destravar, teia, balanco, resgate, festa, ihihi };
+  })();
+
+  // ---------- elementos ----------
+  const el = {
+    svg: $('palco'), cenario: $('cenario'), duende: $('duende'),
+    linha: $('linha-teia'), corda: $('corda-alvo'),
+    heroi: $('heroi'), alvo: $('alvo'), splat: $('splat'),
+    faiscas: [...document.querySelectorAll('#faiscas path')],
+    estrelas: [...document.querySelectorAll('#estrelas .estrela')],
+    halos: [...document.querySelectorAll('#estrelas .halo')],
+    confete: $('confete'), flash: $('flash'),
+  };
+
+  // ---------- cenÃ¡rio: montado a partir de template (sÃ³ um por vez) ----------
+  const DISTANTE = [[120,90],[70,130],[150,70],[90,160],[130,110],[80,60],[140,100],[100,140],[120,80],[90,120],[160,90],[110,70],[130,130],[90,60],[120,100],[80,140],[140,110],[100,90],[120,150],[90,80],[130,100],[150,90],[100,120],[130,70]];
+  const MEDIA = [[180,150],[120,220],[200,90],[140,260],[160,120],[120,180],[220,140],[180,200],[160,100],[200,170],[140,90],[100,130],[180,190],[150,110],[200,160],[170,120]];
+
+  function fatorVale(cx, vale) {
+    const d = cx - vale.x;
+    return 1 - 0.62 * Math.exp(-(d*d) / (2 * vale.r * vale.r));
+  }
+  function gerarSkyline(baseY, gap, edif, vale) {
+    let x = -40, d = `M-40 ${baseY}`;
+    for (const [w, h] of edif) {
+      if (x > 1960) break;
+      const hh = h * fatorVale(x + w/2, vale);
+      d += ` L${x} ${baseY} L${x} ${(baseY-hh).toFixed(1)} L${x+w} ${(baseY-hh).toFixed(1)} L${x+w} ${baseY}`;
+      x += w + gap;
+    }
+    return d + ` L1960 ${baseY} L1960 1090 L-40 1090 Z`;
+  }
+  function clonarTemplate(id) {
+    const tpl = $(id);
+    if (!tpl) return null;
+    const svg = tpl.content.firstElementChild;
+    return svg ? svg.firstElementChild.cloneNode(true) : null;
+  }
+  function montarCenario(i) {
+    const c = CENARIOS[i];
+    const cena = clonarTemplate('tpl-cena-' + c.id);
+    if (cena) {
+      el.cenario.replaceChildren(cena);
+      const sd = cena.querySelector('.skyline-distante');
+      if (sd) sd.setAttribute('d', gerarSkyline(862, 18, DISTANTE, { x:1010, r:300 }));
+      const sm = cena.querySelector('.skyline-media');
+      if (sm) sm.setAttribute('d', gerarSkyline(930, 26, MEDIA, { x:1010, r:340 }));
+    }
+    const alvo = clonarTemplate('tpl-alvo-' + c.id);
+    if (alvo) el.alvo.replaceChildren(alvo);
+  }
+
+  // ---------- confete (nÃ³s prÃ©-criados; sÃ³ transform/opacity) ----------
+  const CORES_CONFETE = ['#FFD166','#F26D5B','#4ECDC4','#FFF4E0','#B39DDB'];
+  const confete = [];
+  for (let i = 0; i < 24; i++) {
+    const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    r.setAttribute('width', 9 + (i % 3) * 3);
+    r.setAttribute('height', 15);
+    r.setAttribute('rx', 2);
+    r.setAttribute('fill', CORES_CONFETE[i % CORES_CONFETE.length]);
+    r.setAttribute('opacity', 0);
+    el.confete.appendChild(r);
+    confete.push({ el: r, x: 0, y: 0, vx: 0, vy: 0, r: 0, vr: 0, ativo: false });
+  }
+
+  // ---------- estado ----------
+  const jogo = {
+    estado: S.ESPERANDO, t: 0, tEstado: 0,
+    cenario: 0, resgates: 0, festas: 0,
+    alvoAtivo: true, alvoCongelado: false, alvoEntrou: 0,
+    espera: 0, duracaoBalanco: BALANCOS[0],
+    alvoCentro: { x: 0, y: 0 }, alvoAngulo: 0,
+    arco: null,
+    splatAtivo: false, splatEm: 0,
+    faiscasAtivas: false, faiscasEm: 0, faiscasCentro: { x: 0, y: 0 },
+    flashEm: -1, flashPico: 0, flashDur: 700,
+    transicao: false,
+    duende: { ativo: false, inicio: 0, x0: 0, y0: 0, x1: 0, y1: 0, dur: 1800, escala: 1 },
+  };
+  const estadoEstrelas = [0,1,2].map(() => ({ acesa: false, acendeuEm: -1, apagouEm: -1 }));
+
+  const cenarioAtual = () => CENARIOS[jogo.cenario];
+
+  function posAlvo() {
+    const c = cenarioAtual();
+    if (jogo.alvoCongelado) return { x: jogo.alvoCentro.x, y: jogo.alvoCentro.y, ang: jogo.alvoAngulo };
+    const ang = 2.4 * Math.sin(jogo.t * 0.0014 + 1.2);
+    const p = girar(c.centroAlvo.x, c.centroAlvo.y, ang);
+    return { x: c.ancorAlvo.x + p.x, y: c.ancorAlvo.y + p.y, ang };
+  }
+
+  // ---------- estrelas ----------
+  function acenderEstrela(i) {
+    const st = estadoEstrelas[i];
+    if (!st) return;
+    st.acesa = true;
+    st.acendeuEm = jogo.t;
+    st.apagouEm = -1;
+  }
+  function apagarEstrelas() {
+    for (const st of estadoEstrelas) {
+      if (st.acesa) st.apagouEm = jogo.t;
+      st.acesa = false;
+    }
+  }
+  function desenharEstrelas() {
+    for (let i = 0; i < 3; i++) {
+      const st = estadoEstrelas[i], node = el.estrelas[i], halo = el.halos[i];
+      let op = 0.36, haloOp = 0, esc = 1;
+      if (st.acesa) {
+        const p = clamp01((jogo.t - st.acendeuEm) / T.brilho);
+        const ep = easeOutCubic(p);
+        op = lerp(0.36, 1, ep);
+        haloOp = 0.85 * ep;
+        esc = 1 + 0.55 * (1 - ep);
+        if (jogo.estado === S.FESTA) {
+          const pulso = Math.sin(jogo.t * 0.008 + i * 1.4);
+          esc *= 1 + 0.07 * pulso;
+          haloOp *= 1 + 0.18 * pulso;
+        }
+      } else if (st.apagouEm >= 0) {
+        const p = clamp01((jogo.t - st.apagouEm) / 300);
+        op = lerp(1, 0.36, p);
+        haloOp = 0.85 * (1 - p);
+        if (p >= 1) st.apagouEm = -1;
+      }
+      node.setAttribute('opacity', op.toFixed(3));
+      node.setAttribute('transform', `translate(${960 + (i - 1) * 72} 1038) scale(${esc.toFixed(3)})`);
+      halo.setAttribute('opacity', Math.max(0, haloOp).toFixed(3));
+    }
+  }
+
+  function desenharSplat() {
+    if (!jogo.splatAtivo) { el.splat.setAttribute('opacity', 0); return; }
+    const d = jogo.t - jogo.splatEm;
+    if (d < 0) { el.splat.setAttribute('opacity', 0); return; }
+    const p = clamp01(d / 300);
+    el.splat.setAttribute('transform', `translate(${jogo.alvoCentro.x.toFixed(2)} ${jogo.alvoCentro.y.toFixed(2)}) scale(${(1 + 0.25 * p).toFixed(3)})`);
+    el.splat.setAttribute('opacity', (0.95 * (1 - p)).toFixed(3));
+    if (p >= 1) jogo.splatAtivo = false;
+  }
+
+  function desenharFaiscas() {
+    if (!jogo.faiscasAtivas) {
+      for (const f of el.faiscas) f.setAttribute('opacity', 0);
+      return;
+    }
+    const p = clamp01((jogo.t - jogo.faiscasEm) / 450);
+    for (let i = 0; i < el.faiscas.length; i++) {
+      const a = (i / el.faiscas.length) * Math.PI * 2 + 0.5;
+      const dist = 12 + 58 * easeOutCubic(p);
+      const x = jogo.faiscasCentro.x + Math.cos(a) * dist;
+      const y = jogo.faiscasCentro.y + Math.sin(a) * dist;
+      const s = 0.45 + 0.75 * Math.sin(Math.PI * p);
+      el.faiscas[i].setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${Math.max(0, s).toFixed(3)})`);
+      el.faiscas[i].setAttribute('opacity', ((1 - p) * 0.95).toFixed(3));
+    }
+    if (p >= 1) jogo.faiscasAtivas = false;
+  }
+
+  // ---------- Duende: sempre longe, de costas, fugindo ----------
+  function iniciarDuende() {
+    const c = cenarioAtual(), d = jogo.duende, cfg = c.duende;
+    d.ativo = true; d.inicio = jogo.t;
+    d.x0 = cfg.x0; d.y0 = cfg.y0; d.x1 = cfg.x1; d.y1 = cfg.y1;
+    d.dur = cfg.dur; d.escala = cfg.escala;
+    Som.ihihi();
+  }
+  function desenharDuende() {
+    const d = jogo.duende;
+    if (!d.ativo) { el.duende.setAttribute('opacity', 0); return; }
+    const p = clamp01((jogo.t - d.inicio) / d.dur);
+    const e = easeInOutCubic(p);
+    const x = lerp(d.x0, d.x1, e);
+    const y = lerp(d.y0, d.y1, e) + Math.sin(p * Math.PI * 2.2) * 5;
+    const banco = Math.sin(p * Math.PI * 1.6) * 5 - 2;
+    const op = p < 0.08 ? p / 0.08 : p > 0.88 ? (1 - p) / 0.12 : 1;
+    el.duende.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${banco.toFixed(2)}) scale(${d.escala})`);
+    el.duende.setAttribute('opacity', Math.max(0, op).toFixed(3));
+    if (p >= 1) d.ativo = false;
+  }
+
+  // ---------- festa ----------
+  function flash(pico, dur) {
+    jogo.flashEm = jogo.t;
+    jogo.flashPico = pico;
+    jogo.flashDur = dur;
+  }
+  function iniciarFesta() {
+    jogo.festas++;
+    flash(0.13, 700);
+    Som.festa();
+    const rnd = mulberry32(0x51ED270B ^ (jogo.festas * 7919) ^ (jogo.cenario * 104729));
+    for (const c of confete) {
+      c.x = rnd() * W;
+      c.y = -30 - rnd() * 520;
+      c.vx = (rnd() - 0.5) * 140;
+      c.vy = 260 + rnd() * 280;
+      c.r = rnd() * 360;
+      c.vr = (rnd() - 0.5) * 440;
+      c.ativo = true;
+      c.el.setAttribute('opacity', 1);
+    }
+  }
+  function atualizarConfete(dt) {
+    const s = dt / 1000;
+    for (const c of confete) {
+      if (!c.ativo) continue;
+      c.vy += 260 * s;
+      c.x += (c.vx + Math.sin((jogo.t + c.r * 13) * 0.0018) * 34) * s;
+      c.y += c.vy * s;
+      c.r += c.vr * s;
+      if (c.y > 1120) { c.ativo = false; c.el.setAttribute('opacity', 0); continue; }
+      c.el.setAttribute('transform', `translate(${c.x.toFixed(1)} ${c.y.toFixed(1)}) rotate(${c.r.toFixed(1)})`);
+    }
+  }
+  function terminarFesta() {
+    apagarEstrelas();
+    for (const c of confete) { c.ativo = false; c.el.setAttribute('opacity', 0); }
+    jogo.resgates = 0;
+    jogo.transicao = false;
+    jogo.cenario = (jogo.cenario + 1) % CENARIOS.length;
+    jogo.alvoAtivo = false;
+    jogo.alvoCongelado = false;
+    jogo.espera = 0;
+    jogo.splatAtivo = false;
+    jogo.duende.ativo = false;
+    montarCenario(jogo.cenario);
+    entrar(S.ESPERANDO);
+  }
+
+  // ---------- transiÃ§Ãµes ----------
+  function nascerAlvo() {
+    jogo.alvoAtivo = true;
+    jogo.alvoCongelado = false;
+    jogo.espera = 0;
+    jogo.alvoEntrou = jogo.t;
+    jogo.splatAtivo = false;
+    el.splat.setAttribute('opacity', 0);
+    iniciarDuende();
+  }
+  function iniciarTeia() {
+    const a = posAlvo();
+    jogo.alvoCentro = { x: a.x, y: a.y };
+    jogo.alvoAngulo = a.ang;
+    jogo.alvoCongelado = true;
+    jogo.duracaoBalanco = BALANCOS[jogo.resgates % 3];
+    const h0 = { x: cenarioAtual().heroi.x, y: cenarioAtual().heroi.y };
+    const h1 = { x: a.x - 28, y: a.y - 26 };
+    jogo.arco = { h0, h1, c: { x: (h0.x + h1.x) / 2, y: (h0.y + h1.y) / 2 + 430 } };
+    jogo.splatAtivo = true;
+    jogo.splatEm = jogo.t + T.teia;
+    Som.teia();
+    entrar(S.TEIA);
+  }
+  function concluir() {
+    if (jogo.resgates >= 3) {
+      entrar(S.FESTA);
+    } else {
+      jogo.alvoAtivo = false;
+      jogo.alvoCongelado = false;
+      jogo.espera = 0;
+      entrar(S.ESPERANDO);
+    }
+  }
+  function entrar(novo) {
+    jogo.estado = novo;
+    jogo.tEstado = 0;
+    if (novo === S.BALANCO) {
+      Som.balanco();
+    } else if (novo === S.RESGATE) {
+      jogo.resgates++;
+      acenderEstrela(jogo.resgates - 1);
+      Som.resgate(cenarioAtual().som);
+    } else if (novo === S.VOLTA) {
+      jogo.faiscasCentro = pontoLocal(26, 148, jogo.arco.h1.x, jogo.arco.h1.y, 0);
+      jogo.faiscasAtivas = true;
+      jogo.faiscasEm = jogo.t;
+    } else if (novo === S.FESTA) {
+      iniciarFesta();
+    }
+  }
+
+  // ---------- loop ----------
+  function passo(dt) {
+    jogo.t += dt;
+    jogo.tEstado += dt;
+    const e = jogo.estado;
+    if (e === S.ESPERANDO) {
+      if (!jogo.alvoAtivo) {
+        jogo.espera += dt;
+        if (jogo.espera >= T.pausaAlvo) nascerAlvo();
+      }
+    } else if (e === S.TEIA) {
+      if (jogo.tEstado >= T.teia) entrar(S.BALANCO);
+    } else if (e === S.BALANCO) {
+      if (jogo.tEstado >= jogo.duracaoBalanco) entrar(S.RESGATE);
+    } else if (e === S.RESGATE) {
+      if (jogo.tEstado >= T.resgate) entrar(S.VOLTA);
+    } else if (e === S.VOLTA) {
+      if (jogo.tEstado >= T.volta) concluir();
+    } else if (e === S.FESTA) {
+      if (jogo.tEstado >= 2750 && !jogo.transicao) {
+        jogo.transicao = true;
+        flash(0.55, 500);
+      }
+      atualizarConfete(dt);
+      if (jogo.tEstado >= T.festa) terminarFesta();
+    }
+    desenhar();
+  }
+
+  function desenhar() {
+    const e = jogo.estado, c = cenarioAtual();
+    desenharEstrelas();
+    desenharSplat();
+    desenharFaiscas();
+    desenharDuende();
+
+    let hx = c.heroi.x, hy = c.heroi.y, hr = 0;
+    let teiaModo = 'pendurada', teiaOp = 0.5, teiaFrac = 1;
+    let alvoPos = null;
+
+    if (e === S.ESPERANDO) {
+      hr = 2.2 * Math.sin(jogo.t * 0.0013);
+      if (jogo.alvoAtivo) {
+        const a = posAlvo();
+        const p = clamp01((jogo.t - jogo.alvoEntrou) / 320);
+        alvoPos = { x: a.x, y: a.y, rot: a.ang, esc: 0.65 + 0.35 * easeOutBack(p), op: clamp01(p * 1.8) };
+      }
+    } else if (e === S.TEIA) {
+      const p = clamp01(jogo.tEstado / T.teia);
+      hr = 2.2 * Math.sin(jogo.t * 0.0013) * (1 - p);
+      teiaModo = 'alvo'; teiaOp = 0.9; teiaFrac = easeOutCubic(p);
+      alvoPos = { x: jogo.alvoCentro.x, y: jogo.alvoCentro.y, rot: jogo.alvoAngulo, esc: 1, op: 1 };
+    } else if (e === S.BALANCO) {
+      const p = clamp01(jogo.tEstado / jogo.duracaoBalanco);
+      const t = easeInOutCubic(p);
+      hx = bez(jogo.arco.h0.x, jogo.arco.c.x, jogo.arco.h1.x, t);
+      hy = bez(jogo.arco.h0.y, jogo.arco.c.y, jogo.arco.h1.y, t);
+      hr = 14 * Math.sin(Math.PI * p);
+      teiaModo = 'alvo'; teiaOp = 0.9;
+      alvoPos = { x: jogo.alvoCentro.x, y: jogo.alvoCentro.y, rot: jogo.alvoAngulo, esc: 1, op: 1 };
+    } else if (e === S.RESGATE) {
+      const p = clamp01(jogo.tEstado / T.resgate);
+      hx = jogo.arco.h1.x;
+      hy = jogo.arco.h1.y + 8 * Math.sin(Math.PI * p);
+      teiaModo = 'alvo'; teiaOp = 0.9 * (1 - p);
+      const peito = pontoLocal(26, 148, hx, hy, 0);
+      const t = easeInOutCubic(p);
+      const ax = bez(jogo.alvoCentro.x, jogo.alvoCentro.x + 96, peito.x, t);
+      const ay = bez(jogo.alvoCentro.y, jogo.alvoCentro.y + 42, peito.y, t);
+      alvoPos = { x: ax, y: ay, rot: lerp(jogo.alvoAngulo, -8, t), esc: lerp(1, 0.86, t), op: 1 };
+    } else if (e === S.VOLTA) {
+      const p = clamp01(jogo.tEstado / T.volta);
+      const t = easeInOutCubic(p);
+      hx = bez(jogo.arco.h1.x, jogo.arco.c.x, jogo.arco.h0.x, t);
+      hy = bez(jogo.arco.h1.y, jogo.arco.c.y, jogo.arco.h0.y, t);
+      hr = -12 * Math.sin(Math.PI * p);
+      teiaModo = 'none';
+      const peito = pontoLocal(26, 148, hx, hy, hr);
+      alvoPos = { x: peito.x, y: peito.y, rot: -8, esc: 0.86, op: 1 - clamp01((p - 0.72) / 0.28) };
+    } else if (e === S.FESTA) {
+      const hop = Math.abs(Math.sin(Math.PI * jogo.tEstado / 1000));
+      hy = c.heroi.y - 44 * hop;
+      hr = 5 * Math.sin(2 * Math.PI * jogo.tEstado / 1000);
+      teiaModo = 'pendurada'; teiaOp = 0.5;
+    }
+
+    el.heroi.setAttribute('transform', `translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(${hr.toFixed(2)})`);
+
+    if (teiaModo === 'pendurada') {
+      const len = Math.max(1, hy + 80);
+      el.linha.setAttribute('transform', `translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(-90) scale(${len.toFixed(2)} 1)`);
+      el.linha.setAttribute('opacity', teiaOp);
+    } else if (teiaModo === 'alvo') {
+      const dx = jogo.alvoCentro.x - hx, dy = jogo.alvoCentro.y - hy;
+      const len = Math.max(0.01, Math.hypot(dx, dy) * teiaFrac);
+      const ang = Math.atan2(dy, dx) * 180 / Math.PI;
+      el.linha.setAttribute('transform', `translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(${ang.toFixed(2)}) scale(${len.toFixed(2)} 1)`);
+      el.linha.setAttribute('opacity', teiaOp);
+    } else {
+      el.linha.setAttribute('opacity', 0);
+    }
+
+    if (alvoPos) {
+      el.alvo.setAttribute('transform', `translate(${alvoPos.x.toFixed(2)} ${alvoPos.y.toFixed(2)}) rotate(${alvoPos.rot.toFixed(2)}) scale(${alvoPos.esc.toFixed(3)})`);
+      el.alvo.setAttribute('opacity', alvoPos.op.toFixed(3));
+    } else {
+      el.alvo.setAttribute('opacity', 0);
+    }
+
+    const podeCorda = c.cordaAlvo && alvoPos && (e === S.ESPERANDO || e === S.TEIA || e === S.BALANCO);
+    if (podeCorda) {
+      const p = pontoLocal(c.cordaAlvo.x, c.cordaAlvo.y, alvoPos.x, alvoPos.y, alvoPos.rot);
+      const dx = p.x - c.ancorAlvo.x, dy = p.y - c.ancorAlvo.y;
+      const len = Math.max(0.01, Math.hypot(dx, dy));
+      const ang = Math.atan2(dy, dx) * 180 / Math.PI;
+      el.corda.setAttribute('transform', `translate(${c.ancorAlvo.x} ${c.ancorAlvo.y}) rotate(${ang.toFixed(2)}) scale(${len.toFixed(2)} 1)`);
+      el.corda.setAttribute('opacity', (0.7 * alvoPos.op).toFixed(3));
+    } else {
+      el.corda.setAttribute('opacity', 0);
+    }
+
+    if (jogo.flashEm >= 0) {
+      const p = clamp01((jogo.t - jogo.flashEm) / jogo.flashDur);
+      el.flash.setAttribute('opacity', (jogo.flashPico * Math.sin(Math.PI * p)).toFixed(3));
+      if (p >= 1) jogo.flashEm = -1;
+    } else {
+      el.flash.setAttribute('opacity', 0);
+    }
+  }
+
+  // ---------- entrada ----------
+  function paraVirtual(ev) {
+    const ctm = el.svg.getScreenCTM();
+    if (!ctm) return null;
+    const pt = el.svg.createSVGPoint();
+    pt.x = ev.clientX; pt.y = ev.clientY;
+    const p = pt.matrixTransform(ctm.inverse());
+    if (p.x < 0 || p.x > W || p.y < 0 || p.y > H) return null;
+    return p;
+  }
+  function aoClicar(ev) {
+    if (ev.button !== 0) return;
+    if (jogo.estado !== S.ESPERANDO || !jogo.alvoAtivo) return;
+    const p = paraVirtual(ev);
+    if (!p) return;
+    const a = posAlvo();
+    const noCirculo = Math.hypot(p.x - a.x, p.y - a.y) <= RAIO;
+    const noTerco = p.x >= TERCO.x1 && p.x <= TERCO.x2 && p.y >= TERCO.y1 && p.y <= TERCO.y2;
+    if (!noCirculo && !noTerco) return;
+    iniciarTeia();
+  }
+  document.addEventListener('pointerdown', Som.destravar, { capture: true, passive: true });
+  el.svg.addEventListener('pointerdown', aoClicar);
+  el.svg.addEventListener('contextmenu', ev => ev.preventDefault());
+
+  // F3: attract mode (8 s de ociosidade) e teclas M/F entram nos ramos abaixo.
+
+  montarCenario(0);
+  iniciarDuende();
+  let anterior = performance.now();
+  function quadro(agora) {
+    const dt = Math.min(100, Math.max(0, agora - anterior));
+    anterior = agora;
+    passo(dt);
+    requestAnimationFrame(quadro);
+  }
+  desenhar();
+  requestAnimationFrame(quadro);
+})();
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,157 @@
+# Teia do Murilo — Tema
+
+- **Versão**: 1.0 (tema fechado; F1 e F2 implementados)
+- **Jogador**: Murilo, 3 anos
+- **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
+- **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
+- **Herói**: Homem-Aranha, identidade oficial, referência do desenho clássico
+- **Travesso**: Duende Verde, suavizado em tom, nunca em close
+
+---
+
+## A frase
+
+> Murilo aponta, a teia gruda, e o mundo balança até o resgate acontecer.
+
+Se qualquer decisão futura contradizer essa frase, a decisão está errada.
+
+## A fantasia
+
+Não é "um jogo do Homem-Aranha". É a experiência de **ter o poder de mover o mundo com um gesto**.
+
+Aos 3 anos a criança não tem força, não tem altura, não tem precisão e não tem permissão para quase nada. O que ela tem é um dedo. O jogo pega esse dedo e dá a ele o corpo do Homem-Aranha.
+
+O prazer não está em vencer, e sim em **causar**. Apontar e ver a cidade obedecer é a fantasia inteira; o resgate é apenas a prova de que funcionou.
+
+**Corolário:** o Murilo não pilota, ele **dirige**. O mouse não é volante, é varinha.
+
+## Quem está jogando
+
+Toda a doutrina abaixo deriva destes fatos, não de preferência estética:
+
+| Fato | Consequência |
+| --- | --- |
+| 3 anos: motricidade fina incompleta | Mouse é o pior dispositivo possível para ele — exige mira, travessia de tela e clique coordenado. Não haverá mira. |
+| Pré-leitor | Zero texto. Nenhum caractere na tela, em nenhum momento — nem título, nem menu. |
+| Atenção de 2 a 5 minutos | O jogo precisa entregar prazer nos primeiros 5 segundos, não depois de um tutorial. |
+| Perder não ensina, só encerra a brincadeira | Zero derrota, zero cronômetro, zero som de erro. |
+| Repetição é conforto, não tédio | O mesmo loop pode rodar 20 vezes. Variedade é bônus, não requisito. |
+| Causa e efeito é o prazer central | Todo clique em alvo tem consequência imediata e exagerada. |
+| Medo não tem rollback | Um susto e ele simplesmente não quer mais jogar — e não sabe explicar por quê. O Duende nunca chega perto. |
+| Ele joga com adulto por perto | O jogo não precisa se explicar sozinho nos primeiros minutos. |
+
+## As leis
+
+Não são recomendações. São restrições de projeto — qualquer uma delas quebrada descaracteriza o jogo.
+
+**L1 — Nenhuma derrota.** Não existe game over, vida, tentativa, "quase!", nem tela de falha. Não existe estado em que o Murilo perdeu.
+
+**L2 — Nenhum prazo.** Nenhum cronômetro, nenhum alvo que expira, nenhum "clique rápido". O jogo espera o tempo que ele precisar.
+
+**L3 — Zero texto.** Nem título, nem instrução, nem "você conseguiu". Se a informação não cabe em forma, cor ou som, ela não entra.
+
+**L4 — Um alvo por vez.** A tela nunca pede escolha. Escolher entre duas coisas é uma habilidade que ele ainda não tem, e a escolha errada (na cabeça dele) é indistinguível de fracasso.
+
+**L5 — O mouse é varinha.** Aim assist de 100%: qualquer clique suficientemente perto acerta em cheio. Clique no vazio não faz nada — nem som, nem tremor, nem olhar de reprovação.
+
+**L6 — Um clique, uma teia.** A teia tem começo, meio e fim. Cliques durante o balanço são ignorados, não enfileirados — senão a tela vira caos e o caos é ilegível para ele.
+
+**L7 — O Duende nunca encara.** Sempre de longe, sempre no planador, sempre fugindo, sempre de costas ou de perfil. Ele é paisagem com intenção, nunca ameaça.
+
+**L8 — Nada de números.** Progresso é visível (estrelas que acendem, objetos que voltam para o lugar), nunca contado com dígitos.
+
+**L9 — Nenhum pico de som.** Volume constante, nenhum estouro súbito, nenhum silêncio punitivo. Susto auditivo é tão ruim quanto visual.
+
+**L10 — Ele decide o ritmo.** Fechar o jogo no meio não é fracasso, é o comportamento normal de uma criança de 3 anos. O jogo não cobra retorno.
+
+## O loop
+
+```
+esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ resgate ──▶ volta
+     ▲                                                                  │
+     └──────────────── 3 resgates ──▶ festa ──▶ novo cenário ◀──────────┘
+```
+
+| Etapa | Duração | O que o Murilo vê | O que ele ouve |
+| --- | --- | --- | --- |
+| Esperando | indefinida | Herói pendurado, balançando devagar. Alvo brilhando. | Ambiente suave |
+| Teia | 0,25 s | Fio branco sai do pulso e gruda | `thwip` |
+| Balanço | 1,2–1,8 s | Herói atravessa a tela em arco | `whoosh` |
+| Resgate | 0,5 s | Objeto salvo voa para o colo do herói | `pop` + gargalhada do resgatável |
+| Volta | 0,6 s | Herói pousa no próximo ponto | nenhum |
+| Festa (a cada 3) | 3 s | Confete, estrelas acendendo, herói pulando | jingle de 8 notas |
+
+**Uma rodada completa dura 10–15 segundos de conteúdo.** O resto do tempo é o Murilo reagindo — e reagir é jogar.
+
+## Elenco
+
+**Herói — Homem-Aranha.** Traje clássico: torso vermelho, braços e pernas azuis, teias pretas, olhos brancos enormes. Precisa ser reconhecível pela silhueta em 200 ms, a 1 metro de distância, sem detalhe nenhum. Só três poses são necessárias: pendurado, balançando, pousando.
+
+**Travesso — Duende Verde.** Visto exclusivamente de longe, no planador, contra o céu. Agarra o objeto, solta, some. Risada `ihihi` de desenho animado, nunca a gargalhada sinistra. Ele é **causa**, não obstáculo: existe para que haja o que resgatar, e é isso que impede o jogo de ser só coleta.
+
+**Resgatáveis.** Um por cenário, cada um com som próprio e óbvio:
+
+| Cenário | Resgatável | Som |
+| --- | --- | --- |
+| Telhados | Gatinho | `miau` agudo |
+| Parque | Balão | `ploc` de borracha |
+| Rua do bairro | Cachorrinho | latido curto |
+
+Variações para as rodadas seguintes: pipa, patinho de borracha, sorvete.
+
+## Cenários
+
+Três, nesta ordem. Cada um precisa ser reconhecível em 1 segundo, sem texto.
+
+1. **Telhados ao pôr do sol** — laranja e roxo, silhuetas de prédios, muito vazio embaixo. É o cenário de abertura porque é onde o balanço tem mais graça: altura e queda visíveis.
+2. **Parque** — verde, céu azul claro, árvores redondas, balões. O resgate mais óbvio que existe: balão preso na árvore.
+3. **Rua do bairro** — casas coloridas, carros, poste. O fecho, porque é o mais próximo da vida real dele.
+
+**Descartado: praia.** Água é caro de desenhar e não acrescenta nada ao verbo do jogo.
+
+## Áudio
+
+- Efeitos sintetizados (Web Audio), música ambiente em loop, `M` para mudo.
+- Áudio destravado no primeiro clique — exigência do navegador, não escolha.
+- Sem narração de voz na v1. TTS de navegador pode encantar ou assustar, e isso só se descobre vendo ele jogar.
+
+## O que este jogo não tem
+
+Sem placar. Sem vidas. Sem tempo. Sem menu. Sem texto. Sem game over. Sem combate. Sem morte. Sem leitura. Sem precisão de mouse. Sem escolha. Sem tutorial.
+
+Cada ausência desta lista é uma decisão registrada, não um esquecimento.
+
+## Como saber se funcionou
+
+Tema de jogo infantil que não foi testado com a criança é ficção. Protocolo: 5 minutos, uma sessão, cinco sinais observados.
+
+| Sinal | Leitura |
+| --- | --- |
+| Onde ele clica primeiro | No alvo = entendi o verbo. No centro da tela = alvo pequeno, aumentar aim assist. |
+| Ele espera o balanço ou clica repetido? | Repetido e frenético = o balanço está longo demais. |
+| Ri do Duende ou desvia o olhar? | Desvio = Duende mais longe ainda, ou fora de quadro. |
+| Pede "de novo" quando a festa acaba? | O único sinal que importa de verdade. |
+| Levanta da cadeira antes de 2 minutos? | O cenário está errado, não o jogo. Trocar o cenário, não a mecânica. |
+
+## Mapa de decisões
+
+| Decisão | Escolha | Registro |
+| --- | --- | --- |
+| Plataforma | Notebook, navegador, mouse + teclado | este documento |
+| Verbo | Teia e balanço, com física automática | este documento |
+| Falha | Nenhuma, nenhum cronômetro | `docs/adr/0001-sem-derrota-sem-cronometro.md` |
+| Entrada | Mouse como varinha, aim assist 100% | `docs/adr/0002-mouse-como-varinha.md` |
+| Identidade | Homem-Aranha oficial, desenho clássico | este documento |
+| Travesso | Duende Verde, sempre de longe | este documento |
+| Estilo | Vetor chapado, SVG inline | este documento |
+| Áudio | Efeitos + música, com mudo | este documento |
+| Progressão | Rodadas de 3 resgates + festa | este documento |
+| Estrutura | Uma pasta por criança | este documento |
+
+## Pendências para a v1.1
+
+Não são dúvidas — são coisas que só o teste com o Murilo pode decidir.
+
+- Narração em voz (`olha o gatinho, Murilo!`) — só depois de ver como ele reage ao áudio.
+- Um segundo travesso, se o Duende funcionar.
+- O jogo do Pedro, em `pedro/`, quando ele pedir.
