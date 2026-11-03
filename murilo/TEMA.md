@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.0 (tema fechado; v1.0 homologada em 2026-11-03)
+- **Versão**: 1.1 (v1.0 homologada em 2026-11-03; conteúdo da v1.1 implementado, homologação observacional pendente)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
@@ -89,15 +89,15 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 
 **Travesso — Duende Verde.** Visto exclusivamente de longe, no planador, contra o céu. Agarra o objeto, solta, some. Risada `ihihi` de desenho animado, nunca a gargalhada sinistra. Ele é **causa**, não obstáculo: existe para que haja o que resgatar, e é isso que impede o jogo de ser só coleta.
 
-**Resgatáveis.** Um por cenário, cada um com som próprio e óbvio:
+**Segundo travesso — Abutre.** Alterna com o Duende a cada rodada. Visto exclusivamente de longe, de costas, de asas largas e **sem rosto**; reutiliza a rota de fuga do Duende no cenário e não se aproxima nunca. Grasnido curto e leve + duas batidas de asa, nada grave nem prolongado. Vale **L7 integralmente**: ele é paisagem com intenção, não ameaça.
 
-| Cenário | Resgatável | Som |
-| --- | --- | --- |
-| Telhados | Gatinho | `miau` agudo |
-| Parque | Balão | `ploc` de borracha |
-| Rua do bairro | Cachorrinho | latido curto |
+**Resgatáveis.** Um por vez, um par por cenário (base + variação), cada um com som próprio e óbvio. A primeira visita ao cenário mostra a base; a segunda, a variação; a terceira volta à base.
 
-Variações para as rodadas seguintes: pipa, patinho de borracha, sorvete.
+| Cenário | Base | Som | Variação | Som da variação |
+| --- | --- | --- | --- | --- |
+| Telhados | Gatinho | `miau` agudo | Pipa | sopro de papel + assobio curto |
+| Parque | Balão | `ploc` de borracha | Patinho de borracha | guincho de borracha |
+| Rua do bairro | Cachorrinho | latido curto | Sorvete | sino curto |
 
 ## Cenários
 
@@ -113,7 +113,7 @@ Três, nesta ordem. Cada um precisa ser reconhecível em 1 segundo, sem texto.
 
 - Efeitos sintetizados (Web Audio), música ambiente em loop, `M` para mudo.
 - Áudio destravado no primeiro clique — exigência do navegador, não escolha.
-- Sem narração de voz na v1. TTS de navegador pode encantar ou assustar, e isso só se descobre vendo ele jogar.
+- Sem narração de voz, em nenhuma versão. TTS de navegador pode encantar ou assustar, e não vale o risco.
 
 ## O que este jogo não tem
 
@@ -142,7 +142,7 @@ Tema de jogo infantil que não foi testado com a criança é ficção. Protocolo
 | Falha | Nenhuma, nenhum cronômetro | `docs/adr/0001-sem-derrota-sem-cronometro.md` |
 | Entrada | Mouse como varinha, aim assist 100% | `docs/adr/0002-mouse-como-varinha.md` |
 | Identidade | Homem-Aranha oficial, desenho clássico | este documento |
-| Travesso | Duende Verde, sempre de longe | este documento |
+| Travesso | Duende e Abutre (alternados por rodada), sempre de longe | este documento |
 | Estilo | Vetor chapado, SVG inline | este documento |
 | Áudio | Efeitos + música, com mudo | este documento |
 | Progressão | Rodadas de 3 resgates + festa | este documento |
@@ -152,6 +152,5 @@ Tema de jogo infantil que não foi testado com a criança é ficção. Protocolo
 
 Não são dúvidas — são coisas que só o teste com o Murilo podia decidir. O teste foi feito e homologado em 2026-11-03 (K1/K2); a v1.1 está liberada.
 
-- Narração em voz (`olha o gatinho, Murilo!`) — só depois de ver como ele reage ao áudio.
 - Um segundo travesso, se o Duende funcionar.
 - O jogo do Pedro, em `pedro/`, quando ele pedir.

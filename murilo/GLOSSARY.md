@@ -13,12 +13,20 @@ O papel de antagonista cômico que provoca o resgate e foge sem confronto.
 _Avoid_: inimigo, vilão, boss, adversário
 
 **Duende**:
-O travesso específico deste jogo, o Duende Verde, sempre visto de longe.
+O primeiro travesso, o Duende Verde, sempre visto de longe.
 _Avoid_: Goblin, vilão verde, o monstro
 
+**Abutre**:
+O segundo travesso, sempre visto de longe, de costas e sem rosto; alterna com o Duende a cada rodada.
+_Avoid_: urubu, vilão, monstro, inimigo
+
 **Resgatável**:
-O ser ou objeto que o Duende solta e que o herói recolhe.
+O ser ou objeto que o travesso solta e que o herói recolhe.
 _Avoid_: item, coleta, pickup, alvo, power-up
+
+**Variação**:
+A segunda forma do resgatável de um cenário, exibida na visita seguinte à base.
+_Avoid_: skin, versão alternativa, item raro, desbloqueável
 
 **Resgate**:
 O ato de recolher um resgatável, concluindo uma unidade de progresso.

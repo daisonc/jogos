@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.1
-- **Escopo do produto**: v1.0 — três cenários, loop completo
+- **Versão do documento**: 1.2 (v1.0 homologada; v1.1 planejada e aprovada)
+- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 em implementação** (variações de resgatável + Abutre; §6): F4.1 e F4.2 concluídas em 2026-11-03; F4.3 (regressão técnica + sessão observacional) pendente.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -128,7 +128,7 @@ Explicitamente **fora** do escopo da v1.0:
 - Dois jogadores, modo cooperativo formal, o jogo do Pedro.
 - Publicação, distribuição, monetização, publicação em loja.
 - Internacionalização. O jogo não tem texto, então não há o que traduzir.
-- Narração por voz (fica para v1.1, condicionada ao teste).
+- Narração por voz, descartada em definitivo.
 - Analytics, telemetria, qualquer coleta de dado.
 
 ---
@@ -249,7 +249,7 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | **F1 — Loop** | FSM completa, 1 cenário (`telhados`), arte provisória, sem áudio | Clicar produz balanço e resgate; K3 e K4 verdes |
 | **F2 — Voz do jogo** | Arte final dos 3 cenários, Duende, áudio sintetizado, estrelas, festa | K5 verde; duração da festa e timings dentro da tolerância |
 | **F3 — v1.0** | Arquivo único final, attract mode, `M`/`F` | **Concluída e homologada em 2026-11-03** — K1/K2, NF12 e conferência visual confirmados pelo operador |
-| **v1.1** | Narração opcional, variações de resgatável (pipa, patinho, sorvete), 2º travesso | Liberada (K1 e K2 confirmados em 2026-11-03) |
+| **v1.1** | Variações de resgatável (pipa, patinho, sorvete) e Abutre como 2º travesso — ver §6 | Aprovada; implementação pendente; K1/K2 serão reconfirmados na entrega |
 | **v2.0** | `pedro/` — o jogo do irmão, com as próprias leis | Fora deste PRD |
 
 ### Definição de pronto
@@ -257,6 +257,176 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 A v1.0 está pronta quando: um arquivo `.html` abre por duplo-clique em notebook offline, o Murilo clica e um resgate acontece em menos de 3,2 s, três resgates produzem uma festa, o Duende aparece e foge sem close, o adulto muta com uma tecla, **NF1–NF12 estão verificados**, e nenhuma das dez leis do `TEMA.md` foi violada.
 
 **Situação em 2026-11-03:** todos os critérios acima foram atendidos e homologados pelo operador.
+
+---
+
+## 6. Planejamento da v1.1
+
+> Emenda de planejamento. A v1.0 permanece congelada e homologada; esta seção descreve apenas o que muda na v1.1.
+
+### 6.1 Escopo e decisões
+
+A v1.1 adiciona **conteúdo**, não mecânica: três variações de resgatável e um segundo travesso. O loop, o aim assist, os tempos da FSM, as estrelas, a festa e os três cenários permanecem exatamente como estão.
+
+| Decisão | Escolha | Consequência |
+| --- | --- | --- |
+| Formato | Emenda a este PRD | Uma fonte de verdade; a v1.0 continua sendo o contrato homologado |
+| Variações | Alternância por cenário | Cada cenário mantém o resgatável base e ganha um alternativo; a base aparece primeiro |
+| 2º travesso | Abutre | Segundo travesso aéreo, visto de longe, sem close |
+| Entrada do Abutre | Alternância por rodada | Rodada 0 Duende, rodada 1 Abutre, rodada 2 Duende… |
+| Narração | Descartada em definitivo | Fora de qualquer versão |
+
+**Mapa de variações (aprovado em 2026-11-03):**
+
+| Cenário | Base | Variante | Som da base | Som da variante |
+| --- | --- | --- | --- | --- |
+| `telhados` | Gatinho | Pipa | `miau` | sopro de papel + assobio curto |
+| `parque` | Balão | Patinho de borracha | `ploc` | guincho de borracha |
+| `rua` | Cachorrinho | Sorvete | latido curto | sino curto |
+
+**Regra de alternância:** a primeira visita a cada cenário mostra sempre a base; a segunda mostra a variante; a terceira visita volta à base. A alternância é determinística (contador por cenário), nunca sorteada.
+
+**Regra do Abutre:** a cada rodada (três resgates + festa + troca de cenário), o travesso alterna. O Abutre usa a mesma rota de fuga do Duende no cenário; mudam a silhueta e o som. Ele é causa, não obstáculo.
+
+**Generalização de US4:** na v1.1, onde `US4` diz "Duende", vale "travesso da rodada" (Duende ou Abutre); todos os demais critérios de segurança permanecem.
+
+**Aprovação de design:** mapa de variações, direção de arte e sons aprovados pelo operador em 2026-11-03.
+
+**Critérios de sucesso:** K1 e K2 reconfirmados em sessão observacional; NF1–NF12 verdes; nenhuma lei do `TEMA.md` violada. Não há KPI novo — a v1.1 é conteúdo, não mudança de comportamento.
+
+### 6.2 Histórias de usuário
+
+#### US7 — Reconhecer um resgatável novo
+
+*Como Murilo, quero ver um brinquedo diferente no mesmo lugar, para ter uma surpresa nova sem aprender uma regra nova.*
+
+**Critérios de aceite**
+
+- Exatamente um resgatável ativo por vez; a variação não muda o aim assist (círculo de 220 px + terço central), a FSM nem a duração de nenhuma etapa.
+- Cada cenário alterna base → variante → base a cada visita; a primeira visita de cada cenário é sempre a base.
+- A variante tem som próprio, distinto dos outros cinco resgatáveis e do `pop` genérico, tocado no resgate.
+- A silhueta da variante é reconhecível em 200 ms, sem texto, sem ícone e sem UI nova.
+- O halo dourado da base é reutilizado; nenhum gradiente novo é criado.
+- A alternância é determinística e não usa `Math.random`; não há estado persistido.
+- O cenário com a variante respeita o teto de 150 nós SVG (orçamento em §6.4).
+
+#### US8 — Entender que o segundo travesso também é a causa
+
+*Como Murilo, quero ver outro travesso fugindo com o brinquedo, para o resgate não ser sempre a mesma cena.*
+
+**Critérios de aceite**
+
+- O Abutre aparece em rodadas alternadas (rodada 0 Duende, rodada 1 Abutre, rodada 2 Duende…).
+- Valem as mesmas regras de segurança do Duende (`US4`/`L7`): distância horizontal ≥ 60% da largura virtual (≥ 1152 px) na aparição, altura aparente ≤ 40%, nunca de frente (de costas, de perfil ou em silhueta), desaparece em ≤ 2 s, nunca se aproxima do herói ou do espectador.
+- O Abutre tem som próprio: grasnido curto e leve + duas batidas de asa; nada grave, longo ou de susto (`L9`).
+- Nenhum estado novo de FSM, nenhuma colisão, nenhum combate; o Abutre não bloqueia o resgate.
+- A rota é dado do cenário, não `if` por cenário; o Abutre reutiliza a rota do Duende no cenário.
+- O total de nós não aumenta: apenas um travesso é renderizado por vez (§6.4).
+
+#### US9 — Não perder o que já funcionava
+
+*Como adulto, quero que a v1.1 não quebre o que já foi homologado.*
+
+**Critérios de aceite**
+
+- K1 e K2 são reconfirmados em sessão observacional com o Murilo.
+- NF1–NF12 continuam válidos; a regressão é medida com os mesmos métodos da v1.0.
+- O loop, os tempos, o aim assist, as estrelas e a festa não mudam.
+- O arquivo continua único, `file://`, sem build, sem rede e sem dependência.
+- Se a criança reagir pior, o conteúdo novo pode ser removido sem tocar no loop (templates + contadores).
+
+### 6.3 Non-goals da v1.1
+
+- Novos cenários, novas mecânicas, novos estados de FSM, fases, dificuldade, chefes, combate, morte.
+- Narração por voz (descartada em definitivo).
+- Placar, pontuação, progresso salvo, texto, ícone novo ou UI nova.
+- Mais de uma variante por cenário e mais de um travesso novo.
+- Mudar o aim assist, os tempos do loop, a festa ou a estrutura de três estrelas.
+- Dependência, biblioteca, build, rede, armazenamento.
+
+### 6.4 Especificação técnica
+
+**Modelo de dados**
+
+`CENARIOS[i]` ganha `alvos`, uma lista ordenada de variantes:
+
+```js
+alvos: [
+  { id: 'gatinho', tpl: 'tpl-alvo-telhados',      som: 'miau' },
+  { id: 'pipa',    tpl: 'tpl-alvo-telhados-pipa', som: 'pipa' },
+]
+```
+
+- `jogo.visitas[i]` conta quantas vezes o cenário `i` foi montado. `montarCenario(i)` escolhe `v = jogo.visitas[i] % alvos.length`, clona `alvos[v].tpl`, guarda `alvos[v].som` em `jogo.somAlvo` (usado por `Som.resgate`) e incrementa `jogo.visitas[i]`. A primeira visita é sempre o índice 0 (base). O campo `som` de `CENARIOS[i]` é substituído por `alvos[].som`.
+- `TRAVESSOS = [{ id:'duende', tpl:'tpl-travesso-duende', som:'ihihi' }, { id:'abutre', tpl:'tpl-travesso-abutre', som:'abutre' }]`.
+- `jogo.rodada` incrementa em `terminarFesta()`; `TRAVESSOS[jogo.rodada % 2]` escolhe o travesso.
+- `#travesso` é substituído pelo clone do template (sem aninhar um `<g>` extra), mantendo o id e a referência em `el.travesso`. O Duende sai do markup fixo e vira template, como os alvos. Isso mantém **um** travesso renderizado por vez, com o mesmo custo de nós.
+- Renomear `duende` → `travesso` no estado, no elemento e nas funções (`iniciarTravesso`, `desenharTravesso`); a rota continua em `CENARIOS[i]` (`rotaTravesso`), com os mesmos valores.
+
+**Orçamento de nós**
+
+| Cenário | Total atual | Resgatável atual | Teto da variante | Total com variante |
+| --- | --- | --- | --- | --- |
+| `telhados` | 147 | 17 | ≤ 20 | ≤ 150 |
+| `parque` | 142 | 6 | ≤ 14 | ≤ 150 |
+| `rua` | 148 | 16 | ≤ 18 | ≤ 150 |
+
+Meta: manter o total atual (147/142/148). Teto absoluto: 150. O `rua` é o cenário crítico (2 nós de folga). O Abutre deve custar o mesmo que o Duende (≤ 12 elementos de arte), para não alterar o total.
+
+**Direção de arte (aprovada em 2026-11-03):** pipa em losango azul-turquesa com rabiola amarela (contrasta com o pôr do sol); patinho amarelo de bico laranja (contrasta com o verde do parque); sorvete com casquinha waffle, bola rosa e cereja (contrasta com o azul da rua); Abutre de asas largas, visto de costas, sem rosto, em verde e roxo suaves. Todos com contorno escuro e silhueta legível, no estilo chapado do `TEMA.md`.
+
+**Áudio**
+
+- `Som.resgate(som)` ganha três ramos:
+  - `pipa` — sopro de papel (ruído em band-pass, 120–180 ms) + assobio curto.
+  - `patinho` — guincho de borracha (oscilador com variação de altura, 100–150 ms).
+  - `sorvete` — sino curto (duas parciais senoidais, 100–150 ms).
+- `Som.travesso(som)`: `duende` mantém o `ihihi`; `abutre` toca grasnido curto + duas batidas de asa.
+- Todos passam pelo master de −12 dBFS e pelo limitador existentes; nenhum compressor novo.
+- Aceite: pico ≤ −6 dBFS medido com `AnalyserNode`; sem clipping; sem som grave/longo.
+
+**Render e performance**
+
+- Só `transform` e `opacity` animam; nenhum `filter`, `mask` ou `stroke-dashoffset` animado.
+- O custo por quadro não aumenta: a variante tem o mesmo porte da base e só um travesso é renderizado.
+- Limites: ≤ 150 nós SVG, ≤ 80 animados/frame, p95 ≤ 16,7 ms.
+
+**Determinismo e dados**
+
+- Nenhum `Math.random`; alternância por contadores.
+- Nenhum `if (cenario === ...)` no comportamento; variante e travesso vêm de dados.
+- A arte nova vive em `<template>`, como a arte atual.
+
+### 6.5 Riscos
+
+| ID | Risco | Prob. | Impacto | Mitigação | Plano B |
+| --- | --- | --- | --- | --- | --- |
+| R7 | Variante estoura o teto de nós (rua tem 2 de folga) | Média | Médio | Teto por variante (§6.4); troca por template; medir após cada arte | Simplificar a arte ou remover um nó de cenário no `rua` |
+| R8 | Abutre assusta e o Murilo abandona | Média | Alto | Silhueta de costas/perfil, sem rosto, longe, ≤ 2 s, grasnido leve; K1/K2 | Remover o Abutre e manter só as variações |
+| R9 | Som novo estala ou assusta | Baixa | Médio | Curto, band-limited, medir pico; limitador | Baixar o ganho ou trocar por som mais suave |
+| R10 | Alternância confunde | Baixa | Médio | Determinística, base primeiro, sem sorteio; observar | Fixar a variante por cenário ou aumentar para 2 visitas |
+| R11 | Escopo cresce | Alta | Médio | Non-goals; só 3 variantes + 1 travesso | Parar no escopo planejado |
+
+### 6.6 Rollout
+
+| Fase | Entrega | Critério de saída |
+| --- | --- | --- |
+| **F4.1 — Variações** | Templates da pipa, patinho e sorvete; sons; `alvos` + `jogo.visitas` | Cada variante aparece na visita correta; total ≤ 150 nós; pico ≤ −6 dBFS; 0 erros |
+| **F4.2 — Abutre** | Template do Abutre; som; `TRAVESSOS` + `jogo.rodada`; troca por template | Abutre alterna por rodada; L7/US4 respeitados; total ≤ 150; nenhum estado novo |
+| **F4.3 — Regressão e observação** | Reexecutar NF1–NF12; sessão com o Murilo | Todos os técnicos verdes; K1/K2 reconfirmados; reversível |
+
+### 6.7 Definição de pronto da v1.1
+
+A v1.1 está pronta quando: as três variações aparecem alternadas por cenário (base primeiro), o Abutre alterna por rodada com o Duende, cada resgatável e cada travesso tem som próprio, NF1–NF12 continuam verdes, os tetos de 150 nós e 80 animados/frame são respeitados, K1/K2 são reconfirmados em sessão observacional, e nenhuma das dez leis do `TEMA.md` foi violada.
+
+**Reversão:** o conteúdo novo é aditivo. Remover os templates das variantes, o template do Abutre e os contadores restaura o comportamento da v1.0 sem tocar no loop.
+
+### 6.8 Tarefas de documentação
+
+- Atualizar `TEMA.md` § Elenco: o Abutre como segundo travesso, com as mesmas regras de L7.
+- Atualizar `GLOSSARY.md`: verbete **Abutre** (travesso específico, sempre visto de longe) e, se necessário, **Variação**.
+- Atualizar a tabela de resgatáveis do `TEMA.md` com as três variações e seus sons.
+- Registrar no `README.md` o status da v1.1 quando ela for implementada.
 
 ---
 
@@ -272,3 +442,5 @@ A v1.0 está pronta quando: um arquivo `.html` abre por duplo-clique em notebook
 | Vocabulário (rodada, resgate, resgatável, festa) | `GLOSSARY.md` |
 | Timings do loop | `TEMA.md` § *O loop* |
 | Protocolo de teste | `TEMA.md` § *Como saber se funcionou* |
+| Variações de resgatável (pipa, patinho, sorvete) | `TEMA.md` § *Elenco* + §6 deste PRD |
+| Segundo travesso (Abutre) | `TEMA.md` § *Elenco* + §6 deste PRD |
