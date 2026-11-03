@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.4 (v1.0 e v1.1 homologadas; v1.2 implementada; v1.3 proposta, §7)
+- **Versão do documento**: 1.4 (v1.0, v1.1 e v1.2 homologadas; v1.3 proposta, §7)
 - **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia)
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 implementada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1 e F5.2 implementadas, regressão técnica verde (NF1–NF12; `docs/regressao-v1.2.md`), com a observação K1/K2 e as medições oficiais (NF3/NF6/NF12) ainda pendentes do operador. **v1.3 proposta** (§7), aguardando aprovação; começa após a observação da v1.2.
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 proposta** (§7), aguardando aprovação.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -250,7 +250,7 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | **F2 — Voz do jogo** | Arte final dos 3 cenários, Duende, áudio sintetizado, estrelas, festa | K5 verde; duração da festa e timings dentro da tolerância |
 | **F3 — v1.0** | Arquivo único final, attract mode, `M`/`F` | **Concluída e homologada em 2026-11-03** — K1/K2, NF12 e conferência visual confirmados pelo operador |
 | **v1.1** | Variações de resgatável (pipa, patinho, sorvete) e Abutre como 2º travesso — ver §6 | **Concluída e homologada em 2026-11-03** — F4.1–F4.3 concluídas; K1/K2 reconfirmados e NF1–NF12 verdes |
-| **v1.2** | Gratidão do resgatado e travesso trapalhão — ver §7 | **F5.1 e F5.2 implementadas em 2026-11-03** — regressão técnica verde (NF1–NF12); F5.3 (K1/K2) pendente do operador |
+| **v1.2** | Gratidão do resgatado e travesso trapalhão — ver §7 | **Concluída e homologada em 2026-11-03** — F5.1–F5.3 concluídas; NF1–NF12 verdes; K1/K2 reconfirmados pelo operador |
 | **v1.3** | Quarto cenário (Praia) — ver §7 | Proposta; começa após a observação da v1.2; exige emenda ao non-goal "novos cenários" (§7.4) |
 | **v2.0** | `pedro/` — o jogo do irmão, com as próprias leis | Fora deste PRD |
 
@@ -566,11 +566,13 @@ O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O s
 | **F6.1 — Praia** | Cenário, templates, sons, fórmula de paridade | Total ≤ 140 nós; alternância correta; US4/US8 respeitadas |
 | **F6.2 — Regressão e observação (v1.3)** | Reexecutar NF1–NF12; sessão com o Murilo | Técnicos verdes; K1/K2 reconfirmados; reversível |
 
-**Situação em 2026-11-03:** F5.1 e F5.2 implementadas — reação de gratidão nos seis resgatáveis (≤ 600 ms, 0 nós novos), trapalhada nos dois travessos e chapéu do Duende como nó separado. NF1–NF12 verdes na regressão técnica; teto de nós em 149/150 (evidências em `docs/regressao-v1.2.md`). **F5.3 pendente** — a sessão observacional (K1/K2) e as medições oficiais (NF3/NF6/NF12) dependem do operador.
+**Situação em 2026-11-03:** F5.1–F5.3 concluídas — reação de gratidão nos seis resgatáveis (≤ 600 ms, 0 nós novos), trapalhada nos dois travessos e chapéu do Duende como nó separado. NF1–NF12 verdes; teto de nós em 149/150 (evidências em `docs/regressao-v1.2.md`). K1/K2 e as medições oficiais (NF3/NF6/NF12) reconfirmadas pelo operador. **v1.2 homologada.**
 
 ### 7.7 Definição de pronto
 
 **v1.2:** os seis resgatáveis reagem em ≤ 600 ms dentro de `VOLTA`, ambos os travessos fazem a trapalhada sem violar `US4`/`US8`, NF1–NF12 continuam verdes, K1/K2 são reconfirmados e nenhuma das dez leis do `TEMA.md` foi violada.
+
+**Situação em 2026-11-03:** todos os critérios acima foram atendidos; a v1.2 foi homologada pelo operador.
 
 **v1.3:** a Praia entra como quarto cenário com resgatável base e variante, o travesso alterna sem fixar por cenário, a Praia fica em ≤ 140 nós, NF1–NF12 continuam verdes, K1/K2 são reconfirmados e nenhuma lei foi violada.
 

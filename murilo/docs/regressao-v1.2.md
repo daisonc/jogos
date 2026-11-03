@@ -1,9 +1,9 @@
-# Regressão da v1.2 — Fases F5.1 e F5.2
+# Regressão da v1.2 — Fases F5.1, F5.2 e F5.3
 
 - **Data**: 2026-11-03
 - **Escopo**: reexecutar NF1–NF12 sobre `teia-do-murilo.html` e verificar o conteúdo novo da v1.2 (M1 — gratidão do resgatado; M2 — travesso trapalhão) sem regressão do loop, do aim assist, dos tempos, das estrelas e da festa.
 - **Referências**: `PRD.md` §7.2 (US10/US11), §7.4 e §7.6, `TEMA.md` (leis L1–L10 e protocolo de teste).
-- **Resultado**: **regressão técnica verde** — NF1–NF12 verificados por auditoria de código e por sessão dirigida; orçamento de nós em **149/150**; zero erros e avisos no console. **F5.3 pendente** — a sessão observacional (K1/K2) e as medições oficiais de NF3/NF6/NF12 dependem do operador.
+- **Resultado**: **regressão técnica verde** — NF1–NF12 verificados por auditoria de código e por sessão dirigida; orçamento de nós em **149/150**; zero erros e avisos no console. **F5.3 concluída** — K1/K2 e as medições oficiais (NF3/NF6/NF12) confirmadas pelo operador. **Versão homologada.**
 
 ## Método
 
@@ -57,13 +57,13 @@ Sessão dirigida (cliques sintéticos, loop acelerado), cobrindo `telhados`, `pa
 
 O conteúdo da v1.2 é aditivo: os campos `reacao`/`tomGrato` em `alvos[]`, o campo `gag` em `TRAVESSOS[]`, os templates do chapéu, e os sons `Som.gratidao`/`Som.trapalhada`. Remover `reacao`, `gag` e o nó do chapéu restaura a v1.1 sem tocar no loop — `montarAlvo`/`montarTravesso` e a FSM são independentes do conteúdo.
 
-## Verificações do operador (F5.3, pendentes)
+## Verificações do operador (F5.3, confirmadas em 2026-11-03)
 
-1. **K1 e K2** — sessão observacional com o Murilo (protocolo em `TEMA.md` § *Como saber se funcionou*), com anotação qualitativa: sorriso/riso no momento da gratidão (M1) e da trapalhada (M2).
-2. **NF3 oficial** — gravação de 60 s em DevTools › Performance.
+1. **K1 e K2** — reconfirmados na sessão observacional com o Murilo (protocolo em `TEMA.md` § *Como saber se funcionou*).
+2. **NF3 oficial** — gravação de 60 s em DevTools › Performance no notebook.
 3. **NF6** — conferência por audição.
 4. **NF12** — execução manual em Chrome, Edge e Firefox.
 
 ## Conclusão
 
-A v1.2 manteve os requisitos técnicos das versões anteriores (NF1–NF12 verdes na regressão técnica, NF4 em 149/150 nós em todo quadro), o conteúdo novo é determinístico e reversível, e o loop não mudou. **A v1.2 está pronta para a observação com o Murilo (F5.3); a homologação depende de K1/K2 e das medições oficiais.**
+A v1.2 manteve os requisitos técnicos das versões anteriores (NF1–NF12 verdes na regressão técnica, NF4 em 149/150 nós em todo quadro), o conteúdo novo é determinístico e reversível, e o loop não mudou. **A v1.2 está homologada pelo operador.**

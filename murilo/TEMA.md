@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.2 (v1.0 e v1.1 homologadas em 2026-11-03; v1.2 implementada em 2026-11-03, aguardando observação com o Murilo)
+- **Versão**: 1.2 (v1.0, v1.1 e v1.2 homologadas em 2026-11-03)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
