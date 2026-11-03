@@ -821,12 +821,16 @@
       const sm = cena.querySelector('.skyline-media');
       if (sm) sm.setAttribute('d', gerarSkyline(930, 26, MEDIA, { x:1010, r:340 }));
     }
-    const v = jogo.visitas[i] % c.alvos.length;
+    montarTravesso();
+  }
+  // Alvo alterna por resgate (base -> variante -> base); resgates zera na festa,
+  // então todo cenário recomeça pela base.
+  function montarAlvo() {
+    const c = cenarioAtual();
+    const v = jogo.resgates % c.alvos.length;
     const alvo = clonarTemplate(c.alvos[v].tpl);
     if (alvo) el.alvo.replaceChildren(alvo);
     jogo.somAlvo = c.alvos[v].som;
-    jogo.visitas[i]++;
-    montarTravesso();
   }
   function montarTravesso() {
     const cfg = TRAVESSOS[jogo.rodada % TRAVESSOS.length];
@@ -856,7 +860,6 @@
   const jogo = {
     estado: S.ESPERANDO, t: 0, tEstado: 0,
     cenario: 0, resgates: 0, festas: 0, rodada: 0,
-    visitas: CENARIOS.map(() => 0),
     somAlvo: null, somTravesso: 'ihihi',
     alvoAtivo: true, alvoCongelado: false, alvoEntrou: 0,
     espera: 0, duracaoBalanco: BALANCOS[0],
@@ -1024,6 +1027,7 @@
 
   // ---------- transiÃ§Ãµes ----------
   function nascerAlvo() {
+    montarAlvo();
     jogo.alvoAtivo = true;
     jogo.alvoCongelado = false;
     jogo.espera = 0;
@@ -1293,6 +1297,7 @@
   document.addEventListener('keydown', aoTeclar);
 
   montarCenario(0);
+  montarAlvo();
   iniciarTravesso();
   let anterior = performance.now();
   function quadro(agora) {
