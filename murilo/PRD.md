@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.2 (v1.0 homologada; v1.1 planejada e aprovada)
-- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso
+- **Versão do documento**: 1.3 (v1.0 homologada; v1.1 planejada e aprovada; v1.2 e v1.3 propostas, §7)
+- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia)
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 em implementação** (variações de resgatável + Abutre; §6): F4.1 e F4.2 concluídas em 2026-11-03; F4.3 (regressão técnica + sessão observacional) pendente.
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 em implementação** (variações de resgatável + Abutre; §6): F4.1 e F4.2 concluídas em 2026-11-03; F4.3 (regressão técnica + sessão observacional) pendente. **v1.2 e v1.3 propostas** (§7), aguardando aprovação do operador; a implementação só começa após a F4.3.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -250,6 +250,8 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | **F2 — Voz do jogo** | Arte final dos 3 cenários, Duende, áudio sintetizado, estrelas, festa | K5 verde; duração da festa e timings dentro da tolerância |
 | **F3 — v1.0** | Arquivo único final, attract mode, `M`/`F` | **Concluída e homologada em 2026-11-03** — K1/K2, NF12 e conferência visual confirmados pelo operador |
 | **v1.1** | Variações de resgatável (pipa, patinho, sorvete) e Abutre como 2º travesso — ver §6 | Aprovada; implementação pendente; K1/K2 serão reconfirmados na entrega |
+| **v1.2** | Gratidão do resgatado e travesso trapalhão — ver §7 | Proposta; começa após a F4.3 da v1.1; K1/K2 reconfirmados na entrega |
+| **v1.3** | Quarto cenário (Praia) — ver §7 | Proposta; começa após a observação da v1.2; exige emenda ao non-goal "novos cenários" (§7.4) |
 | **v2.0** | `pedro/` — o jogo do irmão, com as próprias leis | Fora deste PRD |
 
 ### Definição de pronto
@@ -430,6 +432,153 @@ A v1.1 está pronta quando: as três variações aparecem alternadas por resgate
 
 ---
 
+## 7. Planejamento da v1.2 e da v1.3
+
+> Emenda de planejamento, **proposta** e ainda não aprovada pelo operador. A v1.0 permanece homologada e a v1.1 segue o §6; esta seção só descreve o que as versões seguintes acrescentam. Nada aqui começa antes de a F4.3 da v1.1 estar concluída (disciplina do R6).
+
+### 7.1 Escopo e decisões
+
+A v1.2 adiciona **polimento** (reação do resgatado e uma trapalhada na fuga do travesso) sem nó novo e sem mudar o loop. A v1.3 adiciona **conteúdo** (um quarto cenário). Nenhuma das duas mexe no aim assist, na FSM, nos tempos, nas estrelas ou na festa.
+
+| Decisão | Escolha | Consequência |
+| --- | --- | --- |
+| Formato | Emenda a este PRD | Uma fonte de verdade; v1.0 e v1.1 continuam como contratos |
+| Faseamento | v1.2 = M1 + M2; v1.3 = M3 | A v1.2 é só animação e som; o risco de arte e de nós fica isolado na v1.3 |
+| Gatilho | Após a F4.3 da v1.1 | A v1.1 permanece observável e reversível sozinha |
+| Determinismo | Tudo por tabela de dados e contador | Nenhum `Math.random` em decisão de jogo (NF11) |
+
+| Id | Melhoria | Versão | Natureza |
+| --- | --- | --- | --- |
+| M1 | Gratidão do resgatado | v1.2 | Animação + som, 0 nós |
+| M2 | Travesso trapalhão | v1.2 | Animação + som, ≤ 1 nó |
+| M3 | Quarto cenário: Praia | v1.3 | Arte + dados + sons |
+
+**Critérios de sucesso:** K1 e K2 reconfirmados em sessão observacional a cada versão; NF1–NF12 verdes; nenhuma lei do `TEMA.md` violada. Não há KPI novo. A prancheta da sessão ganha uma anotação **qualitativa** (não é KPI): se o Murilo sorri ou ri no momento da reação (M1) e da trapalhada (M2).
+
+### 7.2 Histórias de usuário
+
+#### US10 — Receber um "obrigado" (M1, v1.2)
+
+*Como Murilo, quero ver o bichinho feliz depois de salvo, para sentir que o que eu fiz deu certo.*
+
+**Critérios de aceite**
+
+- Em todo resgate, uma reação do resgatável e do herói começa no início de `VOLTA` e termina em **≤ 600 ms**, dentro da duração existente. Nenhuma etapa da FSM é alongada (a faixa de 2,3 s a 3,2 s de `US2` se mantém).
+- Cada um dos seis resgatáveis tem reação própria, reconhecível sem texto (tabela em §7.4).
+- Um som curto de gratidão (**≤ 150 ms**) toca no início da reação. Ele **não substitui** o som do resgate.
+- Só `transform` e `opacity` animam, em nós existentes: **0 nós novos**.
+- Cliques durante `VOLTA` continuam ignorados (`TEMA.md` L6). Aim assist, FSM e estrelas não mudam.
+- Sem texto, ícone ou número. A reação é determinística, escolhida pelo índice do resgatável.
+
+#### US11 — Rir da trapalhada do travesso (M2, v1.2)
+
+*Como Murilo, quero ver o travesso se atrapalhar ao fugir, para achar graça nele em vez de ter medo.*
+
+**Critérios de aceite**
+
+- Durante a fuga já existente, cada travesso faz **uma** trapalhada: o Duende perde o chapéu, que cai girando; o Abutre dá uma cambalhota no ar (rotação no plano da tela). Ele continua fugindo e some em **≤ 2 s**, como em `US4`/`US8`.
+- Valem todas as regras de segurança de `US4`/`US8`: distância horizontal ≥ 60% da largura virtual (≥ 1152 px), altura aparente ≤ 40%, nunca de frente, nunca se aproxima do herói ou do espectador. Durante o gag, a distância horizontal ao herói **não diminui**.
+- Sem queda ao chão, sem impacto, sem dor e sem choro: a graça é o movimento, nunca o dano.
+- Som próprio e leve: assobio descendente curto (**≤ 150 ms**), agudo-médio, nada grave, longo ou de susto (`TEMA.md` L9).
+- Nenhum estado novo de FSM, nenhuma colisão, e o gag não bloqueia o resgate nem altera o tempo de nenhuma etapa.
+- A trapalhada é dado do travesso (`TRAVESSOS[i].gag`), não `if` por travesso. Remover o campo restaura a fuga da v1.1.
+
+#### US12 — Um lugar novo para salvar (M3, v1.3)
+
+*Como Murilo, quero ir para um lugar novo depois da festa, para ter uma surpresa sem aprender uma regra nova.*
+
+**Critérios de aceite**
+
+- A Praia entra como o **quarto** cenário do ciclo: três resgates, festa e troca de cenário, como nos demais. Nada no loop muda.
+- Resgatável base **tartaruguinha**, variante **bola de praia**, pela mesma regra de alternância da `US7` (base primeiro, `jogo.resgates % alvos.length`).
+- Os sons são próprios e distintos dos seis atuais (propostos em §7.4, a aprovar).
+- A rota de fuga dos travessos é dado do cenário e cumpre `US4`/`US8`.
+- Total de nós da Praia **≤ 140** (folga ≥ 10 sobre o teto de 150), com ≤ 80 animados por frame.
+- Mar calmo e sem perigo: sem ondas grandes, sem animais que possam assustar. Sem gradiente novo além do céu do cenário.
+- Os três cenários anteriores não mudam.
+
+### 7.3 Non-goals da v1.2 e da v1.3
+
+- Quinto cenário, novas mecânicas, novos estados de FSM, fases, dificuldade, chefes, combate, morte.
+- Qualquer interação nova durante `VOLTA` ou durante a fuga (clique ou tecla da criança).
+- Gag aleatório, gag que machuque ou assuste, travesso novo ou segundo gag por travesso.
+- Placar, pontuação, progresso salvo, texto, ícone ou UI nova, narração por voz.
+- Dependência, biblioteca, build, rede, armazenamento.
+
+### 7.4 Especificação técnica
+
+**Emenda ao non-goal "novos cenários".** O §6.3 exclui novos cenários **da v1.1**. A v1.3 abre **uma exceção**, apenas para a Praia. Um quinto cenário continua fora de escopo.
+
+**M1 — Gratidão (modelo de dados).** `alvos[]` ganha `reacao` (id de uma tabela `REACOES` com os valores de `transform` e a duração) e `tomGrato` (altura da 1ª nota). O som `grato` são duas notas senoidais ascendentes de 100 a 150 ms, com a altura vinda do dado. A reação roda a partir da entrada em `VOLTA`.
+
+| Resgatável | Reação do objeto (`transform`) | Reação do herói |
+| --- | --- | --- |
+| Gatinho | espreguiça: escala vertical sobe e volta | pulinho + inclinação de aceno |
+| Pipa | giro de 360° | pulinho + inclinação de aceno |
+| Balão | balanço pendular de ±12° | pulinho + inclinação de aceno |
+| Patinho | dois quiques curtos | pulinho + inclinação de aceno |
+| Cachorrinho | abana: rotação rápida de ±10° | pulinho + inclinação de aceno |
+| Sorvete | pulso de escala 1 → 1,08 → 1 | pulinho + inclinação de aceno |
+
+O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O sorvete usa o mesmo som, com outro tom.
+
+**M2 — Travesso trapalhão (modelo de dados).** `TRAVESSOS[i]` ganha `gag: { id, quando, som }`, onde `quando` é a fração da fuga em que a trapalhada começa. Exemplos: `{ id:'chapeu', quando:0.5, som:'uepa' }` e `{ id:'cambalhota', quando:0.5, som:'uepa' }`. O Duende precisa que o chapéu seja um nó separado: se hoje ele é parte do corpo, separá-lo custa **+1 nó** por cenário. O Abutre reutiliza o próprio grupo e não custa nó. O limite de 12 elementos de arte por travesso (§6.4) continua valendo.
+
+| Cenário | Total na v1.1 | Teto com o chapéu | Total máximo |
+| --- | --- | --- | --- |
+| `telhados` | 147 | +1 | 148 |
+| `parque` | 142 | +1 | 143 |
+| `rua` | 148 | +1 | 149 |
+
+**M3 — Praia.** `CENARIOS[]` ganha o quarto item, com paleta, silhuetas, posição do resgatável, rota do travesso e `alvos` próprios. A Praia exige seus próprios templates de arte. A **proposta** abaixo ainda precisa de aprovação do operador:
+
+| id | Nome | Céu (proposta) | Base | Variante | Som da base | Som da variante |
+| --- | --- | --- | --- | --- | --- | --- |
+| `praia` | Praia | `#7EC8E3 → #FFF1C1` | Tartaruguinha | Bola de praia | trinado suave de duas notas | quique de borracha leve |
+
+**Consequência da paridade (decisão).** Com três cenários e alternância por rodada (`TRAVESSOS[jogo.rodada % 2]`), cada cenário recebe um travesso diferente a cada volta. Com **quatro** cenários (número par), cada cenário passaria a ter **sempre o mesmo** travesso (`telhados` e `rua` com o Duende, `parque` e `praia` com o Abutre). Para manter a variedade, a escolha passa a ser `TRAVESSOS[(jogo.rodada + floor(jogo.rodada / CENARIOS.length)) % 2]`. Isso continua determinístico, sem sorteio e sem `if` por cenário.
+
+**Áudio.** `Som.gratidao(tom)`, `Som.trapalhada(som)` e dois ramos novos em `Som.resgate` para a Praia. Todos passam pelo master de −12 dBFS e pelo limitador existentes; nenhum compressor novo. Aceite: pico ≤ −6 dBFS medido com `AnalyserNode`, sem clipping, nada grave ou longo.
+
+**Render e performance.** Só `transform` e `opacity` animam; nenhum `filter`, `mask` ou `stroke-dashoffset` animado. O M1 e o M2 não adicionam nós animados por frame além dos já existentes na cena, e o M3 mantém ≤ 80. p95 ≤ 16,7 ms.
+
+### 7.5 Riscos
+
+| ID | Risco | Prob. | Impacto | Mitigação | Plano B |
+| --- | --- | --- | --- | --- | --- |
+| R12 | A reação de gratidão "engasga" ou parece um defeito (é cortada pelo próximo alvo) | Média | Médio | Janela de ≤ 600 ms dentro de `VOLTA`, easing, medir os tempos da FSM | Reduzir a amplitude ou encurtar a reação |
+| R13 | A trapalhada assusta, ou o Murilo a entende como machucado | Baixa | Alto | Sem queda, impacto ou dor; movimento no ar; assobio leve; observar K1/K2 | Remover o campo `gag` e voltar à fuga da v1.1 |
+| R14 | Separar o chapéu estoura o teto de nós | Baixa | Médio | Teto de +1 por cenário (§7.4); medir após a arte | Animar o travesso inteiro, sem separar o chapéu |
+| R15 | A paridade par de cenários fixa um travesso por cenário | Média | Baixo | Fórmula com `floor(rodada / CENARIOS.length)` (§7.4) | Aceitar a fixação, que é previsível |
+| R16 | A Praia estoura o escopo ou o orçamento de nós | Média | Médio | Teto de 140 nós; só 1 cenário novo; sem quinto cenário | Não fazer a v1.3 |
+
+### 7.6 Rollout
+
+| Fase | Entrega | Critério de saída |
+| --- | --- | --- |
+| **F5.1 — Gratidão** | `reacao`, `REACOES`, `Som.gratidao` | Reação em todos os seis resgatáveis; ≤ 600 ms; 0 nós novos; pico ≤ −6 dBFS |
+| **F5.2 — Trapalhão** | `gag` em `TRAVESSOS`, `Som.trapalhada`, chapéu separado | Gag em ambos os travessos; US4/US8 respeitadas; totais ≤ 149 nós |
+| **F5.3 — Regressão e observação (v1.2)** | Reexecutar NF1–NF12; sessão com o Murilo | Técnicos verdes; K1/K2 reconfirmados; reversível |
+| **F6.1 — Praia** | Cenário, templates, sons, fórmula de paridade | Total ≤ 140 nós; alternância correta; US4/US8 respeitadas |
+| **F6.2 — Regressão e observação (v1.3)** | Reexecutar NF1–NF12; sessão com o Murilo | Técnicos verdes; K1/K2 reconfirmados; reversível |
+
+### 7.7 Definição de pronto
+
+**v1.2:** os seis resgatáveis reagem em ≤ 600 ms dentro de `VOLTA`, ambos os travessos fazem a trapalhada sem violar `US4`/`US8`, NF1–NF12 continuam verdes, K1/K2 são reconfirmados e nenhuma das dez leis do `TEMA.md` foi violada.
+
+**v1.3:** a Praia entra como quarto cenário com resgatável base e variante, o travesso alterna sem fixar por cenário, a Praia fica em ≤ 140 nós, NF1–NF12 continuam verdes, K1/K2 são reconfirmados e nenhuma lei foi violada.
+
+**Reversão:** o conteúdo é aditivo. Remover `reacao`, `gag` e o item da Praia restaura a v1.1 sem tocar no loop.
+
+### 7.8 Tarefas de documentação
+
+- Atualizar `TEMA.md` § *O loop* (reação de gratidão em `VOLTA`), § *Elenco* (trapalhada dos travessos) e § *Cenários* (Praia).
+- Atualizar `GLOSSARY.md`: verbetes **Gratidão** e **Trapalhada**, e a Praia na lista de cenários.
+- Registrar no `README.md` o status da v1.2 e da v1.3 quando forem implementadas.
+- Se a v1.3 for aprovada, registrar a exceção ao non-goal "novos cenários" em `docs/adr/`.
+
+---
+
 ## Rastreabilidade
 
 | Requisito | Origem |
@@ -444,3 +593,6 @@ A v1.1 está pronta quando: as três variações aparecem alternadas por resgate
 | Protocolo de teste | `TEMA.md` § *Como saber se funcionou* |
 | Variações de resgatável (pipa, patinho, sorvete) | `TEMA.md` § *Elenco* + §6 deste PRD |
 | Segundo travesso (Abutre) | `TEMA.md` § *Elenco* + §6 deste PRD |
+| Gratidão do resgatado (M1) | `TEMA.md` § *O loop* + §7 deste PRD |
+| Travesso trapalhão (M2) | `TEMA.md` L7, L9 + §7 deste PRD |
+| Quarto cenário, Praia (M3) | `TEMA.md` § *Cenários* + §7 deste PRD |
