@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.3 (v1.0 homologada; v1.1 planejada e aprovada; v1.2 e v1.3 propostas, §7)
+- **Versão do documento**: 1.3 (v1.0 e v1.1 homologadas; v1.2 e v1.3 propostas, §7)
 - **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia)
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 em implementação** (variações de resgatável + Abutre; §6): F4.1 e F4.2 concluídas em 2026-11-03; F4.3 com a **regressão técnica concluída em 2026-11-03** (NF1–NF11 verdes; ver `docs/regressao-v1.1.md`) e a **sessão observacional (K1/K2)** pendente. **v1.2 e v1.3 propostas** (§7), aguardando aprovação do operador; a implementação só começa após a F4.3.
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 e v1.3 propostas** (§7), aguardando aprovação do operador; já podem começar (F4.3 concluída).
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -249,7 +249,7 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | **F1 — Loop** | FSM completa, 1 cenário (`telhados`), arte provisória, sem áudio | Clicar produz balanço e resgate; K3 e K4 verdes |
 | **F2 — Voz do jogo** | Arte final dos 3 cenários, Duende, áudio sintetizado, estrelas, festa | K5 verde; duração da festa e timings dentro da tolerância |
 | **F3 — v1.0** | Arquivo único final, attract mode, `M`/`F` | **Concluída e homologada em 2026-11-03** — K1/K2, NF12 e conferência visual confirmados pelo operador |
-| **v1.1** | Variações de resgatável (pipa, patinho, sorvete) e Abutre como 2º travesso — ver §6 | F4.1/F4.2 e regressão técnica da F4.3 concluídas (2026-11-03); sessão observacional para reconfirmar K1/K2 pendente |
+| **v1.1** | Variações de resgatável (pipa, patinho, sorvete) e Abutre como 2º travesso — ver §6 | **Concluída e homologada em 2026-11-03** — F4.1–F4.3 concluídas; K1/K2 reconfirmados e NF1–NF12 verdes |
 | **v1.2** | Gratidão do resgatado e travesso trapalhão — ver §7 | Proposta; começa após a F4.3 da v1.1; K1/K2 reconfirmados na entrega |
 | **v1.3** | Quarto cenário (Praia) — ver §7 | Proposta; começa após a observação da v1.2; exige emenda ao non-goal "novos cenários" (§7.4) |
 | **v2.0** | `pedro/` — o jogo do irmão, com as próprias leis | Fora deste PRD |
@@ -415,13 +415,15 @@ Meta: manter o total atual (147/142/148). Teto absoluto: 150. O `rua` é o cená
 | --- | --- | --- |
 | **F4.1 — Variações** | Templates da pipa, patinho e sorvete; sons; `alvos` + `jogo.resgates` | Cada variante aparece no resgate correto; total ≤ 150 nós; pico ≤ −6 dBFS; 0 erros |
 | **F4.2 — Abutre** | Template do Abutre; som; `TRAVESSOS` + `jogo.rodada`; troca por template | Abutre alterna por rodada; L7/US4 respeitados; total ≤ 150; nenhum estado novo |
-| **F4.3 — Regressão e observação** | Reexecutar NF1–NF12; sessão com o Murilo | Todos os técnicos verdes; K1/K2 reconfirmados; reversível |
+| **F4.3 — Regressão e observação** | Reexecutar NF1–NF12; sessão com o Murilo | **Concluída em 2026-11-03** — técnicos verdes; K1/K2 reconfirmados; reversível |
 
-**Situação em 2026-11-03:** a regressão técnica da F4.3 foi executada — NF1–NF11 verdes, NF4 no teto de 148/150 nós, alternância de resgatável e de travesso confirmada e reversível; NF3/NF6/NF12 (medição oficial) e a sessão observacional K1/K2 aguardam o operador. Evidências em `docs/regressao-v1.1.md`.
+**Situação em 2026-11-03:** F4.3 concluída — NF1–NF12 verdes, NF4 no teto de 148/150 nós, alternância de resgatável e de travesso confirmada, reversível, e K1/K2 reconfirmados pelo operador. Evidências em `docs/regressao-v1.1.md`.
 
 ### 6.7 Definição de pronto da v1.1
 
 A v1.1 está pronta quando: as três variações aparecem alternadas por resgate dentro de cada cenário (base primeiro), o Abutre alterna por rodada com o Duende, cada resgatável e cada travesso tem som próprio, NF1–NF12 continuam verdes, os tetos de 150 nós e 80 animados/frame são respeitados, K1/K2 são reconfirmados em sessão observacional, e nenhuma das dez leis do `TEMA.md` foi violada.
+
+**Situação em 2026-11-03:** todos os critérios acima foram atendidos; a v1.1 foi homologada pelo operador.
 
 **Reversão:** o conteúdo novo é aditivo. Remover os templates das variantes, o template do Abutre e os contadores restaura o comportamento da v1.0 sem tocar no loop.
 
@@ -436,7 +438,7 @@ A v1.1 está pronta quando: as três variações aparecem alternadas por resgate
 
 ## 7. Planejamento da v1.2 e da v1.3
 
-> Emenda de planejamento, **proposta** e ainda não aprovada pelo operador. A v1.0 permanece homologada e a v1.1 segue o §6; esta seção só descreve o que as versões seguintes acrescentam. Nada aqui começa antes de a F4.3 da v1.1 estar concluída (disciplina do R6).
+> Emenda de planejamento, **proposta** e ainda não aprovada pelo operador. A v1.0 e a v1.1 permanecem homologadas; esta seção só descreve o que as versões seguintes acrescentam. A F4.3 da v1.1 foi concluída em 2026-11-03, então estas versões podem começar (disciplina do R6).
 
 ### 7.1 Escopo e decisões
 
