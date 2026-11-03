@@ -64,6 +64,8 @@ Sessão dirigida (loop acelerado) percorrendo os quatro cenários; 14 resgates o
 - **Loop intacto** — aim assist, tempos da FSM, estrelas, festa e descarte de cliques (L6) inalterados.
 - **Console** — nenhum erro ou aviso em nenhum momento.
 - **Tela cheia no celular (cortesia, `US15`)** — metatags `mobile-web-app-capable`, `apple-mobile-web-app-capable` e `apple-mobile-web-app-status-bar-style` adicionadas; dois toques rápidos (`pointerType: 'touch'`) alternam `requestFullscreen`. Verificado em `jsdom`: duplo-toque de toque alterna, o segundo alterna de volta, mouse é ignorado e toque único não alterna — zero erros. No iPhone, onde a API de tela cheia é parcial, o gesto é inócuo; o caminho é "Adicionar à Tela de Início". A tecla `F` no desktop não muda.
+- **Placar legível no celular (v1.4.2)** — em telas de toque o grupo `#placar` recebe `scale(1.5)` ancorado no canto superior direito; a borda esquerda ampliada fica em `x ≈ 1626` e não cobre o herói (limite ~1626) nem o nascimento do travesso (`x ≈ 1600`). Verificado em `jsdom` com `matchMedia('(pointer: coarse)')` forçado: transform presente, 8 itens, 14 resgates, zero erros, pico de nós 240; no modo desktop, nenhum transform.
+- **Balanço em pêndulo (v1.4.1)** — a teia ancora num ponto alto (bissetriz de partida/resgatável, altura `TEIA_ANCORA_Y = 70`) e o herói descreve um arco em ferradura: pivô em `(940, 70)`, raio constante (~541), mergulho até `y = 610`, fim em `(1281, 499)` = o objeto. Zero erros; pico de nós inalterado.
 
 ### Reversibilidade
 

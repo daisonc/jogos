@@ -710,6 +710,38 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 - Registrar no `README.md` o status da v1.4. **Feito.**
 - Registrar a regressão técnica em `docs/regressao-v1.4.md`. **Feito.**
 
+### 8.9 Correção do balanço (v1.4.1)
+
+**Defeito.** A teia era desenhada do herói **direto ao resgatável** (`teiaModo='alvo'`) e o herói seguia uma curva de Bézier até o objeto. Visualmente ele "atirava a teia contra o objeto": sem pivô, sem pêndulo.
+
+**Correção.** No início de cada balanço o jogo calcula um **pivô** no alto (bissetriz perpendicular de partida/resgatável, na altura `TEIA_ANCORA_Y = 70`), de modo que partida e resgatável fiquem sobre a **mesma circunferência**. O herói passa a percorrer essa circunferência — o pêndulo em ferradura — e a teia é desenhada do pivô ao herói, sempre esticada.
+
+**Critérios de aceite**
+
+- A teia sai do herói para um ponto alto e permanece **esticada**; nunca aponta para o resgatável.
+- O herói descreve um arco em ferradura: desce abaixo dos dois extremos e sobe até o objeto, **terminando no resgatável**.
+- O raio do pêndulo é **constante** (medido: ~541 px; variação só de arredondamento).
+- Nenhum nó novo; aim assist, tempos da FSM, estrelas e festa inalterados.
+- Determinístico (`ancoraTeia` usa só geometria), sem `Math.random`.
+- O `splat` da teia passa a marcar o **pivô** (onde a teia gruda), não o objeto.
+
+**Verificação (2026-11-03).** Sessão dirigida em Node/jsdom: pivô em `(940, 70)`, raio constante, herói desce a `y = 610` e termina em `(1281, 499)` = o objeto; ciclo completo dos quatro cenários com **14 resgates**, **zero erros** e pico de nós inalterado (**240**).
+
+### 8.10 Placar legível no celular (v1.4.2)
+
+**Defeito.** No celular a cena inteira encolhe (letterbox `xMidYMid meet`) e, como o placar vive no mesmo `viewBox`, ele encolhe junto — pequeno demais para ler.
+
+**Correção.** Em telas de toque (`matchMedia('(pointer: coarse)')`), o grupo `#placar` é ampliado em **1,5×** em torno do próprio canto superior direito: `translate(âncora) scale(1.5) translate(-âncora)`. A largura base do painel foi levemente reduzida (206 → 180) para a ampliação não cobrir o herói nem o ponto de nascimento do travesso. No desktop (ponteiro fino) nada muda.
+
+**Critérios de aceite**
+
+- Em toque, `#placar` recebe `scale(1.5)`; ícones e números ficam maiores.
+- No desktop, nenhum transform — aparência inalterada (salvo a largura base levemente menor).
+- A borda esquerda ampliada fica em `x ≈ 1626`, à direita do herói (limite ~1626) e do travesso (nasce em `x ≈ 1600`).
+- Nenhum nó novo (pico segue **240**); determinístico; sem rede.
+
+**Verificação (2026-11-03).** Sessão dirigida em Node/jsdom com `matchMedia('(pointer: coarse)')` forçado: transform presente, **8 itens**, **14 resgates**, zero erros, pico de nós **240**. No modo desktop: nenhum transform.
+
 ---
 
 ## Rastreabilidade
@@ -732,3 +764,4 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 | Placar de resgates (feature 1) | `TEMA.md` § *Placar e lado* + `ADR 0004` + §8 deste PRD |
 | Inversão de lado (feature 2) | `TEMA.md` § *Placar e lado* + `ADR 0004` + §8 deste PRD |
 | Exceção nominal a L3/L8 | `ADR 0004` |
+| Balanço em pêndulo (pivô alto) | `TEMA.md` § *O loop* + §8.9 deste PRD |

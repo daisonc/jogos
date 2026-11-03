@@ -454,7 +454,13 @@
   // v1.4 (feature 1) — placar no canto superior direito: desenho do resgatável salvo +
   // número de salvamentos. Só entram itens já salvos, a contagem é cumulativa na sessão.
   // Emenda deliberada a L8 ("nada de números") e ao non-goal "sem placar" — ver ADR 0004.
-  const PLACAR = { x: 1690, largura: 206, topo: 28, pad: 12, passo: 62, iconeX: 1738, numX: 1788, escala: 0.40 };
+  // v1.4.2 — em telas de toque o grupo é ampliado (ver `atualizarEscalaPlacar`).
+  const PLACAR = { x: 1716, largura: 180, topo: 28, pad: 12, passo: 62, iconeX: 1762, numX: 1800, escala: 0.40 };
+
+  // v1.4.1 — âncora da teia. A teia gruda num ponto alto e o herói descreve um pêndulo em
+  // torno dele (formato de ferradura), passando pelo resgatável — em vez de a teia ser
+  // atirada direto no objeto. Altura do pivô em unidades virtuais (perto do topo).
+  const TEIA_ANCORA_Y = 70;
 
   // Cada cenÃ¡rio Ã© dados: arte (template), posiÃ§Ãµes, corda e rota do travesso.
   // Regra de L7/US4: |travesso.x0 - heroi.x| >= 0.6 * 1920 = 1152.
@@ -1043,6 +1049,21 @@
   const placarLinhas = Object.create(null);
   let placarN = 0;
 
+  // v1.4.2 — no celular a cena inteira encolhe pelo letterbox e o placar encolhe junto.
+  // Em telas de toque (ponteiro primário grosso) o grupo do placar é ampliado em torno do
+  // próprio canto superior direito, para ícones e números ficarem legíveis — sem mudar o
+  // desktop e sem arte nova na cena.
+  const PLACAR_ESCALA_TOQUE = 1.5;
+  function escalaPlacar() {
+    return (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ? PLACAR_ESCALA_TOQUE : 1;
+  }
+  function atualizarEscalaPlacar() {
+    const k = escalaPlacar();
+    if (k <= 1) { el.placar.removeAttribute('transform'); return; }
+    const ax = PLACAR.x + PLACAR.largura, ay = PLACAR.topo;
+    el.placar.setAttribute('transform', `translate(${ax} ${ay}) scale(${k}) translate(${-ax} ${-ay})`);
+  }
+
   function montarPlacar() {
     const fundo = svgNovo('rect', {
       x: PLACAR.x, y: PLACAR.topo, width: PLACAR.largura, height: 0, rx: 18,
@@ -1050,6 +1071,7 @@
     });
     el.placar.appendChild(fundo);
     el.placarFundo = fundo;
+    atualizarEscalaPlacar();
   }
   function atualizarFundoPlacar() {
     def(el.placarFundo, 'height', PLACAR.pad * 2 + placarN * PLACAR.passo);
@@ -1112,8 +1134,8 @@
     alvoAtivo: true, alvoCongelado: false, alvoEntrou: 0,
     espera: 0, duracaoBalanco: BALANCOS[0],
     alvoCentro: { x: 0, y: 0 }, alvoAngulo: 0,
-    arco: null,
-    splatAtivo: false, splatEm: 0,
+    arco: null, ancora: { x: 0, y: 0 },
+    splatAtivo: false, splatEm: 0, splatCentro: null,
     faiscasAtivas: false, faiscasEm: 0, faiscasCentro: { x: 0, y: 0 },
     flashEm: -1, flashPico: 0, flashDur: 700,
     transicao: false,
@@ -1151,6 +1173,20 @@
     const ang = 2.4 * Math.sin(jogo.t * 0.0014 + 1.2);
     const p = girar(c.centroAlvo.x, c.centroAlvo.y, ang);
     return { x: c.ancorAlvo.x + p.x, y: c.ancorAlvo.y + p.y, ang };
+  }
+
+  // v1.4.1 — ponto de ancoragem da teia para o balanço. Fica na bissetriz perpendicular de
+  // h0 (partida) e h1 (resgatável), na altura TEIA_ANCORA_Y: assim os dois pontos caem
+  // sobre a MESMA circunferência de pivô, o herói descreve um pêndulo limpo em ferradura
+  // e o resgatável é alcançado exatamente no fim do arco.
+  function ancoraTeia(h0, h1) {
+    const mx = (h0.x + h1.x) / 2, my = (h0.y + h1.y) / 2;
+    const dx = h1.x - h0.x, dy = h1.y - h0.y;
+    const len = Math.hypot(dx, dy) || 1;
+    const nx = -dy / len, ny = dx / len;
+    if (Math.abs(ny) < 1e-2) return { x: mx, y: TEIA_ANCORA_Y }; // segmento quase vertical
+    const s = (TEIA_ANCORA_Y - my) / ny;
+    return { x: mx + s * nx, y: my + s * ny };
   }
 
   // ---------- estrelas ----------
@@ -1199,7 +1235,8 @@
     const d = jogo.t - jogo.splatEm;
     if (d < 0) { def(el.splat, 'opacity', 0); return; }
     const p = clamp01(d / 300);
-    def(el.splat, 'transform', `translate(${jogo.alvoCentro.x.toFixed(2)} ${jogo.alvoCentro.y.toFixed(2)}) scale(${(1 + 0.25 * p).toFixed(3)})`);
+    const sc = jogo.splatCentro || jogo.alvoCentro;
+    def(el.splat, 'transform', `translate(${sc.x.toFixed(2)} ${sc.y.toFixed(2)}) scale(${(1 + 0.25 * p).toFixed(3)})`);
     def(el.splat, 'opacity', (0.95 * (1 - p)).toFixed(3));
     if (p >= 1) jogo.splatAtivo = false;
   }
@@ -1334,9 +1371,17 @@
     const home = layoutAtual().heroi;
     const h0 = { x: home.x, y: home.y };
     const h1 = { x: a.x - 28, y: a.y - 26 };
-    jogo.arco = { h0, h1, c: { x: (h0.x + h1.x) / 2, y: (h0.y + h1.y) / 2 + 430 } };
+    // v1.4.1: a teia ancora num ponto alto e o herói pende dele. O resgatável (h1) fica
+    // sobre a mesma circunferência, então o arco termina exatamente no objeto.
+    const A = ancoraTeia(h0, h1);
+    const R = Math.hypot(h0.x - A.x, h0.y - A.y);
+    const th1 = Math.atan2(h1.y - A.y, h1.x - A.x);
+    const fim = { x: A.x + R * Math.cos(th1), y: A.y + R * Math.sin(th1) };
+    jogo.ancora = A;
+    jogo.arco = { h1: fim, R, th0: Math.atan2(h0.y - A.y, h0.x - A.x), th1 };
     jogo.splatAtivo = true;
     jogo.splatEm = jogo.t + T.teia;
+    jogo.splatCentro = A;
     Som.teia();
     entrar(S.TEIA);
   }
@@ -1443,21 +1488,25 @@
     } else if (e === S.TEIA) {
       const p = clamp01(jogo.tEstado / T.teia);
       hr = 2.2 * Math.sin(jogo.t * 0.0013) * (1 - p);
-      teiaModo = 'alvo'; teiaOp = 0.9; teiaFrac = easeOutCubic(p);
+      teiaModo = 'ancora'; teiaOp = 0.9; teiaFrac = easeOutCubic(p);
       alvoPos = { x: jogo.alvoCentro.x, y: jogo.alvoCentro.y, rot: jogo.alvoAngulo, esc: 1, op: 1 };
     } else if (e === S.BALANCO) {
       const p = clamp01(jogo.tEstado / jogo.duracaoBalanco);
       const t = easeInOutCubic(p);
-      hx = bez(jogo.arco.h0.x, jogo.arco.c.x, jogo.arco.h1.x, t);
-      hy = bez(jogo.arco.h0.y, jogo.arco.c.y, jogo.arco.h1.y, t);
+      // v1.4.1: pêndulo em torno da âncora — o herói desce, cruza o fundo da ferradura e
+      // sobe até o resgatável, com a teia sempre esticada do pivô até ele.
+      const a = jogo.arco;
+      const ang = lerp(a.th0, a.th1, t);
+      hx = jogo.ancora.x + a.R * Math.cos(ang);
+      hy = jogo.ancora.y + a.R * Math.sin(ang);
       hr = 14 * Math.sin(Math.PI * p);
-      teiaModo = 'alvo'; teiaOp = 0.9;
+      teiaModo = 'ancora'; teiaOp = 0.9;
       alvoPos = { x: jogo.alvoCentro.x, y: jogo.alvoCentro.y, rot: jogo.alvoAngulo, esc: 1, op: 1 };
     } else if (e === S.RESGATE) {
       const p = clamp01(jogo.tEstado / T.resgate);
       hx = jogo.arco.h1.x;
       hy = jogo.arco.h1.y + 8 * Math.sin(Math.PI * p);
-      teiaModo = 'alvo'; teiaOp = 0.9 * (1 - p);
+      teiaModo = 'ancora'; teiaOp = 0.9 * (1 - p);
       const peito = pontoLocal(26, 148, hx, hy, 0);
       const t = easeInOutCubic(p);
       const ax = bez(jogo.alvoCentro.x, jogo.alvoCentro.x + 96, peito.x, t);
@@ -1503,8 +1552,8 @@
       const len = Math.max(1, hy + 80);
       def(el.linha, 'transform', `translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(-90) scale(${len.toFixed(2)} 1)`);
       def(el.linha, 'opacity', teiaOp);
-    } else if (teiaModo === 'alvo') {
-      const dx = jogo.alvoCentro.x - hx, dy = jogo.alvoCentro.y - hy;
+    } else if (teiaModo === 'ancora') {
+      const dx = jogo.ancora.x - hx, dy = jogo.ancora.y - hy;
       const len = Math.max(0.01, Math.hypot(dx, dy) * teiaFrac);
       const ang = Math.atan2(dy, dx) * 180 / Math.PI;
       def(el.linha, 'transform', `translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(${ang.toFixed(2)}) scale(${len.toFixed(2)} 1)`);
@@ -1642,6 +1691,8 @@
   el.svg.addEventListener('contextmenu', ev => ev.preventDefault());
   document.addEventListener('keydown', aoTeclar);
   document.addEventListener('pointerdown', aoToqueRapido, { passive: true });
+  window.addEventListener('resize', atualizarEscalaPlacar);
+  window.addEventListener('orientationchange', atualizarEscalaPlacar);
 
   montarPlacar();
   montarCenario(0);

@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.4 (v1.0, v1.1, v1.2 e v1.3 homologadas em 2026-11-03; v1.4 — placar e inversão de lado — entregue em 2026-11-03, ver `docs/adr/0004-placar-e-inversao-de-lado.md`)
+- **Versão**: 1.4.1 (v1.0, v1.1, v1.2 e v1.3 homologadas em 2026-11-03; v1.4 — placar e inversão de lado — entregue em 2026-11-03; v1.4.1 — correção do balanço, que passou a ser um pêndulo em ferradura ancorado num ponto alto)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, dois toques rápidos alternam a tela cheia (a tecla `F` exige teclado). O alvo jogável continua sendo notebook com mouse — toque não é mecânica suportada.
@@ -77,18 +77,20 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 | --- | --- | --- | --- |
 | Esperando | indefinida | Herói pendurado, balançando devagar. Alvo brilhando. | Ambiente suave |
 | Teia | 0,25 s | Fio branco sai do pulso e gruda | `thwip` |
-| Balanço | 1,2–1,8 s | Herói atravessa a tela em arco | `whoosh` |
+| Balanço | 1,2–1,8 s | Teia gruda num ponto alto; herói desce e sobe em pêndulo (ferradura), cruzando o resgatável | `whoosh` |
 | Resgate | 0,5 s | Objeto salvo voa para o colo do herói | `pop` + gargalhada do resgatável |
 | Volta | 0,6 s | Herói pousa no próximo ponto; o resgatado **agradece** e o herói dá um pulinho | som curto de gratidão |
 | Festa (a cada 3) | 3 s | Confete, estrelas acendendo, herói pulando | jingle de 8 notas |
 
 **Uma rodada completa dura 10–15 segundos de conteúdo.** O resto do tempo é o Murilo reagindo — e reagir é jogar.
 
+**A âncora da teia (v1.4.1).** No balanço, a teia gruda num **ponto alto** e o herói pende dele: o corpo descreve um arco de pêndulo (ferradura), desce, cruza o fundo e sobe até o resgatável, que fica sobre a mesma circunferência. A teia está sempre esticada do pivô até o herói — nunca apontada para o objeto. O pivô é calculado na partida (bissetriz de partida/resgatável, na altura `TEIA_ANCORA_Y`) e não é arte: nenhum nó novo entra na cena.
+
 ## Placar e lado (v1.4)
 
 Duas adições pedidas pelo operador, ambas reversíveis e sem tocar no loop (`ADR 0004`).
 
-**Placar.** No canto superior direito, uma linha por resgatável **já salvo**: o desenho do item à esquerda e o número de salvamentos à direita. A contagem é **cumulativa na sessão** (não zera na festa nem na troca de cenário) e a linha nasce no primeiro salvamento, sem nunca se mover depois. Só entram itens que já foram salvos — nada de ícone com zero. O placar é a **única** exceção às leis L8 e L3, e o número existe porque o Murilo não lê: o desenho identifica o item, o dígito conta.
+**Placar.** No canto superior direito, uma linha por resgatável **já salvo**: o desenho do item à esquerda e o número de salvamentos à direita. A contagem é **cumulativa na sessão** (não zera na festa nem na troca de cenário) e a linha nasce no primeiro salvamento, sem nunca se mover depois. Só entram itens que já foram salvos — nada de ícone com zero. O placar é a **única** exceção às leis L8 e L3, e o número existe porque o Murilo não lê: o desenho identifica o item, o dígito conta. No **celular**, o placar é ampliado em **1,5×** — a cena inteira encolhe pelo letterbox e o placar encolheria junto; no desktop o tamanho não muda.
 
 **Lado.** A cada resgate, o lado em que o herói começa **inverte**: ele começa à esquerda e o objeto à direita; depois do primeiro salvamento, o objeto vai para a esquerda e o herói para a direita; e assim por diante, de forma contínua — atravessando a festa e a troca de cenário. O cenário inteiro é espelhado em torno do eixo central, **inclusive a rota de fuga do travesso**, que continua sempre a ≥ 60% da largura do herói (`L7`). Como o herói já virou para o lado novo no resgate, a volta deixa de ser a travessia de retorno e passa a ser um pouso curto: o herói **pinga** de um lado para o outro a cada ciclo.
 
