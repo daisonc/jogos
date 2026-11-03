@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.4 (v1.0, v1.1 e v1.2 homologadas; v1.3 proposta, §7)
+- **Versão do documento**: 1.6 (v1.0, v1.1, v1.2 e v1.3 homologadas; v2.0 fora deste PRD, §5)
 - **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia)
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 proposta** (§7), aguardando aprovação.
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 concluída e homologada em 2026-11-03** (quarto cenário — Praia; §7): F6.1 e F6.2 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.3.md`), Praia em 138/150 nós, e K1/K2 reconfirmados pelo operador. Com a v1.3, o roadmap deste PRD está completo; a v2.0 (`pedro/`) fica fora deste documento.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -251,7 +251,7 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | **F3 — v1.0** | Arquivo único final, attract mode, `M`/`F` | **Concluída e homologada em 2026-11-03** — K1/K2, NF12 e conferência visual confirmados pelo operador |
 | **v1.1** | Variações de resgatável (pipa, patinho, sorvete) e Abutre como 2º travesso — ver §6 | **Concluída e homologada em 2026-11-03** — F4.1–F4.3 concluídas; K1/K2 reconfirmados e NF1–NF12 verdes |
 | **v1.2** | Gratidão do resgatado e travesso trapalhão — ver §7 | **Concluída e homologada em 2026-11-03** — F5.1–F5.3 concluídas; NF1–NF12 verdes; K1/K2 reconfirmados pelo operador |
-| **v1.3** | Quarto cenário (Praia) — ver §7 | Proposta; começa após a observação da v1.2; exige emenda ao non-goal "novos cenários" (§7.4) |
+| **v1.3** | Quarto cenário (Praia) — ver §7 | **Concluída e homologada em 2026-11-03** — F6.1–F6.2 concluídas; NF1–NF12 verdes; Praia em 138/150 nós; K1/K2 reconfirmados. Emenda ao non-goal "novos cenários" registrada no `ADR 0003` |
 | **v2.0** | `pedro/` — o jogo do irmão, com as próprias leis | Fora deste PRD |
 
 ### Definição de pronto
@@ -438,7 +438,7 @@ A v1.1 está pronta quando: as três variações aparecem alternadas por resgate
 
 ## 7. Planejamento da v1.2 e da v1.3
 
-> Emenda de planejamento, **proposta** e ainda não aprovada pelo operador. A v1.0 e a v1.1 permanecem homologadas; esta seção só descreve o que as versões seguintes acrescentam. A F4.3 da v1.1 foi concluída em 2026-11-03, então estas versões podem começar (disciplina do R6).
+> Emenda de planejamento. A v1.0, a v1.1 e a v1.2 permanecem homologadas; esta seção descreve o que as versões seguintes acrescentam. A v1.2 (M1+M2) foi homologada em 2026-11-03 e a **v1.3 (M3 — Praia) foi aprovada pelo operador e implementada em 2026-11-03** (disciplina do R6).
 
 ### 7.1 Escopo e decisões
 
@@ -523,8 +523,10 @@ A v1.2 adiciona **polimento** (reação do resgatado e uma trapalhada na fuga do
 | Patinho | dois quiques curtos | pulinho + inclinação de aceno |
 | Cachorrinho | abana: rotação rápida de ±10° | pulinho + inclinação de aceno |
 | Sorvete | pulso de escala 1 → 1,08 → 1 | pulinho + inclinação de aceno |
+| Tartaruguinha | cabeceia: balanço de ±18° | pulinho + inclinação de aceno |
+| Bola de praia | três quiques | pulinho + inclinação de aceno |
 
-O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O sorvete usa o mesmo som, com outro tom.
+O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O sorvete usa o mesmo som, com outro tom. (As duas últimas linhas são da v1.3.)
 
 **M2 — Travesso trapalhão (modelo de dados).** `TRAVESSOS[i]` ganha `gag: { id, quando, som }`, onde `quando` é a fração da fuga em que a trapalhada começa. Exemplos: `{ id:'chapeu', quando:0.5, som:'uepa' }` e `{ id:'cambalhota', quando:0.5, som:'uepa' }`. O Duende precisa que o chapéu seja um nó separado: se hoje ele é parte do corpo, separá-lo custa **+1 nó** por cenário. O Abutre reutiliza o próprio grupo e não custa nó. O limite de 12 elementos de arte por travesso (§6.4) continua valendo.
 
@@ -534,9 +536,9 @@ O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O s
 | `parque` | 142 | +1 | 143 |
 | `rua` | 148 | +1 | 149 |
 
-**M3 — Praia.** `CENARIOS[]` ganha o quarto item, com paleta, silhuetas, posição do resgatável, rota do travesso e `alvos` próprios. A Praia exige seus próprios templates de arte. A **proposta** abaixo ainda precisa de aprovação do operador:
+**M3 — Praia.** `CENARIOS[]` ganha o quarto item, com paleta, silhuetas, posição do resgatável, rota do travesso e `alvos` próprios. A Praia exige seus próprios templates de arte. A proposta abaixo foi **aprovada pelo operador** em 2026-11-03:
 
-| id | Nome | Céu (proposta) | Base | Variante | Som da base | Som da variante |
+| id | Nome | Céu | Base | Variante | Som da base | Som da variante |
 | --- | --- | --- | --- | --- | --- | --- |
 | `praia` | Praia | `#7EC8E3 → #FFF1C1` | Tartaruguinha | Bola de praia | trinado suave de duas notas | quique de borracha leve |
 
@@ -568,6 +570,8 @@ O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O s
 
 **Situação em 2026-11-03:** F5.1–F5.3 concluídas — reação de gratidão nos seis resgatáveis (≤ 600 ms, 0 nós novos), trapalhada nos dois travessos e chapéu do Duende como nó separado. NF1–NF12 verdes; teto de nós em 149/150 (evidências em `docs/regressao-v1.2.md`). K1/K2 e as medições oficiais (NF3/NF6/NF12) reconfirmadas pelo operador. **v1.2 homologada.**
 
+**Situação em 2026-11-03:** F6.1–F6.2 concluídas — a Praia entra como quarto cenário (céu `#7EC8E3 → #FFF1C1`, tartaruguinha + bola de praia, sons próprios, resgatáveis repousando na areia e herói pousando com os pés na areia), total em **138/150 nós**, alternância de travesso por cenário confirmada (fórmula com `floor(rodada / CENARIOS.length)`), US4/US8 respeitadas. NF1–NF12 verdes (evidências em `docs/regressao-v1.3.md`), K1/K2 e medições oficiais reconfirmadas pelo operador. **v1.3 homologada.**
+
 ### 7.7 Definição de pronto
 
 **v1.2:** os seis resgatáveis reagem em ≤ 600 ms dentro de `VOLTA`, ambos os travessos fazem a trapalhada sem violar `US4`/`US8`, NF1–NF12 continuam verdes, K1/K2 são reconfirmados e nenhuma das dez leis do `TEMA.md` foi violada.
@@ -575,6 +579,8 @@ O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O s
 **Situação em 2026-11-03:** todos os critérios acima foram atendidos; a v1.2 foi homologada pelo operador.
 
 **v1.3:** a Praia entra como quarto cenário com resgatável base e variante, o travesso alterna sem fixar por cenário, a Praia fica em ≤ 140 nós, NF1–NF12 continuam verdes, K1/K2 são reconfirmados e nenhuma lei foi violada.
+
+**Situação em 2026-11-03:** todos os critérios acima foram atendidos; a v1.3 foi homologada pelo operador. O roadmap deste PRD está completo.
 
 **Reversão:** o conteúdo é aditivo. Remover `reacao`, `gag` e o item da Praia restaura a v1.1 sem tocar no loop.
 

@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.2 (v1.0, v1.1 e v1.2 homologadas em 2026-11-03)
+- **Versão**: 1.3 (v1.0, v1.1, v1.2 e v1.3 homologadas em 2026-11-03)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
@@ -89,7 +89,7 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 
 **Travesso — Duende Verde.** Visto exclusivamente de longe, no planador, contra o céu. Agarra o objeto, solta, some. Risada `ihihi` de desenho animado, nunca a gargalhada sinistra. Ele é **causa**, não obstáculo: existe para que haja o que resgatar, e é isso que impede o jogo de ser só coleta.
 
-**Segundo travesso — Abutre.** Alterna com o Duende a cada rodada. Visto exclusivamente de longe, de costas, de asas largas e **sem rosto**; reutiliza a rota de fuga do Duende no cenário e não se aproxima nunca. Grasnido curto e leve + duas batidas de asa, nada grave nem prolongado. Vale **L7 integralmente**: ele é paisagem com intenção, não ameaça.
+**Segundo travesso — Abutre.** Alterna com o Duende por rodada — com quatro cenários (número par), a escolha soma a volta à rodada para não fixar um travesso por cenário (`ADR 0003`). Visto exclusivamente de longe, de costas, de asas largas e **sem rosto**; reutiliza a rota de fuga do Duende no cenário e não se aproxima nunca. Grasnido curto e leve + duas batidas de asa, nada grave nem prolongado. Vale **L7 integralmente**: ele é paisagem com intenção, não ameaça.
 
 **Trapalhada.** Na fuga, cada travesso faz **um** gesto cômico: o Duende perde o chapéu, que cai girando; o Abutre dá uma cambalhota no ar. Tudo acontece no ar e de longe (L7 vale integralmente): nunca há queda, impacto, dor nem choro — a graça é o movimento, nunca o dano. Um assobio descendente curto acompanha. O gesto é dado do travesso e não muda a duração da fuga.
 
@@ -100,16 +100,18 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 | Telhados | Gatinho | `miau` agudo | Pipa | sopro de papel + assobio curto |
 | Parque | Balão | `ploc` de borracha | Patinho de borracha | guincho de borracha |
 | Rua do bairro | Cachorrinho | latido curto | Sorvete | sino curto |
+| Praia | Tartaruguinha | trinado suave de duas notas | Bola de praia | quique de borracha leve |
 
 ## Cenários
 
-Três, nesta ordem. Cada um precisa ser reconhecível em 1 segundo, sem texto.
+Quatro, nesta ordem. Cada um precisa ser reconhecível em 1 segundo, sem texto.
 
 1. **Telhados ao pôr do sol** — laranja e roxo, silhuetas de prédios, muito vazio embaixo. É o cenário de abertura porque é onde o balanço tem mais graça: altura e queda visíveis.
 2. **Parque** — verde, céu azul claro, árvores redondas, balões. O resgate mais óbvio que existe: balão preso na árvore.
 3. **Rua do bairro** — casas coloridas, carros, poste. O fecho, porque é o mais próximo da vida real dele.
+4. **Praia** — céu azul-claro a creme, mar calmo, areia, coqueiro e guarda-sol. Entrou na v1.3 (`ADR 0003`): lugar novo, sem perigo, para a surpresa depois da terceira festa.
 
-**Descartado: praia.** Água é caro de desenhar e não acrescenta nada ao verbo do jogo.
+**A praia já foi descartada** na v1.0 ("água é caro de desenhar"). A v1.3 revisitou a decisão por outro ângulo — a de que um lugar novo é a forma de variedade que não pede habilidade nova — e a incluiu como quarto cenário. Um quinto continua fora de escopo.
 
 ## Áudio
 

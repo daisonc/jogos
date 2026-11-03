@@ -56,6 +56,10 @@ _Avoid_: swing, voo, pulo, movimentação
 O lugar onde uma rodada acontece, reconhecível sem texto.
 _Avoid_: mapa, background, fundo, level
 
+**Praia**:
+O quarto cenário, de mar calmo e sem perigo, com tartaruguinha e bola de praia; entrou na v1.3.
+_Avoid_: litoral, mar, cenário bônus, DLC
+
 **Aim assist**:
 A tolerância que faz um clique impreciso contar como acerto no resgatável.
 _Avoid_: auto-aim, mira automática, assistência de mira

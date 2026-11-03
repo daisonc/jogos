@@ -230,6 +230,39 @@
   </svg>
 </template>
 
+<template id="tpl-cena-praia">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <linearGradient id="ceu-praia" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7EC8E3"/>
+        <stop offset="1" stop-color="#FFF1C1"/>
+      </linearGradient>
+      <rect width="1920" height="1080" fill="url(#ceu-praia)"/>
+      <circle cx="1560" cy="230" r="150" fill="url(#brilho-sol)" opacity="0.6"/>
+      <circle cx="1560" cy="230" r="92" fill="#FFF3C4"/>
+      <path fill="#FFFFFF" opacity="0.75" d="M120 200 C150 172 210 168 246 188 C280 160 344 160 378 186 C420 170 470 182 486 204 C506 210 496 224 470 224 L142 224 C118 224 108 212 120 200 Z"/>
+      <path fill="#FFFFFF" opacity="0.6" d="M700 150 C724 128 770 124 798 140 C824 118 874 118 902 138 C936 126 976 134 988 152 C1004 158 996 168 976 168 L718 168 C698 168 691 160 700 150 Z"/>
+      <path fill="#3FA7BE" d="M0 700 Q480 682 960 696 T1920 690 L1920 900 L0 900 Z"/>
+      <path fill="#6FCBDB" opacity="0.5" d="M0 700 Q480 682 960 696 T1920 690 L1920 736 Q480 752 0 740 Z"/>
+      <path fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.45" d="M140 782 Q190 772 240 782 M440 820 Q490 810 540 820 M1460 796 Q1510 786 1560 796"/>
+      <path fill="#F2DCA8" d="M0 858 Q480 830 960 850 T1920 842 L1920 1080 L0 1080 Z"/>
+      <path fill="#E7C983" opacity="0.5" d="M0 946 Q520 916 1000 936 T1920 926 L1920 1080 L0 1080 Z"/>
+      <path fill="#A9743F" stroke="#6B4226" stroke-width="3" d="M1652 462 Q1640 596 1656 726 L1688 726 Q1672 596 1682 462 Z"/>
+      <g fill="#4E9E4A" stroke="#2F6B2E" stroke-width="2" stroke-linejoin="round">
+        <path d="M1668 464 Q1584 426 1520 448 Q1602 456 1668 482 Z"/>
+        <path d="M1668 464 Q1752 424 1816 446 Q1732 454 1668 482 Z"/>
+        <path d="M1668 464 Q1622 392 1560 380 Q1630 420 1668 486 Z"/>
+        <path d="M1668 464 Q1714 390 1778 378 Q1706 418 1668 486 Z"/>
+      </g>
+      <path stroke="#8B5A2B" stroke-width="9" stroke-linecap="round" d="M300 728 L300 906"/>
+      <path fill="#F26D6B" stroke="#C43A4E" stroke-width="3" stroke-linejoin="round" d="M182 730 A118 118 0 0 1 418 730 Q360 716 300 730 Q240 716 182 730 Z"/>
+      <path fill="#F2A65A" stroke="#C97B33" stroke-width="2.5" stroke-linejoin="round" d="M690 942 l9 -24 l9 24 l24 3 l-18 17 l6 24 l-21 -13 l-21 13 l6 -24 l-18 -17 z"/>
+      <path fill="#FFFFFF" stroke="#2A1A3A" stroke-width="2" d="M1080 662 L1176 662 L1160 690 L1096 690 Z"/>
+      <path fill="#F26D6B" stroke="#2A1A3A" stroke-width="2" d="M1128 662 L1128 596 L1176 654 Z"/>
+    </g>
+  </svg>
+</template>
+
 <template id="tpl-alvo-telhados">
   <svg xmlns="http://www.w3.org/2000/svg">
     <g>
@@ -329,6 +362,38 @@
   </svg>
 </template>
 
+<template id="tpl-alvo-praia">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <circle cx="0" cy="-6" r="66" fill="url(#halo-estrela)"/>
+      <path fill="#7FBE63" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-30 6 Q-56 2 -58 24 Q-36 28 -24 16 Z"/>
+      <path fill="#7FBE63" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M6 20 Q28 24 30 8 Q18 8 12 16 Z"/>
+      <path fill="#7FBE63" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-20 34 Q-28 54 -12 58 Q-8 42 -11 32 Z"/>
+      <path fill="#7FBE63" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M16 34 Q24 54 8 58 Q4 42 7 32 Z"/>
+      <path fill="#3FA796" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-34 8 Q-34 -26 0 -32 Q34 -26 34 8 Q20 16 0 16 Q-20 16 -34 8 Z"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="2" opacity="0.55" d="M0 -32 L0 16 M-20 -22 L-22 10 M20 -22 L22 10 M-9 -28 L-11 14 M9 -28 L11 14"/>
+      <path fill="#6FD0BF" opacity="0.7" d="M-20 -16 Q0 -24 18 -16 Q2 -9 -20 -16 Z"/>
+      <path fill="#8FCB6E" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M18 -2 Q40 -12 52 2 Q54 16 38 20 Q24 20 18 12 Z"/>
+      <circle cx="42" cy="7" r="2.8" fill="#2A1A3A"/>
+      <circle cx="34" cy="5" r="2.8" fill="#2A1A3A"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="1.8" stroke-linecap="round" d="M47 13 Q43 14 41 12"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-alvo-praia-bola">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <circle cx="0" cy="-2" r="66" fill="url(#halo-estrela)"/>
+      <circle cx="0" cy="0" r="40" fill="#F8F1E3" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="#E23B4E" d="M0 0 L0 -40 A40 40 0 0 1 34.64 20 Z"/>
+      <path fill="#F2C14E" d="M0 0 L34.64 20 A40 40 0 0 1 -34.64 20 Z"/>
+      <path fill="#3FB8AF" d="M0 0 L-34.64 20 A40 40 0 0 1 0 -40 Z"/>
+      <ellipse cx="-13" cy="-15" rx="9" ry="6" fill="#FFFFFF" opacity="0.6" transform="rotate(-28 -13 -15)"/>
+    </g>
+  </svg>
+</template>
+
 <template id="tpl-travesso-duende">
   <svg xmlns="http://www.w3.org/2000/svg">
     <g opacity="0">
@@ -420,6 +485,21 @@
         { id: 'sorvete', tpl: 'tpl-alvo-rua-sorvete', som: 'sorvete', reacao: 'pulso', tomGrato: 783.99 },
       ],
     },
+    {
+      id: 'praia',
+      // Os resgatáveis repousam na areia (não no céu) e o herói pousa com os pés sobre a
+      // areia. O ponto de apoio fica na faixa de areia na altura em que os pés do herói
+      // (origem + ~227 px) ainda cabem na tela; flutuação mínima, só a US1 ("movimento sutil").
+      ancorAlvo: { x: 1280, y: 850 },
+      centroAlvo: { x: 0, y: -3 },
+      heroi: { x: 420, y: 300 },
+      cordaAlvo: null,
+      rotaTravesso: { x0: 1620, y0: 210, x1: 2060, y1: 150, dur: 1800, escala: 1 },
+      alvos: [
+        { id: 'tartaruguinha', tpl: 'tpl-alvo-praia', som: 'tartaruga', reacao: 'cabeceia', tomGrato: 554.37 },
+        { id: 'bola', tpl: 'tpl-alvo-praia-bola', som: 'bola', reacao: 'quica', tomGrato: 880 },
+      ],
+    },
   ];
 
   // Travessos: um por rodada, alternando por contador (sem sorteio).
@@ -448,6 +528,8 @@
     quiques:    { dur: 600, obj: p => `translate(0 ${(-32 * Math.abs(Math.sin(p * Math.PI * 2)) * envoltoria(p)).toFixed(2)})` },
     abana:      { dur: 600, obj: p => `rotate(${(30 * Math.sin(p * Math.PI * 4) * envoltoria(p)).toFixed(2)})` },
     pulso:      { dur: 600, obj: p => `scale(${(1 + 0.4 * envoltoria(p)).toFixed(3)})` },
+    cabeceia:   { dur: 600, obj: p => `rotate(${(18 * Math.sin(p * Math.PI * 2) * envoltoria(p)).toFixed(2)})` },
+    quica:      { dur: 600, obj: p => `translate(0 ${(-36 * Math.abs(Math.sin(p * Math.PI * 3)) * envoltoria(p)).toFixed(2)})` },
   };
 
   const clamp01 = t => t < 0 ? 0 : t > 1 ? 1 : t;
@@ -719,6 +801,26 @@
       nota(q, 1568, 0.2, 0.14, 'sine');
       nota(q, 2349.32, 0.12, 0.12, 'sine');
     }
+    // M3 (v1.3): tartaruguinha — trinado suave de duas notas.
+    function tartaruga(q) {
+      if (!ctx) return;
+      nota(q, 880, 0.26, 0.09, 'sine');
+      nota(q + 0.09, 1174.66, 0.24, 0.1, 'sine');
+    }
+    // M3 (v1.3): bola de praia — quique de borracha leve.
+    function bola(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(340, q);
+      o.frequency.exponentialRampToValueAtTime(620, q + 0.06);
+      o.frequency.exponentialRampToValueAtTime(360, q + 0.14);
+      const g = ctx.createGain();
+      envelope(g, q, 0.32, 0.005, 0.16);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.18);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
     // M1 (v1.2): gratidão do resgatado — duas notas senoidais ascendentes, ≤ 150 ms.
     function gratidao(tom) {
       if (!ctx) return;
@@ -808,6 +910,8 @@
       else if (som === 'pipa') pipa(q + 0.07);
       else if (som === 'patinho') patinho(q + 0.07);
       else if (som === 'sorvete') sorvete(q + 0.07);
+      else if (som === 'tartaruga') tartaruga(q + 0.07);
+      else if (som === 'bola') bola(q + 0.07);
     }
     function travesso(som) {
       if (!ctx) return;
@@ -897,7 +1001,11 @@
     jogo.reacaoAtiva = false;
   }
   function montarTravesso() {
-    const cfg = TRAVESSOS[jogo.rodada % TRAVESSOS.length];
+    // Com 4 cenários (par), a alternância só por rodada fixaria um travesso por cenário
+    // (telhados/rua sempre com o Duende, parque/praia sempre com o Abutre). Somar a volta
+    // — floor(rodada / CENARIOS.length) — mantém a variedade, sem sorteio e sem `if`.
+    const idx = (jogo.rodada + Math.floor(jogo.rodada / CENARIOS.length)) % TRAVESSOS.length;
+    const cfg = TRAVESSOS[idx];
     const novo = clonarTemplate(cfg.tpl);
     if (!novo) return;
     novo.id = 'travesso';
