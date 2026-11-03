@@ -3,6 +3,7 @@
 - **Versão**: 1.4 (v1.0, v1.1, v1.2 e v1.3 homologadas em 2026-11-03; v1.4 — placar e inversão de lado — entregue em 2026-11-03, ver `docs/adr/0004-placar-e-inversao-de-lado.md`)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
+- **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, dois toques rápidos alternam a tela cheia (a tecla `F` exige teclado). O alvo jogável continua sendo notebook com mouse — toque não é mecânica suportada.
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
 - **Herói**: Homem-Aranha, identidade oficial, referência do desenho clássico
 - **Travesso**: Duende Verde, suavizado em tom, nunca em close

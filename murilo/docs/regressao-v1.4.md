@@ -63,6 +63,7 @@ Sessão dirigida (loop acelerado) percorrendo os quatro cenários; 14 resgates o
 - **Sem salto de posição** — a posição do herói é contínua na fronteira `RESGATE → VOLTA` (ambos usam `arco.h1`) e `VOLTA → ESPERANDO` (ambos usam `layoutAtual().heroi`).
 - **Loop intacto** — aim assist, tempos da FSM, estrelas, festa e descarte de cliques (L6) inalterados.
 - **Console** — nenhum erro ou aviso em nenhum momento.
+- **Tela cheia no celular (cortesia, `US15`)** — metatags `mobile-web-app-capable`, `apple-mobile-web-app-capable` e `apple-mobile-web-app-status-bar-style` adicionadas; dois toques rápidos (`pointerType: 'touch'`) alternam `requestFullscreen`. Verificado em `jsdom`: duplo-toque de toque alterna, o segundo alterna de volta, mouse é ignorado e toque único não alterna — zero erros. No iPhone, onde a API de tela cheia é parcial, o gesto é inócuo; o caminho é "Adicionar à Tela de Início". A tecla `F` no desktop não muda.
 
 ### Reversibilidade
 

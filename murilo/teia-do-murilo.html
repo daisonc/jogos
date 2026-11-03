@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>Teia do Murilo</title>
 <link rel="icon" href="data:,">
 <style>
@@ -1613,6 +1616,18 @@
       }
     } catch (e) {}
   }
+  // Tela cheia por toque (celular). O atalho `F` só existe com teclado e, em telas de
+  // toque, a API de fullscreen exige um gesto. Dois toques rápidos em área vazia alternam
+  // a tela cheia; um toque no alvo continua sendo resgate — o segundo toque chega com a
+  // FSM fora de ESPERANDO e por isso não conta como duplo-toque. Desktop (mouse) não muda.
+  let ultimoToque = -1;
+  function aoToqueRapido(ev) {
+    if (ev.pointerType !== 'touch') return;
+    if (jogo.estado !== S.ESPERANDO) { ultimoToque = -1; return; }
+    const agora = performance.now();
+    if (ultimoToque >= 0 && agora - ultimoToque <= 320) { ultimoToque = -1; alternarTela(); }
+    else ultimoToque = agora;
+  }
   function aoTeclar(ev) {
     jogo.ocioso = 0;
     if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
@@ -1626,6 +1641,7 @@
   el.svg.addEventListener('pointerdown', aoClicar);
   el.svg.addEventListener('contextmenu', ev => ev.preventDefault());
   document.addEventListener('keydown', aoTeclar);
+  document.addEventListener('pointerdown', aoToqueRapido, { passive: true });
 
   montarPlacar();
   montarCenario(0);

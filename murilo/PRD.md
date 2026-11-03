@@ -608,6 +608,7 @@ A v1.4 adiciona **um HUD de leitura sem leitura** (o placar) e **variedade de mo
 | Escopo do placar | Cumulativo na sessão | Não zera na festa nem na troca de cenário |
 | Itens do placar | Só os já salvos | Sem ícone com zero; a linha nasce no primeiro salvamento |
 | Inversão de lado | A cada resgate, contínua | Atravessa festa e troca de cenário; espelha o cenário inteiro |
+| Tela cheia no toque | Duplo-toque (cortesia) | Exceção mínima ao non-goal "toque": é só o atalho de tela cheia; a jogabilidade segue mouse + teclado |
 
 **Emenda ao non-goal "Placar, recorde, pontuação".** O §2 exclui placar. A v1.4 abre **uma exceção nominal**, apenas para o placar de resgates descrito nesta seção: nada de recorde, ranking, pontuação por tempo, dificuldade ou progresso salvo. A emenda está registrada no `ADR 0004`.
 
@@ -641,12 +642,25 @@ A v1.4 adiciona **um HUD de leitura sem leitura** (o placar) e **variedade de mo
 - A `VOLTA` pousa no **lado novo** (o herói já virou para lá no resgate), sem salto de posição entre o fim de uma etapa e o início da seguinte.
 - Nenhum `Math.random`; a inversão é determinística.
 
+#### US15 — Abrir em tela cheia no celular (cortesia)
+
+*Como adulto, quero colocar em tela cheia sem teclado, para aproveitar o jogo quando ele for aberto no celular.*
+
+**Critérios de aceite**
+
+- A tecla `F` continua valendo no desktop, inalterada.
+- No toque, **dois toques rápidos** (≤ 320 ms) em área vazia alternam a tela cheia via `requestFullscreen`; um toque no alvo continua sendo resgate (o segundo toque chega com a FSM fora de `ESPERANDO` e não conta).
+- Um toque único **não** alterna; o mouse é ignorado pelo gesto.
+- As metatags de instalação (`mobile-web-app-capable`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) permitem que "Adicionar à Tela de Início" abra sem a barra de endereço.
+- Onde a API de tela cheia não existe (ex.: iPhone), o gesto é inócuo — nada quebra e nenhum diálogo aparece.
+
 ### 8.3 Non-goals da v1.4
 
 - Placar de pontuação, recorde, ranking, tempo, dificuldade ou progresso salvo — o placar é **só** de contagem de resgates por item.
 - Texto, letra ou qualquer outro número fora do placar.
 - Terceira feature, novo cenário, nova mecânica, novo estado de FSM, novos resgatáveis ou travessos.
 - Mudar o aim assist, os tempos do loop, a festa ou a estrutura de três estrelas.
+- Toque, celular e tablet como alvo jogável continuam fora de escopo; a única exceção é o **duplo-toque para tela cheia** (`US15`), sem mecânica de toque nova.
 - Dependência, biblioteca, build, rede, armazenamento.
 
 ### 8.4 Especificação técnica
