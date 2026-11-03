@@ -3,7 +3,7 @@
 - **Versão do documento**: 1.1
 - **Escopo do produto**: v1.0 — três cenários, loop completo
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: F1 e F2 implementados; F3 pendente
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -57,7 +57,7 @@ Dois observacionais (sessão real com o Murilo, protocolo em `TEMA.md` § *Como 
   - **(a)** círculo de acerto com raio de **220 px** ao redor do resgatável (≈ 11,5% da largura);
   - **(b)** se houver exatamente um resgatável ativo, qualquer clique dentro do **terço central** (30%–70% da largura, 25%–75% da altura) também conta.
 - Clique fora de (a) e (b) não produz **nada**: sem som, sem animação, sem mudança de estado, sem cursor de erro.
-- Nenhum texto, ícone ou tutorial é exibido em momento algum.
+- Nenhum texto nem tutorial é exibido em momento algum. Ícones só existem como feedback de tecla do adulto (`US5`), nunca durante o jogo em si.
 
 #### US2 — O resgate acontece sozinho
 
@@ -180,9 +180,11 @@ Data-driven (`game-engine` › *Data-Driven Design*): os três cenários são co
 
 | id | Nome | Céu | Resgatável | Som do resgatável |
 | --- | --- | --- | --- | --- |
-| `telhados` | Telhados ao pôr do sol | `#FFD08A → #F08A5D → #6B4E8F` | Gatinho | `miau` agudo |
+| `telhados` | Telhados ao pôr do sol | `#6B4E8F → #F08A5D → #FFD08A` | Gatinho | `miau` agudo |
 | `parque` | Parque | `#87CEEB → #C9E9F6` | Balão | `ploc` de borracha |
 | `rua` | Rua do bairro | `#A8DADC` | Cachorrinho | latido curto |
+
+*(Céu: cores do topo para a base da tela; uma cor = céu uniforme.)*
 
 Cada cenário define: paleta, silhuetas de prédios/árvores/casas, posição do resgatável, e a rota de fuga do Duende. Nenhum comportamento é hard-coded por cenário.
 
@@ -238,7 +240,7 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | R3 | Autoplay bloqueia o áudio e a sessão fica silenciosa | Média | Baixo | Destravar no primeiro `pointerdown`; `resume()` se suspenso | Ícone piscando pedindo um clique; nunca bloquear o jogo por áudio |
 | R4 | Notebook antigo não sustenta 60 fps | Baixa | Médio | Só `transform`/`opacity`; DPR limitado a 2; ≤ 80 nós animados | Reduzir confete de 60 para 24 partículas; se persistir, migrar render para Canvas 2D |
 | R5 | Ele fecha a janela ou sai da tela cheia com o mouse | Média | Baixo | `F` para tela cheia; área de jogo cobre 100% da viewport | Aceitar: é responsabilidade do adulto, não do jogo |
-| R6 | Escopo cresce para "mais um cenário", "mais um vilão" | Alta | Médio | Non-goals explícitos; v1.1 congelada até o teste com o Murilo | Nada. Este risco não tem mitigação técnica, só disciplina |
+| R6 | Escopo cresce para "mais um cenário", "mais um vilão" | Alta | Médio | Non-goals explícitos; v1.1 só depois da v1.0 homologada (feito em 2026-11-03) | Nada. Este risco não tem mitigação técnica, só disciplina |
 
 ### Rollout
 
@@ -246,13 +248,15 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | --- | --- | --- |
 | **F1 — Loop** | FSM completa, 1 cenário (`telhados`), arte provisória, sem áudio | Clicar produz balanço e resgate; K3 e K4 verdes |
 | **F2 — Voz do jogo** | Arte final dos 3 cenários, Duende, áudio sintetizado, estrelas, festa | K5 verde; duração da festa e timings dentro da tolerância |
-| **F3 — v1.0** | Arquivo único final, attract mode, `M`/`F` | **Teste com o Murilo** e K1/K2 observados |
-| **v1.1** | Narração opcional, variações de resgatável (pipa, patinho, sorvete), 2º travesso | Só depois de K1 e K2 confirmados |
+| **F3 — v1.0** | Arquivo único final, attract mode, `M`/`F` | **Concluída e homologada em 2026-11-03** — K1/K2, NF12 e conferência visual confirmados pelo operador |
+| **v1.1** | Narração opcional, variações de resgatável (pipa, patinho, sorvete), 2º travesso | Liberada (K1 e K2 confirmados em 2026-11-03) |
 | **v2.0** | `pedro/` — o jogo do irmão, com as próprias leis | Fora deste PRD |
 
 ### Definição de pronto
 
 A v1.0 está pronta quando: um arquivo `.html` abre por duplo-clique em notebook offline, o Murilo clica e um resgate acontece em menos de 3,2 s, três resgates produzem uma festa, o Duende aparece e foge sem close, o adulto muta com uma tecla, **NF1–NF12 estão verificados**, e nenhuma das dez leis do `TEMA.md` foi violada.
+
+**Situação em 2026-11-03:** todos os critérios acima foram atendidos e homologados pelo operador.
 
 ---
 

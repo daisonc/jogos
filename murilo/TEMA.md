@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.0 (tema fechado; F1 e F2 implementados)
+- **Versão**: 1.0 (tema fechado; v1.0 homologada em 2026-11-03)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
@@ -150,7 +150,7 @@ Tema de jogo infantil que não foi testado com a criança é ficção. Protocolo
 
 ## Pendências para a v1.1
 
-Não são dúvidas — são coisas que só o teste com o Murilo pode decidir.
+Não são dúvidas — são coisas que só o teste com o Murilo podia decidir. O teste foi feito e homologado em 2026-11-03 (K1/K2); a v1.1 está liberada.
 
 - Narração em voz (`olha o gatinho, Murilo!`) — só depois de ver como ele reage ao áudio.
 - Um segundo travesso, se o Duende funcionar.
