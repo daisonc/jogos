@@ -271,7 +271,7 @@ A v1.1 adiciona **conteúdo**, não mecânica: três variações de resgatável 
 | Decisão | Escolha | Consequência |
 | --- | --- | --- |
 | Formato | Emenda a este PRD | Uma fonte de verdade; a v1.0 continua sendo o contrato homologado |
-| Variações | Alternância por cenário | Cada cenário mantém o resgatável base e ganha um alternativo; a base aparece primeiro |
+| Variações | Alternância por resgate | Cada cenário mantém o resgatável base e ganha um alternativo; a base aparece primeiro em cada cenário |
 | 2º travesso | Abutre | Segundo travesso aéreo, visto de longe, sem close |
 | Entrada do Abutre | Alternância por rodada | Rodada 0 Duende, rodada 1 Abutre, rodada 2 Duende… |
 | Narração | Descartada em definitivo | Fora de qualquer versão |
@@ -284,7 +284,7 @@ A v1.1 adiciona **conteúdo**, não mecânica: três variações de resgatável 
 | `parque` | Balão | Patinho de borracha | `ploc` | guincho de borracha |
 | `rua` | Cachorrinho | Sorvete | latido curto | sino curto |
 
-**Regra de alternância:** a primeira visita a cada cenário mostra sempre a base; a segunda mostra a variante; a terceira visita volta à base. A alternância é determinística (contador por cenário), nunca sorteada.
+**Regra de alternância:** o objeto alterna **a cada resgate**, não a cada troca de cenário. Em cada cenário o 1º resgate mostra a base, o 2º a variante e o 3º volta à base. Como `jogo.resgates` zera na festa, todo cenário recomeça pela base. A alternância é determinística (`jogo.resgates % alvos.length`), nunca sorteada.
 
 **Regra do Abutre:** a cada rodada (três resgates + festa + troca de cenário), o travesso alterna. O Abutre usa a mesma rota de fuga do Duende no cenário; mudam a silhueta e o som. Ele é causa, não obstáculo.
 
@@ -303,7 +303,7 @@ A v1.1 adiciona **conteúdo**, não mecânica: três variações de resgatável 
 **Critérios de aceite**
 
 - Exatamente um resgatável ativo por vez; a variação não muda o aim assist (círculo de 220 px + terço central), a FSM nem a duração de nenhuma etapa.
-- Cada cenário alterna base → variante → base a cada visita; a primeira visita de cada cenário é sempre a base.
+- O objeto alterna base → variante → base **a cada resgate** dentro da rodada; o primeiro resgate de cada cenário é sempre a base.
 - A variante tem som próprio, distinto dos outros cinco resgatáveis e do `pop` genérico, tocado no resgate.
 - A silhueta da variante é reconhecível em 200 ms, sem texto, sem ícone e sem UI nova.
 - O halo dourado da base é reutilizado; nenhum gradiente novo é criado.
@@ -357,7 +357,7 @@ alvos: [
 ]
 ```
 
-- `jogo.visitas[i]` conta quantas vezes o cenário `i` foi montado. `montarCenario(i)` escolhe `v = jogo.visitas[i] % alvos.length`, clona `alvos[v].tpl`, guarda `alvos[v].som` em `jogo.somAlvo` (usado por `Som.resgate`) e incrementa `jogo.visitas[i]`. A primeira visita é sempre o índice 0 (base). O campo `som` de `CENARIOS[i]` é substituído por `alvos[].som`.
+- `jogo.resgates` conta os resgates da rodada e zera em `terminarFesta()`. `montarAlvo()` (chamada por `nascerAlvo()`, a cada resgate) escolhe `v = jogo.resgates % alvos.length`, clona `alvos[v].tpl` e guarda `alvos[v].som` em `jogo.somAlvo` (usado por `Som.resgate`). O índice 0 (base) é sempre o primeiro resgate de cada cenário. O campo `som` de `CENARIOS[i]` é substituído por `alvos[].som`; `montarCenario()` monta só cenário e travesso.
 - `TRAVESSOS = [{ id:'duende', tpl:'tpl-travesso-duende', som:'ihihi' }, { id:'abutre', tpl:'tpl-travesso-abutre', som:'abutre' }]`.
 - `jogo.rodada` incrementa em `terminarFesta()`; `TRAVESSOS[jogo.rodada % 2]` escolhe o travesso.
 - `#travesso` é substituído pelo clone do template (sem aninhar um `<g>` extra), mantendo o id e a referência em `el.travesso`. O Duende sai do markup fixo e vira template, como os alvos. Isso mantém **um** travesso renderizado por vez, com o mesmo custo de nós.
@@ -404,20 +404,20 @@ Meta: manter o total atual (147/142/148). Teto absoluto: 150. O `rua` é o cená
 | R7 | Variante estoura o teto de nós (rua tem 2 de folga) | Média | Médio | Teto por variante (§6.4); troca por template; medir após cada arte | Simplificar a arte ou remover um nó de cenário no `rua` |
 | R8 | Abutre assusta e o Murilo abandona | Média | Alto | Silhueta de costas/perfil, sem rosto, longe, ≤ 2 s, grasnido leve; K1/K2 | Remover o Abutre e manter só as variações |
 | R9 | Som novo estala ou assusta | Baixa | Médio | Curto, band-limited, medir pico; limitador | Baixar o ganho ou trocar por som mais suave |
-| R10 | Alternância confunde | Baixa | Médio | Determinística, base primeiro, sem sorteio; observar | Fixar a variante por cenário ou aumentar para 2 visitas |
+| R10 | Alternância confunde | Baixa | Médio | Determinística, base primeiro, sem sorteio; observar | Fixar a variante por cenário ou alternar a cada 2 resgates |
 | R11 | Escopo cresce | Alta | Médio | Non-goals; só 3 variantes + 1 travesso | Parar no escopo planejado |
 
 ### 6.6 Rollout
 
 | Fase | Entrega | Critério de saída |
 | --- | --- | --- |
-| **F4.1 — Variações** | Templates da pipa, patinho e sorvete; sons; `alvos` + `jogo.visitas` | Cada variante aparece na visita correta; total ≤ 150 nós; pico ≤ −6 dBFS; 0 erros |
+| **F4.1 — Variações** | Templates da pipa, patinho e sorvete; sons; `alvos` + `jogo.resgates` | Cada variante aparece no resgate correto; total ≤ 150 nós; pico ≤ −6 dBFS; 0 erros |
 | **F4.2 — Abutre** | Template do Abutre; som; `TRAVESSOS` + `jogo.rodada`; troca por template | Abutre alterna por rodada; L7/US4 respeitados; total ≤ 150; nenhum estado novo |
 | **F4.3 — Regressão e observação** | Reexecutar NF1–NF12; sessão com o Murilo | Todos os técnicos verdes; K1/K2 reconfirmados; reversível |
 
 ### 6.7 Definição de pronto da v1.1
 
-A v1.1 está pronta quando: as três variações aparecem alternadas por cenário (base primeiro), o Abutre alterna por rodada com o Duende, cada resgatável e cada travesso tem som próprio, NF1–NF12 continuam verdes, os tetos de 150 nós e 80 animados/frame são respeitados, K1/K2 são reconfirmados em sessão observacional, e nenhuma das dez leis do `TEMA.md` foi violada.
+A v1.1 está pronta quando: as três variações aparecem alternadas por resgate dentro de cada cenário (base primeiro), o Abutre alterna por rodada com o Duende, cada resgatável e cada travesso tem som próprio, NF1–NF12 continuam verdes, os tetos de 150 nós e 80 animados/frame são respeitados, K1/K2 são reconfirmados em sessão observacional, e nenhuma das dez leis do `TEMA.md` foi violada.
 
 **Reversão:** o conteúdo novo é aditivo. Remover os templates das variantes, o template do Abutre e os contadores restaura o comportamento da v1.0 sem tocar no loop.
 

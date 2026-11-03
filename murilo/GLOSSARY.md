@@ -25,7 +25,7 @@ O ser ou objeto que o travesso solta e que o herói recolhe.
 _Avoid_: item, coleta, pickup, alvo, power-up
 
 **Variação**:
-A segunda forma do resgatável de um cenário, exibida na visita seguinte à base.
+A segunda forma do resgatável de um cenário, exibida no resgate seguinte à base.
 _Avoid_: skin, versão alternativa, item raro, desbloqueável
 
 **Resgate**:

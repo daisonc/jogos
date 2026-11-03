@@ -91,7 +91,7 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 
 **Segundo travesso — Abutre.** Alterna com o Duende a cada rodada. Visto exclusivamente de longe, de costas, de asas largas e **sem rosto**; reutiliza a rota de fuga do Duende no cenário e não se aproxima nunca. Grasnido curto e leve + duas batidas de asa, nada grave nem prolongado. Vale **L7 integralmente**: ele é paisagem com intenção, não ameaça.
 
-**Resgatáveis.** Um por vez, um par por cenário (base + variação), cada um com som próprio e óbvio. A primeira visita ao cenário mostra a base; a segunda, a variação; a terceira volta à base.
+**Resgatáveis.** Um por vez, um par por cenário (base + variação), cada um com som próprio e óbvio. O objeto alterna **a cada resgate**: base, variação, base. Como a rodada tem três resgates e recomeça a cada cenário, todo cenário abre pela base.
 
 | Cenário | Base | Som | Variação | Som da variação |
 | --- | --- | --- | --- | --- |
