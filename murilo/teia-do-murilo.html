@@ -340,7 +340,9 @@
       <path fill="none" stroke="#1B1420" stroke-width="5" stroke-linecap="round" d="M-6 24 L-10 30 M6 24 L10 30"/>
       <path fill="none" stroke="#6FAE4E" stroke-width="2.5" stroke-linecap="round" d="M-6 24 L-10 30 M6 24 L10 30"/>
       <circle cx="0" cy="-8" r="10" fill="#6FAE4E" stroke="#1B1420" stroke-width="3"/>
-      <path fill="#5A963E" stroke="#1B1420" stroke-width="2.5" stroke-linejoin="round" d="M-10 -12 Q0 -30 10 -12 Q0 -6 -10 -12 Z"/>
+      <g class="gag-chapeu">
+        <path fill="#6A4C93" stroke="#1B1420" stroke-width="2.5" stroke-linejoin="round" d="M-11 -10 Q0 -32 11 -10 Z M-16 -11 Q0 -16 16 -11 Q0 -6 -16 -11 Z"/>
+      </g>
       <path fill="none" stroke="#1B1420" stroke-width="4.5" stroke-linecap="round" d="M-8 2 L-20 6 M8 2 L20 6"/>
       <path fill="none" stroke="#6FAE4E" stroke-width="2" stroke-linecap="round" d="M-8 2 L-20 6 M8 2 L20 6"/>
       <rect x="12" y="10" width="13" height="15" rx="4" fill="#8B5A3C" stroke="#1B1420" stroke-width="2" transform="rotate(8 18 17)"/>
@@ -390,8 +392,8 @@
       cordaAlvo: { x: 0, y: -52 },
       rotaTravesso: { x0: 1600, y0: 190, x1: 2050, y1: 130, dur: 1800, escala: 1 },
       alvos: [
-        { id: 'gatinho', tpl: 'tpl-alvo-telhados', som: 'miau' },
-        { id: 'pipa', tpl: 'tpl-alvo-telhados-pipa', som: 'pipa' },
+        { id: 'gatinho', tpl: 'tpl-alvo-telhados', som: 'miau', reacao: 'espreguica', tomGrato: 523.25 },
+        { id: 'pipa', tpl: 'tpl-alvo-telhados-pipa', som: 'pipa', reacao: 'giro', tomGrato: 659.25 },
       ],
     },
     {
@@ -402,8 +404,8 @@
       cordaAlvo: { x: 0, y: -40 },
       rotaTravesso: { x0: 1580, y0: 210, x1: 2040, y1: 150, dur: 1800, escala: 1 },
       alvos: [
-        { id: 'balao', tpl: 'tpl-alvo-parque', som: 'ploc' },
-        { id: 'patinho', tpl: 'tpl-alvo-parque-patinho', som: 'patinho' },
+        { id: 'balao', tpl: 'tpl-alvo-parque', som: 'ploc', reacao: 'pendulo', tomGrato: 587.33 },
+        { id: 'patinho', tpl: 'tpl-alvo-parque-patinho', som: 'patinho', reacao: 'quiques', tomGrato: 698.46 },
       ],
     },
     {
@@ -414,17 +416,39 @@
       cordaAlvo: null,
       rotaTravesso: { x0: 1600, y0: 180, x1: 2050, y1: 120, dur: 1800, escala: 1 },
       alvos: [
-        { id: 'cachorrinho', tpl: 'tpl-alvo-rua', som: 'latido' },
-        { id: 'sorvete', tpl: 'tpl-alvo-rua-sorvete', som: 'sorvete' },
+        { id: 'cachorrinho', tpl: 'tpl-alvo-rua', som: 'latido', reacao: 'abana', tomGrato: 493.88 },
+        { id: 'sorvete', tpl: 'tpl-alvo-rua-sorvete', som: 'sorvete', reacao: 'pulso', tomGrato: 783.99 },
       ],
     },
   ];
 
   // Travessos: um por rodada, alternando por contador (sem sorteio).
+  // M2 (v1.2): cada travesso faz uma trapalhada na fuga — dado, nunca `if` por travesso.
   const TRAVESSOS = [
-    { id: 'duende', tpl: 'tpl-travesso-duende', som: 'ihihi' },
-    { id: 'abutre', tpl: 'tpl-travesso-abutre', som: 'abutre' },
+    { id: 'duende', tpl: 'tpl-travesso-duende', som: 'ihihi',  gag: { id: 'chapeu',     quando: 0.5, som: 'uepa' } },
+    { id: 'abutre', tpl: 'tpl-travesso-abutre', som: 'abutre', gag: { id: 'cambalhota', quando: 0.5, som: 'uepa' } },
   ];
+
+  // M2 (v1.2): forma de cada trapalhada. `dur` é a fração da fuga gasta no gesto.
+  // `chapeu` anima o nó separado `.gag-chapeu`; `cambalhota` gira o travesso inteiro no plano.
+  const GAGS = {
+    chapeu:     { dur: 0.34 },
+    cambalhota: { dur: 0.42 },
+  };
+
+  // M1 (v1.2): reação do resgatado na entrada de VOLTA. `dur` ≤ 600 ms (a própria VOLTA)
+  // e `obj` devolve o `transform` de um nó de arte já existente — nenhum nó novo.
+  // Amplitude generosa e com retenção no pico (`envoltoria`): o objeto é carregado no
+  // colo do herói enquanto ele balança de volta, então o gesto precisa ser exagerado e
+  // segurado para o Murilo ler "deu certo" sem texto. `dur` = 600 ms = a própria VOLTA.
+  const REACOES = {
+    espreguica: { dur: 600, obj: p => `scale(1 ${(1 + 0.22 * envoltoria(p)).toFixed(3)})` },
+    giro:       { dur: 600, obj: p => `rotate(${(360 * easeInOutCubic(clamp01(p / 0.8))).toFixed(1)})` },
+    pendulo:    { dur: 600, obj: p => `rotate(${(38 * Math.sin(p * Math.PI * 2) * envoltoria(p)).toFixed(2)})` },
+    quiques:    { dur: 600, obj: p => `translate(0 ${(-32 * Math.abs(Math.sin(p * Math.PI * 2)) * envoltoria(p)).toFixed(2)})` },
+    abana:      { dur: 600, obj: p => `rotate(${(30 * Math.sin(p * Math.PI * 4) * envoltoria(p)).toFixed(2)})` },
+    pulso:      { dur: 600, obj: p => `scale(${(1 + 0.4 * envoltoria(p)).toFixed(3)})` },
+  };
 
   const clamp01 = t => t < 0 ? 0 : t > 1 ? 1 : t;
   const lerp = (a,b,t) => a + (b-a)*t;
@@ -432,6 +456,9 @@
   const easeInOutCubic = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
   const easeOutBack = t => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3*Math.pow(t-1,3) + c1*Math.pow(t-1,2); };
   const bez = (a,b,c,t) => (1-t)*(1-t)*a + 2*(1-t)*t*b + t*t*c;
+  // Envelope "entra rápido, segura no pico, sai": sem a retenção o gesto é rápido
+  // demais para o olho pegar, ainda mais com o herói balançando de volta ao mesmo tempo.
+  const envoltoria = t => t < 0.22 ? easeOutCubic(t / 0.22) : t < 0.72 ? 1 : 1 - easeInOutCubic((t - 0.72) / 0.28);
   const $ = id => document.getElementById(id);
 
   // Cache de atributos: evita reescrever o DOM quando o valor não mudou.
@@ -692,6 +719,29 @@
       nota(q, 1568, 0.2, 0.14, 'sine');
       nota(q, 2349.32, 0.12, 0.12, 'sine');
     }
+    // M1 (v1.2): gratidão do resgatado — duas notas senoidais ascendentes, ≤ 150 ms.
+    function gratidao(tom) {
+      if (!ctx) return;
+      const q = agora() + 0.01;
+      const f = tom || 620;
+      nota(q, f, 0.34, 0.08, 'sine');
+      nota(q + 0.075, f * 1.5, 0.3, 0.075, 'sine');
+    }
+    // M2 (v1.2): trapalhada — assobio descendente curto e agudo-médio, ≤ 150 ms.
+    // `som` vem de TRAVESSOS[i].gag.som (hoje só 'uepa').
+    function trapalhada(som) {
+      if (!ctx || som !== 'uepa') return;
+      const q = agora() + 0.01;
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(1180, q);
+      o.frequency.exponentialRampToValueAtTime(520, q + 0.13);
+      const g = ctx.createGain();
+      envelope(g, q, 0.34, 0.01, 0.14);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.16);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
     function grasnido(q) {
       if (!ctx) return;
       const o = ctx.createOscillator();
@@ -772,14 +822,15 @@
       g.setValueAtTime(g.value, t);
       g.linearRampToValueAtTime(mudo ? 0.0001 : 0.251, t + 0.03);
     }
-    return { destravar, teia, balanco, resgate, festa, travesso, definirMudo };
+    return { destravar, teia, balanco, resgate, festa, travesso, gratidao, trapalhada, definirMudo };
   })();
 
   // ---------- elementos ----------
   const el = {
     svg: $('palco'), cenario: $('cenario'), travesso: $('travesso'),
     linha: $('linha-teia'), corda: $('corda-alvo'),
-    heroi: $('heroi'), alvo: $('alvo'), splat: $('splat'),
+    heroi: $('heroi'), alvo: $('alvo'), alvoArte: null, splat: $('splat'),
+    chapeu: null,
     faiscas: [...document.querySelectorAll('#faiscas path')],
     estrelas: [...document.querySelectorAll('#estrelas .estrela')],
     halos: [...document.querySelectorAll('#estrelas .halo')],
@@ -811,6 +862,13 @@
     const svg = tpl.content.firstElementChild;
     return svg ? svg.firstElementChild.cloneNode(true) : null;
   }
+  // Um alvo por vez: o nó do resgatável anterior sai do DOM assim que deixa de estar
+  // ativo, para o cenário nunca reter duas artes e o total de nós (NF4) ficar ≤ 149
+  // em todo quadro — inclusive na janela de 400 ms até o próximo nascer.
+  function limparAlvo() {
+    el.alvo.replaceChildren();
+    el.alvoArte = null;
+  }
   function montarCenario(i) {
     const c = CENARIOS[i];
     const cena = clonarTemplate('tpl-cena-' + c.id);
@@ -821,6 +879,7 @@
       const sm = cena.querySelector('.skyline-media');
       if (sm) sm.setAttribute('d', gerarSkyline(930, 26, MEDIA, { x:1010, r:340 }));
     }
+    limparAlvo();
     montarTravesso();
   }
   // Alvo alterna por resgate (base -> variante -> base); resgates zera na festa,
@@ -828,9 +887,14 @@
   function montarAlvo() {
     const c = cenarioAtual();
     const v = jogo.resgates % c.alvos.length;
-    const alvo = clonarTemplate(c.alvos[v].tpl);
+    const cfg = c.alvos[v];
+    const alvo = clonarTemplate(cfg.tpl);
     if (alvo) el.alvo.replaceChildren(alvo);
-    jogo.somAlvo = c.alvos[v].som;
+    el.alvoArte = alvo;
+    jogo.somAlvo = cfg.som;
+    jogo.reacaoAlvo = cfg.reacao;
+    jogo.tomGrato = cfg.tomGrato;
+    jogo.reacaoAtiva = false;
   }
   function montarTravesso() {
     const cfg = TRAVESSOS[jogo.rodada % TRAVESSOS.length];
@@ -839,7 +903,9 @@
     novo.id = 'travesso';
     el.travesso.replaceWith(novo);
     el.travesso = novo;
+    el.chapeu = novo.querySelector('.gag-chapeu');
     jogo.somTravesso = cfg.som;
+    jogo.gagTravesso = cfg.gag;
   }
 
   // ---------- confete (nÃ³s prÃ©-criados; sÃ³ transform/opacity) ----------
@@ -870,6 +936,8 @@
     flashEm: -1, flashPico: 0, flashDur: 700,
     transicao: false,
     ocioso: 0, demo: false, mudo: false, mudoAvisoEm: -1,
+    reacaoAlvo: null, tomGrato: 0, reacaoAtiva: false, reacaoEm: -1, reacaoDur: 0,
+    gagTravesso: null, gagTocada: false,
     travesso: { ativo: false, inicio: 0, x0: 0, y0: 0, x1: 0, y1: 0, dur: 1800, escala: 1 },
   };
   const estadoEstrelas = [0,1,2].map(() => ({ acesa: false, acendeuEm: -1, apagouEm: -1 }));
@@ -959,6 +1027,8 @@
     d.ativo = true; d.inicio = jogo.t;
     d.x0 = cfg.x0; d.y0 = cfg.y0; d.x1 = cfg.x1; d.y1 = cfg.y1;
     d.dur = cfg.dur; d.escala = cfg.escala;
+    jogo.gagTocada = false;
+    if (el.chapeu) { def(el.chapeu, 'transform', ''); def(el.chapeu, 'opacity', 1); }
     Som.travesso(jogo.somTravesso);
   }
   function desenharTravesso() {
@@ -970,7 +1040,25 @@
     const y = lerp(d.y0, d.y1, e) + Math.sin(p * Math.PI * 2.2) * 5;
     const banco = Math.sin(p * Math.PI * 1.6) * 5 - 2;
     const op = p < 0.08 ? p / 0.08 : p > 0.88 ? (1 - p) / 0.12 : 1;
-    def(el.travesso, 'transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${banco.toFixed(2)}) scale(${d.escala})`);
+
+    // M2 (v1.2): uma trapalhada por fuga, no ponto declarado em TRAVESSOS[i].gag.
+    // O gesto é sempre no ar e nunca reduz a distância horizontal ao herói.
+    let gagRot = 0;
+    const gag = jogo.gagTravesso;
+    if (gag) {
+      const gd = GAGS[gag.id] || { dur: 0.4 };
+      const q = p - gag.quando;
+      if (q >= 0 && !jogo.gagTocada) { jogo.gagTocada = true; Som.trapalhada(gag.som); }
+      if (gag.id === 'cambalhota') gagRot = 360 * easeInOutCubic(clamp01(q / gd.dur));
+      if (el.chapeu && q >= 0) {
+        const hp = clamp01(q / gd.dur);
+        if (hp < 1) {
+          def(el.chapeu, 'transform', `translate(${(30 * hp).toFixed(1)} ${(58 * hp + 60 * hp * hp).toFixed(1)}) rotate(${(320 * hp).toFixed(1)})`);
+          def(el.chapeu, 'opacity', (1 - clamp01((hp - 0.5) / 0.5)).toFixed(3));
+        }
+      }
+    }
+    def(el.travesso, 'transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(banco + gagRot).toFixed(2)}) scale(${d.escala})`);
     def(el.travesso, 'opacity', Math.max(0, op).toFixed(3));
     if (p >= 1) d.ativo = false;
   }
@@ -1052,6 +1140,7 @@
   }
   function concluir() {
     jogo.demo = false;
+    limparAlvo();
     if (jogo.resgates >= 3) {
       entrar(S.FESTA);
     } else {
@@ -1076,6 +1165,12 @@
       jogo.faiscasCentro = pontoLocal(26, 148, jogo.arco.h1.x, jogo.arco.h1.y, 0);
       jogo.faiscasAtivas = true;
       jogo.faiscasEm = jogo.t;
+      // M1 (v1.2): a gratidão começa na entrada de VOLTA e cabe na própria VOLTA (≤ 600 ms).
+      const rec = REACOES[jogo.reacaoAlvo];
+      jogo.reacaoEm = jogo.t;
+      jogo.reacaoDur = rec ? rec.dur : 0;
+      jogo.reacaoAtiva = !!rec;
+      Som.gratidao(jogo.tomGrato);
     } else if (novo === S.FESTA) {
       iniciarFesta();
     }
@@ -1121,6 +1216,13 @@
     desenharFaiscas();
     desenharTravesso();
 
+    // M1 (v1.2): progresso da gratidão (0..1) na VOLTA; -1 quando inativa.
+    let reacaoP = -1;
+    if (jogo.reacaoAtiva) {
+      reacaoP = clamp01((jogo.t - jogo.reacaoEm) / jogo.reacaoDur);
+      if (reacaoP >= 1) { reacaoP = -1; jogo.reacaoAtiva = false; }
+    }
+
     let hx = c.heroi.x, hy = c.heroi.y, hr = 0;
     let teiaModo = 'pendurada', teiaOp = 0.5, teiaFrac = 1;
     let alvoPos = null;
@@ -1163,7 +1265,16 @@
       hr = -12 * Math.sin(Math.PI * p);
       teiaModo = 'none';
       const peito = pontoLocal(26, 148, hx, hy, hr);
-      alvoPos = { x: peito.x, y: peito.y, rot: -8, esc: 0.86, op: 1 - clamp01((p - 0.72) / 0.28) };
+      // M1 (v1.2): destaque da gratidão — o resgatado sobe e cresce à frente do herói
+      // enquanto reage, para o gesto não se perder no balanço de volta.
+      const dp = reacaoP >= 0 ? envoltoria(reacaoP) : 0;
+      alvoPos = {
+        x: peito.x,
+        y: peito.y - 92 * dp,
+        rot: -8,
+        esc: lerp(0.86, 1.4, dp),
+        op: 1 - clamp01((p - 0.88) / 0.12),
+      };
     } else if (e === S.FESTA) {
       const hop = Math.abs(Math.sin(Math.PI * jogo.tEstado / 1000));
       hy = c.heroi.y - 44 * hop;
@@ -1171,6 +1282,10 @@
       teiaModo = 'pendurada'; teiaOp = 0.5;
     }
 
+    if (reacaoP >= 0) {
+      hy += -34 * Math.sin(Math.PI * reacaoP);    // pulinho
+      hr += 12 * Math.sin(reacaoP * Math.PI * 2); // inclinação de aceno
+    }
     def(el.heroi, 'transform', `translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(${hr.toFixed(2)})`);
 
     if (teiaModo === 'pendurada') {
@@ -1192,6 +1307,13 @@
       def(el.alvo, 'opacity', alvoPos.op.toFixed(3));
     } else {
       def(el.alvo, 'opacity', 0);
+    }
+
+    // M1 (v1.2): reação do resgatado num nó de arte já existente (0 nós novos).
+    if (el.alvoArte) {
+      const rec = REACOES[jogo.reacaoAlvo];
+      if (reacaoP >= 0 && rec) def(el.alvoArte, 'transform', rec.obj(reacaoP));
+      else def(el.alvoArte, 'transform', '');
     }
 
     const podeCorda = c.cordaAlvo && alvoPos && (e === S.ESPERANDO || e === S.TEIA || e === S.BALANCO);
@@ -1254,6 +1376,7 @@
     if (jogo.estado !== S.ESPERANDO) {
       jogo.alvoAtivo = false;
       jogo.alvoCongelado = false;
+      limparAlvo();
       jogo.espera = 0;
       jogo.splatAtivo = false;
       jogo.faiscasAtivas = false;

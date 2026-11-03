@@ -20,6 +20,10 @@ _Avoid_: Goblin, vilão verde, o monstro
 O segundo travesso, sempre visto de longe, de costas e sem rosto; alterna com o Duende a cada rodada.
 _Avoid_: urubu, vilão, monstro, inimigo
 
+**Trapalhada**:
+O gesto cômico que cada travesso faz durante a fuga — o Duende perde o chapéu, o Abutre dá uma cambalhota — sempre no ar, sem queda, impacto ou dor.
+_Avoid_: acidente, queda, gag, desastre, erro
+
 **Resgatável**:
 O ser ou objeto que o travesso solta e que o herói recolhe.
 _Avoid_: item, coleta, pickup, alvo, power-up
@@ -31,6 +35,10 @@ _Avoid_: skin, versão alternativa, item raro, desbloqueável
 **Resgate**:
 O ato de recolher um resgatável, concluindo uma unidade de progresso.
 _Avoid_: ponto, score, captura, coleta
+
+**Gratidão**:
+A reação curta do resgatável salvo no início da volta, acompanhada de um som próprio — a prova visual de que o resgate deu certo.
+_Avoid_: comemoração, agradecimento falado, cutscene, obrigado
 
 **Rodada**:
 A unidade de jogo composta por três resgates e uma festa, em um cenário.

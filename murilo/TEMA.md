@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.1 (v1.0 homologada em 2026-11-03; v1.1 concluída e homologada em 2026-11-03)
+- **Versão**: 1.2 (v1.0 e v1.1 homologadas em 2026-11-03; v1.2 implementada em 2026-11-03, aguardando observação com o Murilo)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
@@ -78,7 +78,7 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 | Teia | 0,25 s | Fio branco sai do pulso e gruda | `thwip` |
 | Balanço | 1,2–1,8 s | Herói atravessa a tela em arco | `whoosh` |
 | Resgate | 0,5 s | Objeto salvo voa para o colo do herói | `pop` + gargalhada do resgatável |
-| Volta | 0,6 s | Herói pousa no próximo ponto | nenhum |
+| Volta | 0,6 s | Herói pousa no próximo ponto; o resgatado **agradece** e o herói dá um pulinho | som curto de gratidão |
 | Festa (a cada 3) | 3 s | Confete, estrelas acendendo, herói pulando | jingle de 8 notas |
 
 **Uma rodada completa dura 10–15 segundos de conteúdo.** O resto do tempo é o Murilo reagindo — e reagir é jogar.
@@ -91,7 +91,9 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 
 **Segundo travesso — Abutre.** Alterna com o Duende a cada rodada. Visto exclusivamente de longe, de costas, de asas largas e **sem rosto**; reutiliza a rota de fuga do Duende no cenário e não se aproxima nunca. Grasnido curto e leve + duas batidas de asa, nada grave nem prolongado. Vale **L7 integralmente**: ele é paisagem com intenção, não ameaça.
 
-**Resgatáveis.** Um por vez, um par por cenário (base + variação), cada um com som próprio e óbvio. O objeto alterna **a cada resgate**: base, variação, base. Como a rodada tem três resgates e recomeça a cada cenário, todo cenário abre pela base.
+**Trapalhada.** Na fuga, cada travesso faz **um** gesto cômico: o Duende perde o chapéu, que cai girando; o Abutre dá uma cambalhota no ar. Tudo acontece no ar e de longe (L7 vale integralmente): nunca há queda, impacto, dor nem choro — a graça é o movimento, nunca o dano. Um assobio descendente curto acompanha. O gesto é dado do travesso e não muda a duração da fuga.
+
+**Resgatáveis.** Um por vez, um par por cenário (base + variação), cada um com som próprio e óbvio. O objeto alterna **a cada resgate**: base, variação, base. Como a rodada tem três resgates e recomeça a cada cenário, todo cenário abre pela base. Salvo, cada resgatável reage do seu jeito (espreguiça, gira, balança, quica, abana ou pulsa), sempre acompanhado de um som curto de gratidão.
 
 | Cenário | Base | Som | Variação | Som da variação |
 | --- | --- | --- | --- | --- |
