@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.6 (v1.0, v1.1, v1.2 e v1.3 homologadas; v2.0 fora deste PRD, §5)
-- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia)
+- **Versão do documento**: 1.7 (v1.0, v1.1, v1.2, v1.3 e v1.4 homologadas; v2.0 fora deste PRD, §5)
+- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia); v1.4 — placar de resgates e inversão de lado (§8)
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 concluída e homologada em 2026-11-03** (quarto cenário — Praia; §7): F6.1 e F6.2 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.3.md`), Praia em 138/150 nós, e K1/K2 reconfirmados pelo operador. Com a v1.3, o roadmap deste PRD está completo; a v2.0 (`pedro/`) fica fora deste documento.
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 concluída e homologada em 2026-11-03** (quarto cenário — Praia; §7): F6.1 e F6.2 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.3.md`), Praia em 138/150 nós, e K1/K2 reconfirmados pelo operador. **v1.4 entregue em 2026-11-03** (placar de resgates + inversão de lado; §8) — implementada; NF1–NF12 verdes salvo o rebaseline de NF4 (pico de 240 nós, ver §8.4), K1/K2 pendentes de sessão observacional. Com a v1.4, o roadmap original deste PRD está completo; a v2.0 (`pedro/`) fica fora deste documento.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -593,6 +593,111 @@ O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O s
 
 ---
 
+## 8. Planejamento da v1.4
+
+> Emenda de planejamento. A v1.0–v1.3 permanecem homologadas; esta seção descreve o que a v1.4 acrescenta: **placar de resgates** (feature 1) e **inversão de lado a cada salvamento** (feature 2), ambas pedidas pelo operador.
+
+### 8.1 Escopo e decisões
+
+A v1.4 adiciona **um HUD de leitura sem leitura** (o placar) e **variedade de movimento** (a inversão de lado). Nenhuma das duas mexe no aim assist, na FSM, nos tempos, nas estrelas ou na festa.
+
+| Decisão | Escolha | Consequência |
+| --- | --- | --- |
+| Formato | Emenda a este PRD | v1.0–v1.3 continuam como contratos |
+| Placar com dígitos | Sim, sobrepõe L8 e L3 | Exceção **nominal** registrada no `ADR 0004`; nenhum outro número entra |
+| Escopo do placar | Cumulativo na sessão | Não zera na festa nem na troca de cenário |
+| Itens do placar | Só os já salvos | Sem ícone com zero; a linha nasce no primeiro salvamento |
+| Inversão de lado | A cada resgate, contínua | Atravessa festa e troca de cenário; espelha o cenário inteiro |
+
+**Emenda ao non-goal "Placar, recorde, pontuação".** O §2 exclui placar. A v1.4 abre **uma exceção nominal**, apenas para o placar de resgates descrito nesta seção: nada de recorde, ranking, pontuação por tempo, dificuldade ou progresso salvo. A emenda está registrada no `ADR 0004`.
+
+### 8.2 Histórias de usuário
+
+#### US13 — Ver o que eu já salvei (feature 1)
+
+*Como Murilo, quero ver o desenho de cada bicho/brinquedo que eu salvei e quantos eu já salvei, para sentir a coleção crescer sem precisar ler.*
+
+**Critérios de aceite**
+
+- Placar no **canto superior direito** (coordenadas virtuais), sem cobrir o herói nem o resgatável ativo.
+- Uma linha por resgatável **já salvo**: o desenho do item à esquerda e o número de salvamentos à direita.
+- Só aparecem itens já salvos; nenhum ícone com zero.
+- A contagem é **cumulativa na sessão** — não zera na festa nem na troca de cenário.
+- A linha nasce no primeiro salvamento do item e **não se reposiciona** depois (o placar só cresce para baixo).
+- Determinístico e sem `Math.random`; nenhum estado persistido.
+- Só `transform` e `opacity` animam; o placar é **estático** (não soma animados/frame).
+- É a **única** exceção a L3 e L8; nenhum outro texto, letra ou número aparece no jogo.
+
+#### US14 — O lado muda a cada resgate (feature 2)
+
+*Como Murilo, quero que o herói e o objeto troquem de lado a cada salvamento, para o balanço não ser sempre na mesma direção.*
+
+**Critérios de aceite**
+
+- A cada resgate, o lado em que o herói começa **inverte**: herói à esquerda/objeto à direita ⇄ objeto à esquerda/herói à direita, indefinidamente.
+- A alternância é por **contador** (`jogo.lado`), determinística e **contínua** — atravessa a festa e a troca de cenário.
+- O cenário é espelhado em torno de `x = W/2`, **inclusive a rota do travesso**; na aparição, `|herói − travesso| ≥ 1152 px` (≥ 60% da largura), preservando `US4`/`US8` e `L7` em todos os cenários e nos dois lados.
+- Nenhum estado novo de FSM; o loop, o aim assist, os tempos, as estrelas e a festa não mudam.
+- A `VOLTA` pousa no **lado novo** (o herói já virou para lá no resgate), sem salto de posição entre o fim de uma etapa e o início da seguinte.
+- Nenhum `Math.random`; a inversão é determinística.
+
+### 8.3 Non-goals da v1.4
+
+- Placar de pontuação, recorde, ranking, tempo, dificuldade ou progresso salvo — o placar é **só** de contagem de resgates por item.
+- Texto, letra ou qualquer outro número fora do placar.
+- Terceira feature, novo cenário, nova mecânica, novo estado de FSM, novos resgatáveis ou travessos.
+- Mudar o aim assist, os tempos do loop, a festa ou a estrutura de três estrelas.
+- Dependência, biblioteca, build, rede, armazenamento.
+
+### 8.4 Especificação técnica
+
+**Placar.** Constantes em `PLACAR`; `<g id="placar">` no topo (acima do cenário, abaixo do flash e do aviso de mudo). Estado `placarContagem` (id → nº) e `placarLinhas` (id → nó de texto). Em `entrar(S.RESGATE)`, `registrarResgate()` lê `jogo.alvoId`/`jogo.alvoTpl` (gravados em `montarAlvo()`), incrementa o contador do item e, no primeiro salvamento, clona a arte do template do resgatável numa linha nova (sem o halo dourado). O dígito é um `<text>` com fonte de sistema; a linha nasce em `y` fixo e o fundo (`<rect>`) cresce com o número de itens. Reaproveita a arte real de cada item — é o desenho que o Murilo reconhece.
+
+**Inversão de lado.** Estado `jogo.lado` (0/1). `espelharLayout(c)` devolve o cenário com `heroi`, `ancorAlvo`, `centroAlvo.x`, `cordaAlvo.x` e `rotaTravesso` espelhados em `x = W/2`; `layoutAtual()` escolhe entre o cenário base e o espelhado. `posAlvo`, `iniciarTravesso`, `iniciarTeia` e `desenhar` passam a ler `layoutAtual()`. Em `entrar(S.RESGATE)`, `jogo.lado ^= 1` (a virada acontece depois do balanço, para a volta já pousar no lado novo). A `VOLTA` deixa de retornar ao ponto de partida e passa a pousar em `layoutAtual().heroi`, com controle de arco próprio.
+
+**Orçamento de nós (NF4) — rebaseline.** O placar soma nós (a arte real de cada item). Pico medido com oito itens salvos: **240 nós** (antes 149), durante o ciclo completo dos quatro cenários. Os nós do placar são **estáticos**: não entram no limite de ≤ 80 animados/frame nem no frame time (NF3). O teto de NF4 passa a **240** para a v1.4 (amendment no `ADR 0004`); a alternativa de ícones pictográficos próprios foi descartada por risco de descaracterizar o item.
+
+**Determinismo e dados.** Nenhum `Math.random` na contagem nem na inversão; ambos são contadores. Nenhum `if (cenario === …)`; o espelhamento é geométrico e a contagem é por id. Sem persistência.
+
+**Áudio, seguranças e loop.** Inalterados: nenhum som novo, nenhum nó animado a mais, aim assist (círculo de 220 px + terço central), tempos da FSM, estrelas e festa intactos.
+
+### 8.5 Riscos
+
+| ID | Risco | Prob. | Impacto | Mitigação | Plano B |
+| --- | --- | --- | --- | --- | --- |
+| R17 | O placar polui a tela ou cobre o travesso | Média | Baixo | Canto superior direito, fundo translúcido, só itens salvos; observar K1/K2 | Encolher os ícones ou mover o placar para uma faixa no topo |
+| R18 | O número confunde e some a leitura do desenho | Baixa | Médio | Desenho à esquerda, dígito à direita, alto contraste; item reconhecível em 200 ms | Reduzir a fonte do dígito ou destacar mais o desenho |
+| R19 | NF4 estoura de vez com oito itens | Média | Baixo | Rebaseline para 240, nós estáticos; medir a cada item | Ícones pictográficos compactos por item |
+| R20 | A inversão de lado confunde o Murilo | Baixa | Médio | Determinística, contínua, mesma cena espelhada; observar | Fixar o lado ou inverter a cada rodada |
+| R21 | Espelhar a rota do travesso aproxima-o do herói | Baixa | Alto | Rota espelhada junto; `|herói − travesso| = 1170–1220 px` nos dois lados | Não espelhar o lado do travesso, só o do herói/objeto |
+| R22 | Escopo cresce para "placar de tudo" | Alta | Médio | Non-goals; exceção nominal no `ADR 0004` | Parar no placar de resgates |
+
+### 8.6 Rollout
+
+| Fase | Entrega | Critério de saída |
+| --- | --- | --- |
+| **F7.1 — Placar** | `PLACAR`, `#placar`, `registrarResgate`, `jogo.alvoId/alvoTpl` | Uma linha por item salvo; número correto; cumulativo; 0 erros |
+| **F7.2 — Inversão de lado** | `jogo.lado`, `espelharLayout`/`layoutAtual`, VOLTA no lado novo | Lado alterna a cada resgate; L7/US4 respeitadas nos dois lados |
+| **F7.3 — Regressão e observação** | Reexecutar NF1–NF12 (NF4 rebaselinado); sessão com o Murilo | Técnicos verdes (ressalva NF4); K1/K2 reconfirmados; reversível |
+
+**Situação em 2026-11-03:** F7.1 e F7.2 implementadas e verificadas (sessão dirigida em Node/jsdom, ciclo completo dos quatro cenários, 14 resgates, 8 itens no placar, zero erros de console, alternância de lado confirmada; pico de nós 240). **F7.3 pendente** da medição oficial de NF3/NF6/NF12 e da sessão observacional (K1/K2) pelo operador.
+
+### 8.7 Definição de pronto
+
+A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenho e o número de salvamentos, cumulativo na sessão; o lado em que o herói começa inverte a cada resgate, continuamente, com o travesso sempre a ≥ 60% de distância nos dois lados; NF1–NF12 seguem verdes (com o rebaseline de NF4 para 240 nós); K1/K2 são reconfirmados em sessão observacional; e nenhuma outra lei do `TEMA.md` foi violada além da exceção nominal registrada.
+
+**Reversão:** o conteúdo é aditivo. Remover o bloco do placar e a inversão de lado (`jogo.lado`, `espelharLayout`/`layoutAtual`) restaura a v1.3 sem tocar no loop.
+
+### 8.8 Tarefas de documentação
+
+- Registrar a exceção a L3/L8 e ao non-goal "sem placar" e o rebaseline de NF4 em `docs/adr/0004-placar-e-inversao-de-lado.md`. **Feito.**
+- Atualizar `TEMA.md` § *As leis* (L3/L8), § *O que este jogo não tem* e § *Placar e lado*. **Feito.**
+- Atualizar `GLOSSARY.md`: verbetes **Placar** e **Inversão de lado**. **Feito.**
+- Registrar no `README.md` o status da v1.4. **Feito.**
+- Registrar a regressão técnica em `docs/regressao-v1.4.md`. **Feito.**
+
+---
+
 ## Rastreabilidade
 
 | Requisito | Origem |
@@ -610,3 +715,6 @@ O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O s
 | Gratidão do resgatado (M1) | `TEMA.md` § *O loop* + §7 deste PRD |
 | Travesso trapalhão (M2) | `TEMA.md` L7, L9 + §7 deste PRD |
 | Quarto cenário, Praia (M3) | `TEMA.md` § *Cenários* + §7 deste PRD |
+| Placar de resgates (feature 1) | `TEMA.md` § *Placar e lado* + `ADR 0004` + §8 deste PRD |
+| Inversão de lado (feature 2) | `TEMA.md` § *Placar e lado* + `ADR 0004` + §8 deste PRD |
+| Exceção nominal a L3/L8 | `ADR 0004` |

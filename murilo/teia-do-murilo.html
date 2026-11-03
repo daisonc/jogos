@@ -98,6 +98,8 @@
 
   <g id="confete"></g>
 
+  <g id="placar"></g>
+
   <g id="mudo-icone" opacity="0">
     <path fill="#FFFFFF" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M44 50 L58 50 L76 34 L76 86 L58 70 L44 70 Z"/>
     <line id="mudo-risco" x1="38" y1="94" x2="84" y2="26" stroke="#E23B4E" stroke-width="5" stroke-linecap="round" opacity="0"/>
@@ -446,6 +448,11 @@
   const RAIO = 220;
   const TERCO = { x1: W*0.3, x2: W*0.7, y1: H*0.25, y2: H*0.75 };
 
+  // v1.4 (feature 1) — placar no canto superior direito: desenho do resgatável salvo +
+  // número de salvamentos. Só entram itens já salvos, a contagem é cumulativa na sessão.
+  // Emenda deliberada a L8 ("nada de números") e ao non-goal "sem placar" — ver ADR 0004.
+  const PLACAR = { x: 1690, largura: 206, topo: 28, pad: 12, passo: 62, iconeX: 1738, numX: 1788, escala: 0.40 };
+
   // Cada cenÃ¡rio Ã© dados: arte (template), posiÃ§Ãµes, corda e rota do travesso.
   // Regra de L7/US4: |travesso.x0 - heroi.x| >= 0.6 * 1920 = 1152.
   const CENARIOS = [
@@ -542,6 +549,12 @@
   // demais para o olho pegar, ainda mais com o herói balançando de volta ao mesmo tempo.
   const envoltoria = t => t < 0.22 ? easeOutCubic(t / 0.22) : t < 0.72 ? 1 : 1 - easeInOutCubic((t - 0.72) / 0.28);
   const $ = id => document.getElementById(id);
+  const NS_SVG = 'http://www.w3.org/2000/svg';
+  function svgNovo(tag, attrs) {
+    const n = document.createElementNS(NS_SVG, tag);
+    if (attrs) for (const k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
 
   // Cache de atributos: evita reescrever o DOM quando o valor não mudou.
   // Em repouso (e boa parte do movimento) quase nenhuma escrita acontece.
@@ -935,6 +948,7 @@
     linha: $('linha-teia'), corda: $('corda-alvo'),
     heroi: $('heroi'), alvo: $('alvo'), alvoArte: null, splat: $('splat'),
     chapeu: null,
+    placar: $('placar'), placarFundo: null,
     faiscas: [...document.querySelectorAll('#faiscas path')],
     estrelas: [...document.querySelectorAll('#estrelas .estrela')],
     halos: [...document.querySelectorAll('#estrelas .halo')],
@@ -996,6 +1010,8 @@
     if (alvo) el.alvo.replaceChildren(alvo);
     el.alvoArte = alvo;
     jogo.somAlvo = cfg.som;
+    jogo.alvoId = cfg.id;
+    jogo.alvoTpl = cfg.tpl;
     jogo.reacaoAlvo = cfg.reacao;
     jogo.tomGrato = cfg.tomGrato;
     jogo.reacaoAtiva = false;
@@ -1014,6 +1030,59 @@
     el.chapeu = novo.querySelector('.gag-chapeu');
     jogo.somTravesso = cfg.som;
     jogo.gagTravesso = cfg.gag;
+  }
+
+  // ---------- placar (feature 1 / v1.4) ----------
+  // Uma linha por resgatável já salvo: o desenho do item à esquerda, o número de
+  // salvamentos à direita. A linha nasce no primeiro salvamento e não se move depois,
+  // então nenhum dígito muda de lugar quando um item novo entra.
+  const placarContagem = Object.create(null);
+  const placarLinhas = Object.create(null);
+  let placarN = 0;
+
+  function montarPlacar() {
+    const fundo = svgNovo('rect', {
+      x: PLACAR.x, y: PLACAR.topo, width: PLACAR.largura, height: 0, rx: 18,
+      fill: '#1B1420', opacity: 0,
+    });
+    el.placar.appendChild(fundo);
+    el.placarFundo = fundo;
+  }
+  function atualizarFundoPlacar() {
+    def(el.placarFundo, 'height', PLACAR.pad * 2 + placarN * PLACAR.passo);
+    def(el.placarFundo, 'opacity', placarN > 0 ? 0.4 : 0);
+  }
+  function adicionarLinhaPlacar(id, tplId) {
+    const cy = PLACAR.topo + PLACAR.pad + placarN * PLACAR.passo + PLACAR.passo / 2;
+    const holder = svgNovo('g', { transform: `translate(${PLACAR.iconeX} ${cy.toFixed(1)}) scale(${PLACAR.escala})` });
+    const arte = clonarTemplate(tplId);
+    if (arte) {
+      // O halo dourado existe para o alvo vivo; no placar só atrapalha a leitura, então sai.
+      const halo = arte.firstElementChild;
+      if (halo && (halo.getAttribute('fill') || '').indexOf('halo-estrela') >= 0) halo.remove();
+      holder.appendChild(arte);
+    }
+    const txt = svgNovo('text', {
+      x: PLACAR.numX, y: (cy + 15).toFixed(1), 'text-anchor': 'start',
+      'font-family': '"Arial Black","Segoe UI",system-ui,sans-serif',
+      'font-size': 42, 'font-weight': 800,
+      fill: '#FFF8E7', stroke: '#1B1420', 'stroke-width': 2.6,
+      'paint-order': 'stroke', 'stroke-linejoin': 'round',
+    });
+    txt.textContent = '1';
+    el.placar.appendChild(holder);
+    el.placar.appendChild(txt);
+    placarLinhas[id] = { txt };
+    placarN++;
+  }
+  function registrarResgate() {
+    const id = jogo.alvoId;
+    if (!id) return;
+    const n = (placarContagem[id] || 0) + 1;
+    placarContagem[id] = n;
+    if (n === 1) adicionarLinhaPlacar(id, jogo.alvoTpl);
+    else placarLinhas[id].txt.textContent = String(n);
+    atualizarFundoPlacar();
   }
 
   // ---------- confete (nÃ³s prÃ©-criados; sÃ³ transform/opacity) ----------
@@ -1035,6 +1104,8 @@
     estado: S.ESPERANDO, t: 0, tEstado: 0,
     cenario: 0, resgates: 0, festas: 0, rodada: 0,
     somAlvo: null, somTravesso: 'ihihi',
+    alvoId: null, alvoTpl: null,
+    lado: 0,
     alvoAtivo: true, alvoCongelado: false, alvoEntrou: 0,
     espera: 0, duracaoBalanco: BALANCOS[0],
     alvoCentro: { x: 0, y: 0 }, alvoAngulo: 0,
@@ -1052,8 +1123,27 @@
 
   const cenarioAtual = () => CENARIOS[jogo.cenario];
 
+  // v1.4 (feature 2) — inversão de lado. O cenário é espelhado em torno do eixo central
+  // (x = W/2), incluindo a rota do travesso: sem espelhar a rota, ele apareceria a menos
+  // de 60% da largura do herói e violaria L7/US4. A alternância é por contador (`jogo.lado`),
+  // nunca sorteada.
+  function espelharLayout(c) {
+    return {
+      heroi: { x: W - c.heroi.x, y: c.heroi.y },
+      ancorAlvo: { x: W - c.ancorAlvo.x, y: c.ancorAlvo.y },
+      centroAlvo: { x: -c.centroAlvo.x, y: c.centroAlvo.y },
+      cordaAlvo: c.cordaAlvo ? { x: -c.cordaAlvo.x, y: c.cordaAlvo.y } : null,
+      rotaTravesso: {
+        x0: W - c.rotaTravesso.x0, y0: c.rotaTravesso.y0,
+        x1: W - c.rotaTravesso.x1, y1: c.rotaTravesso.y1,
+        dur: c.rotaTravesso.dur, escala: c.rotaTravesso.escala,
+      },
+    };
+  }
+  const layoutAtual = () => jogo.lado ? espelharLayout(cenarioAtual()) : cenarioAtual();
+
   function posAlvo() {
-    const c = cenarioAtual();
+    const c = layoutAtual();
     if (jogo.alvoCongelado) return { x: jogo.alvoCentro.x, y: jogo.alvoCentro.y, ang: jogo.alvoAngulo };
     const ang = 2.4 * Math.sin(jogo.t * 0.0014 + 1.2);
     const p = girar(c.centroAlvo.x, c.centroAlvo.y, ang);
@@ -1131,7 +1221,7 @@
 
   // ---------- Travesso: sempre longe, de costas, fugindo ----------
   function iniciarTravesso() {
-    const c = cenarioAtual(), d = jogo.travesso, cfg = c.rotaTravesso;
+    const c = layoutAtual(), d = jogo.travesso, cfg = c.rotaTravesso;
     d.ativo = true; d.inicio = jogo.t;
     d.x0 = cfg.x0; d.y0 = cfg.y0; d.x1 = cfg.x1; d.y1 = cfg.y1;
     d.dur = cfg.dur; d.escala = cfg.escala;
@@ -1238,7 +1328,8 @@
     jogo.alvoAngulo = a.ang;
     jogo.alvoCongelado = true;
     jogo.duracaoBalanco = BALANCOS[jogo.resgates % 3];
-    const h0 = { x: cenarioAtual().heroi.x, y: cenarioAtual().heroi.y };
+    const home = layoutAtual().heroi;
+    const h0 = { x: home.x, y: home.y };
     const h1 = { x: a.x - 28, y: a.y - 26 };
     jogo.arco = { h0, h1, c: { x: (h0.x + h1.x) / 2, y: (h0.y + h1.y) / 2 + 430 } };
     jogo.splatAtivo = true;
@@ -1269,6 +1360,10 @@
       jogo.resgates++;
       acenderEstrela(jogo.resgates - 1);
       Som.resgate(jogo.somAlvo);
+      registrarResgate();
+      // v1.4 (feature 2): o próximo ciclo começa do outro lado. A virada acontece aqui,
+      // depois do balanço, para a volta já pousar no lado novo sem salto de posição.
+      jogo.lado ^= 1;
     } else if (novo === S.VOLTA) {
       jogo.faiscasCentro = pontoLocal(26, 148, jogo.arco.h1.x, jogo.arco.h1.y, 0);
       jogo.faiscasAtivas = true;
@@ -1318,7 +1413,7 @@
   }
 
   function desenhar() {
-    const e = jogo.estado, c = cenarioAtual();
+    const e = jogo.estado, c = layoutAtual();
     desenharEstrelas();
     desenharSplat();
     desenharFaiscas();
@@ -1368,8 +1463,13 @@
     } else if (e === S.VOLTA) {
       const p = clamp01(jogo.tEstado / T.volta);
       const t = easeInOutCubic(p);
-      hx = bez(jogo.arco.h1.x, jogo.arco.c.x, jogo.arco.h0.x, t);
-      hy = bez(jogo.arco.h1.y, jogo.arco.c.y, jogo.arco.h0.y, t);
+      // v1.4 (feature 2): a volta pousa no lado NOVO — o herói já virou para lá no
+      // resgate —, então ela é um reposicionamento curto, não a travessia de volta.
+      const destino = layoutAtual().heroi;
+      const cx = (jogo.arco.h1.x + destino.x) / 2;
+      const cy = (jogo.arco.h1.y + destino.y) / 2 + 170;
+      hx = bez(jogo.arco.h1.x, cx, destino.x, t);
+      hy = bez(jogo.arco.h1.y, cy, destino.y, t);
       hr = -12 * Math.sin(Math.PI * p);
       teiaModo = 'none';
       const peito = pontoLocal(26, 148, hx, hy, hr);
@@ -1527,6 +1627,7 @@
   el.svg.addEventListener('contextmenu', ev => ev.preventDefault());
   document.addEventListener('keydown', aoTeclar);
 
+  montarPlacar();
   montarCenario(0);
   montarAlvo();
   iniciarTravesso();

@@ -48,6 +48,14 @@ _Avoid_: fase, nível, level, tela, round
 A celebração curta que encerra a rodada e inicia o próximo cenário.
 _Avoid_: cutscene, transição, vitória, comemoração
 
+**Placar**:
+O painel no canto superior direito que mostra, por resgatável já salvo, o desenho do item e o número de salvamentos acumulados na sessão.
+_Avoid_: score, pontuação, recorde, ranking, contador
+
+**Inversão de lado**:
+A troca, a cada resgate, do lado em que o herói começa e do lado onde está o resgatável — o cenário é espelhado, inclusive a rota do travesso.
+_Avoid_: espelhamento, flip, troca de tela, mudança de fase
+
 **Balanço**:
 O deslocamento automático do herói entre dois pontos de teia.
 _Avoid_: swing, voo, pulo, movimentação

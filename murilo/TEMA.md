@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.3 (v1.0, v1.1, v1.2 e v1.3 homologadas em 2026-11-03)
+- **Versão**: 1.4 (v1.0, v1.1, v1.2 e v1.3 homologadas em 2026-11-03; v1.4 — placar e inversão de lado — entregue em 2026-11-03, ver `docs/adr/0004-placar-e-inversao-de-lado.md`)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
@@ -48,7 +48,7 @@ Não são recomendações. São restrições de projeto — qualquer uma delas q
 
 **L2 — Nenhum prazo.** Nenhum cronômetro, nenhum alvo que expira, nenhum "clique rápido". O jogo espera o tempo que ele precisar.
 
-**L3 — Zero texto.** Nem título, nem instrução, nem "você conseguiu". Se a informação não cabe em forma, cor ou som, ela não entra.
+**L3 — Zero texto.** Nem título, nem instrução, nem "você conseguiu". Se a informação não cabe em forma, cor ou som, ela não entra. *(Exceção nominal da v1.4: os dígitos do placar — ver `ADR 0004`.)*
 
 **L4 — Um alvo por vez.** A tela nunca pede escolha. Escolher entre duas coisas é uma habilidade que ele ainda não tem, e a escolha errada (na cabeça dele) é indistinguível de fracasso.
 
@@ -58,7 +58,7 @@ Não são recomendações. São restrições de projeto — qualquer uma delas q
 
 **L7 — O Duende nunca encara.** Sempre de longe, sempre no planador, sempre fugindo, sempre de costas ou de perfil. Ele é paisagem com intenção, nunca ameaça.
 
-**L8 — Nada de números.** Progresso é visível (estrelas que acendem, objetos que voltam para o lugar), nunca contado com dígitos.
+**L8 — Nada de números.** Progresso é visível (estrelas que acendem, objetos que voltam para o lugar), nunca contado com dígitos. *(Exceção nominal da v1.4: o **placar** mostra o desenho do resgatável salvo e o número de salvamentos, a pedido do operador — ver `ADR 0004`. Nenhum outro número entra no jogo.)*
 
 **L9 — Nenhum pico de som.** Volume constante, nenhum estouro súbito, nenhum silêncio punitivo. Susto auditivo é tão ruim quanto visual.
 
@@ -82,6 +82,14 @@ esperando ──clique perto do alvo──▶ teia ──▶ balanço ──▶ 
 | Festa (a cada 3) | 3 s | Confete, estrelas acendendo, herói pulando | jingle de 8 notas |
 
 **Uma rodada completa dura 10–15 segundos de conteúdo.** O resto do tempo é o Murilo reagindo — e reagir é jogar.
+
+## Placar e lado (v1.4)
+
+Duas adições pedidas pelo operador, ambas reversíveis e sem tocar no loop (`ADR 0004`).
+
+**Placar.** No canto superior direito, uma linha por resgatável **já salvo**: o desenho do item à esquerda e o número de salvamentos à direita. A contagem é **cumulativa na sessão** (não zera na festa nem na troca de cenário) e a linha nasce no primeiro salvamento, sem nunca se mover depois. Só entram itens que já foram salvos — nada de ícone com zero. O placar é a **única** exceção às leis L8 e L3, e o número existe porque o Murilo não lê: o desenho identifica o item, o dígito conta.
+
+**Lado.** A cada resgate, o lado em que o herói começa **inverte**: ele começa à esquerda e o objeto à direita; depois do primeiro salvamento, o objeto vai para a esquerda e o herói para a direita; e assim por diante, de forma contínua — atravessando a festa e a troca de cenário. O cenário inteiro é espelhado em torno do eixo central, **inclusive a rota de fuga do travesso**, que continua sempre a ≥ 60% da largura do herói (`L7`). Como o herói já virou para o lado novo no resgate, a volta deixa de ser a travessia de retorno e passa a ser um pouso curto: o herói **pinga** de um lado para o outro a cada ciclo.
 
 ## Elenco
 
@@ -121,7 +129,7 @@ Quatro, nesta ordem. Cada um precisa ser reconhecível em 1 segundo, sem texto.
 
 ## O que este jogo não tem
 
-Sem placar. Sem vidas. Sem tempo. Sem menu. Sem texto. Sem game over. Sem combate. Sem morte. Sem leitura. Sem precisão de mouse. Sem escolha. Sem tutorial.
+Sem vidas. Sem tempo. Sem menu. Sem texto — só os dígitos do placar da v1.4. Sem game over. Sem combate. Sem morte. Sem leitura. Sem precisão de mouse. Sem escolha. Sem tutorial.
 
 Cada ausência desta lista é uma decisão registrada, não um esquecimento.
 
@@ -150,6 +158,8 @@ Tema de jogo infantil que não foi testado com a criança é ficção. Protocolo
 | Estilo | Vetor chapado, SVG inline | este documento |
 | Áudio | Efeitos + música, com mudo | este documento |
 | Progressão | Rodadas de 3 resgates + festa | este documento |
+| Placar | Desenho do item salvo + número de salvamentos, cumulativo na sessão | `docs/adr/0004-placar-e-inversao-de-lado.md` |
+| Lado | Invertido a cada resgate, de forma contínua (cenário espelhado) | `docs/adr/0004-placar-e-inversao-de-lado.md` |
 | Estrutura | Uma pasta por criança | este documento |
 
 ## Pendências para a v1.1
