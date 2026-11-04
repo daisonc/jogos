@@ -1,0 +1,1629 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Veloz do Murilo</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; user-select: none; -webkit-user-select: none; overscroll-behavior: none; }
+  #palco { display: block; width: min(100vw, calc(100vh * 1.77778)); height: min(100vh, calc(100vw * 0.5625)); background: #000; cursor: default; touch-action: none; overflow: hidden; }
+
+  .voltar {
+    position: fixed;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    z-index: 50;
+    width: 64px; height: 64px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(160deg, #4A90E2 0%, #2E5FCB 100%);
+    border: 5px solid #FFF6E6;
+    box-shadow: 0 7px 0 rgba(27,20,32,.45), 0 14px 24px rgba(0,0,0,.38);
+    text-decoration: none;
+    transition: transform .16s ease, box-shadow .16s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .voltar svg { width: 36px; height: 36px; display: block; filter: drop-shadow(0 2px 0 rgba(0,0,0,.3)); }
+  .voltar:hover, .voltar:focus-visible { transform: scale(1.08) rotate(-3deg); box-shadow: 0 9px 0 rgba(27,20,32,.45), 0 18px 30px rgba(0,0,0,.42); }
+  .voltar:active { transform: scale(.95); box-shadow: 0 4px 0 rgba(27,20,32,.45), 0 8px 14px rgba(0,0,0,.35); }
+  .voltar:focus-visible { outline: none; box-shadow: 0 0 0 5px #FFE066, 0 7px 0 rgba(27,20,32,.45); }
+  @media (max-width: 560px) { .voltar { width: 56px; height: 56px; border-width: 4px; } .voltar svg { width: 31px; height: 31px; } }
+  @media (prefers-reduced-motion: reduce) { .voltar { transition: none; } }
+</style>
+</head>
+<body>
+<svg id="palco" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ceu-greenhill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#87CEEB"/>
+      <stop offset="1" stop-color="#C9E9F6"/>
+    </linearGradient>
+    <linearGradient id="ceu-canyon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8B26A"/>
+      <stop offset="1" stop-color="#FFE0B2"/>
+    </linearGradient>
+    <linearGradient id="ceu-cidade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A8DADC"/>
+      <stop offset="1" stop-color="#FFF3D6"/>
+    </linearGradient>
+    <radialGradient id="sol">
+      <stop offset="0" stop-color="#FFF8DC"/>
+      <stop offset="0.55" stop-color="#FFE3A8"/>
+      <stop offset="1" stop-color="#FFC97E"/>
+    </radialGradient>
+    <radialGradient id="halo-estrela">
+      <stop offset="0" stop-color="#FFD166" stop-opacity="0.85"/>
+      <stop offset="0.45" stop-color="#FFD166" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#FFD166" stop-opacity="0"/>
+    </radialGradient>
+    <path id="estrela" d="M0 -26 L6.47 -8.9 L24.73 -8.03 L10.46 3.4 L15.28 21.03 L0 11 L-15.28 21.03 L-10.46 3.4 L-24.73 -8.03 L-6.47 -8.9 Z"/>
+    <g id="anel">
+      <circle r="16" fill="none" stroke="#FFD166" stroke-width="7"/>
+      <circle r="16" fill="none" stroke="#FFF3C4" stroke-width="2.5"/>
+    </g>
+  </defs>
+
+  <g id="mundo">
+    <g id="cenario"></g>
+    <g id="rachaduras"></g>
+    <g id="linhas" stroke="#7FC4FF" stroke-width="4" stroke-linecap="round" opacity="0">
+      <line x1="0" y1="0" x2="180" y2="0"/>
+      <line x1="0" y1="0" x2="220" y2="0"/>
+      <line x1="0" y1="0" x2="160" y2="0"/>
+      <line x1="0" y1="0" x2="200" y2="0"/>
+      <line x1="0" y1="0" x2="140" y2="0"/>
+      <line x1="0" y1="0" x2="190" y2="0"/>
+    </g>
+    <g id="rastro" fill="#4A90E2">
+      <circle r="16" opacity="0"/>
+      <circle r="13" opacity="0"/>
+      <circle r="10" opacity="0"/>
+    </g>
+    <g id="eggman"></g>
+    <g id="obstaculo"></g>
+    <g id="amigo"></g>
+
+    <g id="heroi">
+      <!-- pernas -->
+      <path fill="none" stroke="#1A4A9E" stroke-width="14" stroke-linecap="round" d="M-10 28 L-14 72 M10 28 L14 72"/>
+      <path fill="none" stroke="#2E6BD6" stroke-width="9" stroke-linecap="round" d="M-10 28 L-14 72 M10 28 L14 72"/>
+      <!-- tênis vermelhos -->
+      <path fill="none" stroke="#8B1E2D" stroke-width="16" stroke-linecap="round" d="M-16 76 L-18 86 M16 76 L18 86"/>
+      <path fill="none" stroke="#E23B4E" stroke-width="11" stroke-linecap="round" d="M-16 76 L-18 86 M16 76 L18 86"/>
+      <path fill="none" stroke="#FFF6E6" stroke-width="3" stroke-linecap="round" d="M-17 80 L-17 83 M17 80 L17 83"/>
+      <!-- corpo -->
+      <path fill="#2E6BD6" stroke="#1A4A9E" stroke-width="4" stroke-linejoin="round" d="M-28 -28 Q0 -42 28 -28 L24 32 Q0 42 -24 32 Z"/>
+      <path fill="#F5D7A3" stroke="#1A4A9E" stroke-width="2.5" d="M-14 0 Q0 8 14 0 L12 28 Q0 34 -12 28 Z"/>
+      <!-- braços / luvas -->
+      <path fill="none" stroke="#1A4A9E" stroke-width="13" stroke-linecap="round" d="M-26 -22 Q-46 -8 -44 16"/>
+      <path fill="none" stroke="#2E6BD6" stroke-width="8" stroke-linecap="round" d="M-26 -22 Q-46 -8 -44 16"/>
+      <circle cx="-46" cy="22" r="10" fill="#FFF6E6" stroke="#1A4A9E" stroke-width="3"/>
+      <path fill="none" stroke="#1A4A9E" stroke-width="13" stroke-linecap="round" d="M26 -22 Q46 -8 44 16"/>
+      <path fill="none" stroke="#2E6BD6" stroke-width="8" stroke-linecap="round" d="M26 -22 Q46 -8 44 16"/>
+      <circle cx="46" cy="22" r="10" fill="#FFF6E6" stroke="#1A4A9E" stroke-width="3"/>
+      <!-- cabeça com espinhos -->
+      <path fill="#2E6BD6" stroke="#1A4A9E" stroke-width="3.5" stroke-linejoin="round" d="M-8 -50 L-52 -38 L-14 -34 L-58 -16 L-12 -20 Z"/>
+      <circle cx="4" cy="-58" r="25" fill="#2E6BD6" stroke="#1A4A9E" stroke-width="4"/>
+      <path fill="#F5D7A3" d="M-8 -44 Q4 -38 16 -44 Q10 -34 -8 -38 Z"/>
+      <!-- olhos juntos, clássicos -->
+      <path fill="#FFF6E6" stroke="#1A4A9E" stroke-width="2" d="M-2 -66 Q10 -74 22 -66 Q22 -56 10 -54 Q-2 -56 -2 -66 Z"/>
+      <circle cx="12" cy="-63" r="3" fill="#1B1420"/>
+      <circle cx="22" cy="-50" r="3.2" fill="#1B1420"/>
+      <path fill="none" stroke="#1A4A9E" stroke-width="2.2" stroke-linecap="round" d="M14 -42 Q20 -40 24 -44"/>
+    </g>
+
+    <g id="estrelas">
+      <circle class="halo" cx="888" cy="1038" r="36" fill="url(#halo-estrela)" opacity="0"/>
+      <circle class="halo" cx="960" cy="1038" r="36" fill="url(#halo-estrela)" opacity="0"/>
+      <circle class="halo" cx="1032" cy="1038" r="36" fill="url(#halo-estrela)" opacity="0"/>
+      <use class="estrela" href="#estrela" transform="translate(888 1038)" fill="#FFD166" stroke="#2A1A3A" stroke-width="2.5" opacity="0.36"/>
+      <use class="estrela" href="#estrela" transform="translate(960 1038)" fill="#FFD166" stroke="#2A1A3A" stroke-width="2.5" opacity="0.36"/>
+      <use class="estrela" href="#estrela" transform="translate(1032 1038)" fill="#FFD166" stroke="#2A1A3A" stroke-width="2.5" opacity="0.36"/>
+    </g>
+
+    <g id="poeira">
+      <circle r="9" fill="#BFD8F2" opacity="0"/>
+      <circle r="7" fill="#A8C8E8" opacity="0"/>
+      <circle r="11" fill="#BFD8F2" opacity="0"/>
+      <circle r="6" fill="#D7E8F8" opacity="0"/>
+      <circle r="8" fill="#A8C8E8" opacity="0"/>
+      <circle r="10" fill="#BFD8F2" opacity="0"/>
+      <circle r="6" fill="#D7E8F8" opacity="0"/>
+      <circle r="9" fill="#A8C8E8" opacity="0"/>
+      <circle r="7" fill="#BFD8F2" opacity="0"/>
+      <circle r="12" fill="#D7E8F8" opacity="0"/>
+    </g>
+
+    <g id="confete"></g>
+    <g id="aneis-festa"></g>
+  </g>
+
+  <g id="placar"></g>
+
+  <g id="mudo-icone" opacity="0" transform="translate(912 0)">
+    <path fill="#FFFFFF" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M44 50 L58 50 L76 34 L76 86 L58 70 L44 70 Z"/>
+    <line id="mudo-risco" x1="38" y1="94" x2="84" y2="26" stroke="#E23B4E" stroke-width="5" stroke-linecap="round" opacity="0"/>
+  </g>
+
+  <rect id="flash" width="1920" height="1080" fill="#D6EBFF" opacity="0"/>
+</svg>
+
+<a class="voltar" href="../../index.html" aria-label="Voltar para a vitrine" title="Voltar para a vitrine (escolher outro jogo)">
+  <svg viewBox="0 0 48 48" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30 9 L15 24 L30 39" fill="none" stroke="#FFFFFF" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+
+<template id="tpl-cena-greenhill">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect width="1920" height="1080" fill="url(#ceu-greenhill)"/>
+      <circle cx="420" cy="200" r="110" fill="url(#sol)" opacity="0.9"/>
+      <path fill="#7CC15B" opacity="0.75" d="M-40 640 Q240 560 480 630 Q720 700 960 620 Q1200 550 1440 630 Q1680 700 1960 610 L1960 1080 L-40 1080 Z"/>
+      <path fill="#58A044" d="M-40 860 Q300 820 620 850 Q960 880 1300 840 Q1620 810 1960 850 L1960 1080 L-40 1080 Z"/>
+      <path fill="#3E7A32" d="M0 0 h192 v192 h-192 Z M192 192 h192 v192 h-192 Z M384 0 h192 v192 h-192 Z M0 384 h192 v192 h-192 Z M384 384 h192 v192 h-192 Z M576 192 h192 v192 h-192 Z" transform="translate(0 888) scale(1 0.5)" opacity="0.35"/>
+      <path fill="#2F6B28" d="M240 820 L270 740 L300 820 Z M1500 830 L1530 750 L1560 830 Z"/>
+      <circle cx="700" cy="780" r="18" fill="#FFE066"/>
+      <rect x="696" y="798" width="8" height="26" fill="#3E7A32"/>
+      <use href="#anel" transform="translate(240 700)" opacity="0.85"/>
+      <use href="#anel" transform="translate(1680 680)" opacity="0.85"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-cena-canyon">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect width="1920" height="1080" fill="url(#ceu-canyon)"/>
+      <circle cx="1500" cy="220" r="120" fill="url(#sol)" opacity="0.9"/>
+      <path fill="#C47B3A" opacity="0.7" d="M-40 600 L200 420 L400 580 L620 400 L840 600 L1080 440 L1320 620 L1560 460 L1960 640 L1960 1080 L-40 1080 Z"/>
+      <path fill="#A8602A" d="M-40 840 Q280 800 560 840 Q860 880 1160 830 Q1460 790 1960 850 L1960 1080 L-40 1080 Z"/>
+      <path fill="#8A4E20" d="M-40 940 Q340 910 680 935 Q1020 960 1360 925 Q1660 900 1960 935 L1960 1080 L-40 1080 Z"/>
+      <path fill="none" stroke="#6B3A18" stroke-width="8" stroke-linecap="round" opacity="0.4" d="M300 500 a160 160 0 1 1 0.1 0"/>
+      <path fill="none" stroke="#6B3A18" stroke-width="6" stroke-linecap="round" opacity="0.3" d="M1400 480 a120 120 0 1 1 0.1 0"/>
+      <use href="#anel" transform="translate(500 680)" opacity="0.85"/>
+      <use href="#anel" transform="translate(1420 700)" opacity="0.85"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-cena-cidade">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect width="1920" height="1080" fill="url(#ceu-cidade)"/>
+      <circle cx="1200" cy="210" r="110" fill="url(#sol)" opacity="0.85"/>
+      <path fill="#8FA3B8" opacity="0.7" d="M80 620 L80 380 L200 380 L200 300 L280 300 L280 620 Z M400 620 L400 340 L520 340 L520 620 Z M640 620 L640 420 L760 420 L760 620 Z M1100 620 L1100 360 L1240 360 L1240 620 Z M1360 620 L1360 280 L1480 280 L1480 620 Z M1600 620 L1600 400 L1740 400 L1740 620 Z"/>
+      <path fill="#5C6B78" d="M-40 860 L1960 860 L1960 880 L-40 880 Z"/>
+      <path fill="#4A5A66" d="M-40 880 L1960 880 L1960 1080 L-40 1080 Z"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="4" stroke-dasharray="40 30" opacity="0.5" d="M0 940 L1920 940"/>
+      <rect x="300" y="760" width="80" height="100" fill="#7A8A96"/>
+      <rect x="1520" y="750" width="90" height="110" fill="#7A8A96"/>
+      <use href="#anel" transform="translate(200 720)" opacity="0.85"/>
+      <use href="#anel" transform="translate(1740 700)" opacity="0.85"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-obst-greenhill">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <circle cx="0" cy="-60" r="76" fill="url(#halo-estrela)"/>
+      <g class="metade-a">
+        <path fill="#4C8F3E" stroke="#2F6B28" stroke-width="4" stroke-linejoin="round" d="M-8 -70 Q-70 -60 -80 -10 Q-84 40 -58 58 L-4 58 Z"/>
+        <path fill="#6BB35A" d="M-40 -50 Q-66 -20 -68 16 Q-44 -8 -32 -40 Z"/>
+      </g>
+      <g class="metade-b">
+        <path fill="#3E7A32" stroke="#2F6B28" stroke-width="4" stroke-linejoin="round" d="M8 -70 Q70 -60 80 -10 Q84 40 58 58 L4 58 Z"/>
+        <path fill="#5FA84E" d="M40 -50 Q66 -20 68 16 Q44 -8 32 -40 Z"/>
+      </g>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-obst-canyon">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <circle cx="0" cy="-64" r="76" fill="url(#halo-estrela)"/>
+      <g class="metade-a">
+        <path fill="#C47B3A" stroke="#8A4E20" stroke-width="4" stroke-linejoin="round" d="M-6 -78 Q-68 -66 -80 -14 Q-86 32 -60 56 L-4 56 Z"/>
+        <path fill="#D4945A" d="M-36 -56 Q-62 -28 -64 8 Q-42 -14 -28 -44 Z"/>
+      </g>
+      <g class="metade-b">
+        <path fill="#A8602A" stroke="#8A4E20" stroke-width="4" stroke-linejoin="round" d="M6 -78 Q68 -66 80 -14 Q86 32 60 56 L4 56 Z"/>
+        <path fill="#C47B3A" d="M36 -56 Q62 -28 64 8 Q42 -14 28 -44 Z"/>
+      </g>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-obst-cidade">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <circle cx="0" cy="-64" r="76" fill="url(#halo-estrela)"/>
+      <g class="metade-a">
+        <path fill="none" stroke="#5C6B78" stroke-width="7" stroke-linecap="round" d="M-6 -80 L-6 56 M-28 -76 L-28 52 M-50 -64 L-50 40"/>
+        <path fill="#7A8A96" stroke="#4A5A66" stroke-width="3" d="M-8 -84 Q-56 -70 -58 8 L-4 56 Z"/>
+      </g>
+      <g class="metade-b">
+        <path fill="none" stroke="#5C6B78" stroke-width="7" stroke-linecap="round" d="M6 -80 L6 56 M28 -76 L28 52 M50 -64 L50 40"/>
+        <path fill="#6B7B8A" stroke="#4A5A66" stroke-width="3" d="M8 -84 Q56 -70 58 8 L4 56 Z"/>
+      </g>
+      <rect x="-58" y="-88" width="116" height="10" rx="5" fill="#E23B4E" opacity="0.8"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-coelhinho">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <path fill="#D7CBB8" stroke="#8A7A6C" stroke-width="3" stroke-linejoin="round" d="M-14 16 Q-18 -8 -6 -16 Q0 -20 8 -14 Q18 -6 14 16 Q0 24 -14 16 Z"/>
+      <circle cx="-4" cy="-8" r="2.2" fill="#3A2A20"/>
+      <circle cx="6" cy="-8" r="2.2" fill="#3A2A20"/>
+      <path fill="#E8A0A8" d="M0 -2 Q3 1 6 -2 Q3 -4 0 -2 Z"/>
+      <path fill="#C9B8A3" stroke="#8A7A6C" stroke-width="2" d="M-8 -18 Q-12 -38 -2 -40 Q2 -28 0 -18 Z M8 -18 Q14 -36 6 -40 Q0 -28 2 -16 Z"/>
+      <path fill="#F0E6D6" d="M-6 18 Q0 14 6 18 L4 28 Q0 32 -4 28 Z"/>
+      <path fill="none" stroke="#8A7A6C" stroke-width="2.5" stroke-linecap="round" d="M-14 8 Q-22 10 -24 16 M14 8 Q22 10 26 16"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-cervinho">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <path fill="#A5744E" stroke="#5C3A20" stroke-width="3" stroke-linejoin="round" d="M-16 16 Q-20 -10 -6 -18 Q0 -22 8 -16 Q20 -8 16 16 Q0 24 -16 16 Z"/>
+      <path fill="#C49A6C" d="M-8 -14 Q0 -20 8 -14 Q4 -8 -8 -14 Z"/>
+      <circle cx="-5" cy="-8" r="2.2" fill="#2A1A10"/>
+      <circle cx="7" cy="-8" r="2.2" fill="#2A1A10"/>
+      <path fill="none" stroke="#5C3A20" stroke-width="2" stroke-linecap="round" d="M0 -2 Q3 0 6 -2"/>
+      <path fill="#E8D8B8" d="M-2 22 L2 22 L1 30 L-1 30 Z"/>
+      <path fill="none" stroke="#5C3A20" stroke-width="2.5" stroke-linecap="round" d="M-16 10 Q-26 8 -28 2 M16 10 Q26 8 28 2"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-patinho">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="-4" cy="16" rx="40" ry="27" fill="#FFD93D" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="#F2C14E" stroke="#2A1A3A" stroke-width="2" d="M-38 10 Q-12 0 18 6 L16 16 Q-12 12 -38 24 Z"/>
+      <circle cx="20" cy="-16" r="22" fill="#FFE45C" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="#F5A623" stroke="#2A1A3A" stroke-width="2.5" stroke-linejoin="round" d="M38 -20 Q58 -16 58 -6 Q48 -2 38 -8 Z"/>
+      <circle cx="25" cy="-23" r="3.2" fill="#2A1A3A"/>
+      <path fill="#F5A623" stroke="#2A1A3A" stroke-width="2" stroke-linejoin="round" d="M-24 40 L-38 48 L-34 34 Z M8 40 L22 48 L18 34 Z"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-gatinho">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g transform="scale(0.62)">
+      <path fill="#FFF2DD" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-18 -34 L-13 -56 L2 -40 Z M18 -34 L13 -56 L-2 -40 Z"/>
+      <path fill="#F3B7A3" d="M-14 -37 L-11 -49 L-2 -40 Z M14 -37 L11 -49 L2 -40 Z"/>
+      <path fill="#FFF2DD" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-23 14 Q-26 40 -14 44 L14 44 Q26 40 23 14 L19 -8 Q10 -18 0 -18 Q-10 -18 -19 -8 Z"/>
+      <circle cx="0" cy="-22" r="23" fill="#FFF2DD" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="none" stroke="#E8A87C" stroke-width="3" stroke-linecap="round" d="M-23 -30 L-16 -33 M-24 -22 L-17 -24 M23 -30 L16 -33 M24 -22 L17 -24"/>
+      <path fill="none" stroke="#E8A87C" stroke-width="2.6" stroke-linecap="round" d="M-12 4 L-16 12 M-4 8 L-6 17 M12 4 L16 12 M4 8 L6 17"/>
+      <ellipse cx="-8" cy="-26" rx="4.6" ry="6.2" fill="#2A1A3A"/>
+      <ellipse cx="8" cy="-26" rx="4.6" ry="6.2" fill="#2A1A3A"/>
+      <circle cx="-6.6" cy="-28" r="1.5" fill="#FFFDF7"/>
+      <circle cx="9.4" cy="-28" r="1.5" fill="#FFFDF7"/>
+      <path fill="#F3A0A0" d="M0 -15 L-3.5 -19 L3.5 -19 Z"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="2" stroke-linecap="round" d="M0 -15 L0 -12 M0 -12 Q-4 -8 -7 -10 M0 -12 Q4 -8 7 -10"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="1.6" stroke-linecap="round" opacity="0.7" d="M-24 -18 L-38 -23 M-24 -13 L-38 -12 M24 -18 L38 -23 M24 -13 L38 -12"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="8" stroke-linecap="round" d="M20 30 Q38 34 36 18 Q35 8 44 6"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-pipa">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g transform="scale(0.62)">
+      <path fill="none" stroke="#F2C14E" stroke-width="2.4" stroke-linecap="round" d="M0 40 Q-10 56 0 66 Q10 76 2 92"/>
+      <path fill="#F2C14E" stroke="#2A1A3A" stroke-width="1.6" stroke-linejoin="round" d="M-2 60 L-16 52 L-13 68 Z"/>
+      <path fill="#3FB8AF" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M0 -58 L42 -6 L0 46 L-42 -6 Z"/>
+      <path fill="#6FDAD1" d="M0 -50 L33 -6 L0 2 Z"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="2" opacity="0.6" d="M0 -58 L0 46 M-42 -6 L42 -6"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-balao">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g transform="scale(0.62)">
+      <ellipse cx="0" cy="0" rx="34" ry="42" fill="#E84A5F" stroke="#2A1A3A" stroke-width="3"/>
+      <ellipse cx="-12" cy="-14" rx="9" ry="14" fill="#FF9AA2" opacity="0.85" transform="rotate(-18 -12 -14)"/>
+      <path fill="#C43A4E" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-7 40 L7 40 L0 52 Z"/>
+      <path fill="none" stroke="#F8F1E3" stroke-width="2" opacity="0.8" d="M0 52 Q-8 58 0 64 Q8 70 0 76"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-cachorrinho">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g transform="scale(0.62)">
+      <path fill="#C98A5B" stroke="#2A1A3A" stroke-width="3" d="M-19 8 Q-22 34 0 44 Q22 34 19 8 Q10 -2 0 -2 Q-10 -2 -19 8 Z"/>
+      <circle cx="0" cy="-24" r="20" fill="#E0A878" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="#8B5A3C" stroke="#2A1A3A" stroke-width="2.5" d="M-18 -38 Q-30 -28 -24 -10 Q-14 -16 -12 -32 Z"/>
+      <path fill="#8B5A3C" stroke="#2A1A3A" stroke-width="2.5" d="M18 -38 Q30 -28 24 -10 Q14 -16 12 -32 Z"/>
+      <ellipse cx="0" cy="-14" rx="10" ry="8" fill="#F6E3D0"/>
+      <ellipse cx="0" cy="-18" rx="4" ry="3" fill="#2A1A3A"/>
+      <circle cx="-7" cy="-29" r="2.4" fill="#2A1A3A"/>
+      <circle cx="7" cy="-29" r="2.4" fill="#2A1A3A"/>
+      <path fill="#F26D6B" d="M0 -8 Q-4 -2 0 1 Q4 -2 0 -8 Z"/>
+      <path fill="none" stroke="#C98A5B" stroke-width="7" stroke-linecap="round" d="M19 10 Q34 6 32 -8"/>
+      <path fill="#E84A5F" d="M-14 2 Q0 8 14 2 L14 8 Q0 14 -14 8 Z"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-bola">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g transform="scale(0.62)">
+      <circle cx="0" cy="0" r="40" fill="#F8F1E3" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="#E23B4E" d="M0 0 L0 -40 A40 40 0 0 1 34.64 20 Z"/>
+      <path fill="#F2C14E" d="M0 0 L34.64 20 A40 40 0 0 1 -34.64 20 Z"/>
+      <path fill="#3FB8AF" d="M0 0 L-34.64 20 A40 40 0 0 1 0 -40 Z"/>
+      <ellipse cx="-13" cy="-15" rx="9" ry="6" fill="#FFFFFF" opacity="0.6" transform="rotate(-28 -13 -15)"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-amigo-sorvete">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g transform="scale(0.62)">
+      <path fill="#C98A5B" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M-26 4 L26 4 L0 58 Z"/>
+      <path fill="none" stroke="#A9703F" stroke-width="2" opacity="0.85" d="M-18 12 L18 30 M18 12 L-18 30 M-12 6 L12 24 M12 6 L-12 24"/>
+      <circle cx="0" cy="-12" r="28" fill="#FF9AA2" stroke="#2A1A3A" stroke-width="3"/>
+      <path fill="#FFD1D8" d="M-14 -26 Q-2 -34 12 -27 Q2 -16 -8 -18 Z"/>
+      <path fill="none" stroke="#2A1A3A" stroke-width="2.6" stroke-linecap="round" d="M0 -38 Q6 -50 16 -52"/>
+      <circle cx="18" cy="-54" r="7" fill="#E23B4E" stroke="#2A1A3A" stroke-width="2.5"/>
+    </g>
+  </svg>
+</template>
+
+<template id="tpl-eggman">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0">
+      <!-- Egg Mobile, de perfil, fugindo -->
+      <path fill="#E23B4E" stroke="#8B1E2D" stroke-width="3" stroke-linejoin="round" d="M-28 -8 Q0 -22 28 -8 L22 8 Q0 16 -22 8 Z"/>
+      <path fill="#8A8F96" stroke="#4A5058" stroke-width="2.5" d="M-20 10 Q0 20 20 10 L16 20 Q0 26 -16 20 Z"/>
+      <circle cx="0" cy="22" r="6" fill="#4A5058"/>
+      <!-- Eggman de perfil, sem rosto de frente -->
+      <circle cx="-4" cy="-28" r="14" fill="#F5D7A3" stroke="#8B5A3C" stroke-width="2.5"/>
+      <path fill="#8B5A3C" d="M-16 -34 Q-4 -44 8 -36 Q-2 -32 -8 -28 Z"/>
+      <path fill="#8B5A3C" stroke="#6B4526" stroke-width="1.5" d="M-14 -22 Q-2 -16 10 -20 Q0 -12 -12 -16 Z"/>
+      <rect x="-12" y="-20" width="18" height="8" rx="4" fill="#1A4A9E" opacity="0.85"/>
+      <path fill="#E23B4E" stroke="#8B1E2D" stroke-width="2" d="M-12 -14 Q0 -8 12 -14 L10 4 Q0 8 -10 4 Z"/>
+      <!-- fuga: linhas de velocidade dele -->
+      <path fill="none" stroke="#FFF2DD" stroke-width="3" stroke-linecap="round" opacity="0.3" d="M-36 4 L-58 8 M-32 14 L-52 18"/>
+    </g>
+  </svg>
+</template>
+
+<script>
+'use strict';
+(() => {
+  const W = 1920, H = 1080;
+  const S = Object.freeze({
+    ESPERANDO: 'esperando',
+    GIRAR: 'girar',
+    DISPARO: 'disparo',
+    CHEGADA: 'chegada',
+    ABERTURA: 'abertura',
+    GRATIDAO: 'gratidao',
+    FESTA: 'festa',
+  });
+  const T = Object.freeze({
+    girar: 250,
+    disparo: 900,
+    chegada: 250,
+    abertura: 500,
+    gratidao: 600,
+    festa: 3000,
+    pausaObst: 400,
+    brilho: 420,
+  });
+  const RAIO = 220;
+  const TERCO = { x1: W * 0.3, x2: W * 0.7, y1: H * 0.25, y2: H * 0.75 };
+  const SEM_BORRAO = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const PLACAR = { x: 1716, largura: 180, topo: 28, pad: 12, passo: 62, iconeX: 1762, numX: 1800, escala: 0.40 };
+  const PLACAR_ESCALA_TOQUE = 1.5;
+  const EGG_DIST = 1200; // ≥ 1152 (60% de 1920)
+  const EGG_DUR = 1800;
+
+  const CENARIOS = [
+    {
+      id: 'greenhill',
+      esq: { heroi: { x: 480, y: 775 }, obst: { x: 280, y: 810 } },
+      dir: { heroi: { x: 1280, y: 775 }, obst: { x: 1480, y: 810 } },
+      obstTpl: 'tpl-obst-greenhill',
+      amigos: [
+        { id: 'coelhinho', tpl: 'tpl-amigo-coelhinho', som: 'fungado', reacao: 'orelha', tomGrato: 698.46 },
+        { id: 'gatinho', tpl: 'tpl-amigo-gatinho', som: 'miau', reacao: 'espreguica', tomGrato: 659.25 },
+        { id: 'balao', tpl: 'tpl-amigo-balao', som: 'ploc', reacao: 'pendulo', tomGrato: 698.46 },
+      ],
+    },
+    {
+      id: 'canyon',
+      esq: { heroi: { x: 500, y: 775 }, obst: { x: 300, y: 800 } },
+      dir: { heroi: { x: 1260, y: 775 }, obst: { x: 1460, y: 800 } },
+      obstTpl: 'tpl-obst-canyon',
+      amigos: [
+        { id: 'cervinho', tpl: 'tpl-amigo-cervinho', som: 'cervo', reacao: 'pulinho', tomGrato: 587.33 },
+        { id: 'pipa', tpl: 'tpl-amigo-pipa', som: 'pipa', reacao: 'giro', tomGrato: 783.99 },
+        { id: 'cachorrinho', tpl: 'tpl-amigo-cachorrinho', som: 'latido', reacao: 'abana', tomGrato: 523.25 },
+      ],
+    },
+    {
+      id: 'cidade',
+      esq: { heroi: { x: 490, y: 775 }, obst: { x: 290, y: 805 } },
+      dir: { heroi: { x: 1270, y: 775 }, obst: { x: 1470, y: 805 } },
+      obstTpl: 'tpl-obst-cidade',
+      amigos: [
+        { id: 'patinho', tpl: 'tpl-amigo-patinho', som: 'patinho', reacao: 'quiques', tomGrato: 783.99 },
+        { id: 'bola', tpl: 'tpl-amigo-bola', som: 'bola', reacao: 'quica', tomGrato: 880 },
+        { id: 'sorvete', tpl: 'tpl-amigo-sorvete', som: 'sorvete', reacao: 'pulso', tomGrato: 659.25 },
+      ],
+    },
+  ];
+
+  const REACOES = {
+    espreguica: { dur: 600, obj: p => `scale(1 ${(1 + 0.22 * envoltoria(p)).toFixed(3)})` },
+    pulinho:    { dur: 600, obj: p => `translate(0 ${(-28 * Math.abs(Math.sin(p * Math.PI * 2)) * envoltoria(p)).toFixed(2)})` },
+    orelha:     { dur: 600, obj: p => `rotate(${(16 * Math.sin(p * Math.PI * 3) * envoltoria(p)).toFixed(2)})` },
+    giro:       { dur: 600, obj: p => `rotate(${(360 * easeInOutCubic(clamp01(p / 0.8))).toFixed(1)})` },
+    pendulo:    { dur: 600, obj: p => `rotate(${(38 * Math.sin(p * Math.PI * 2) * envoltoria(p)).toFixed(2)})` },
+    quiques:    { dur: 600, obj: p => `translate(0 ${(-32 * Math.abs(Math.sin(p * Math.PI * 2)) * envoltoria(p)).toFixed(2)})` },
+    abana:      { dur: 600, obj: p => `rotate(${(30 * Math.sin(p * Math.PI * 4) * envoltoria(p)).toFixed(2)})` },
+    quica:      { dur: 600, obj: p => `translate(0 ${(-36 * Math.abs(Math.sin(p * Math.PI * 3)) * envoltoria(p)).toFixed(2)})` },
+    pulso:      { dur: 600, obj: p => `scale(${(1 + 0.3 * envoltoria(p)).toFixed(3)})` },
+  };
+
+  const clamp01 = t => t < 0 ? 0 : t > 1 ? 1 : t;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+  const easeInOutCubic = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const easeInOutQuart = t => t < .5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+  const envoltoria = t => t < 0.22 ? easeOutCubic(t / 0.22) : t < 0.72 ? 1 : 1 - easeInOutCubic((t - 0.72) / 0.28);
+  const $ = id => document.getElementById(id);
+  const NS_SVG = 'http://www.w3.org/2000/svg';
+
+  function svgNovo(tag, attrs) {
+    const n = document.createElementNS(NS_SVG, tag);
+    if (attrs) for (const k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+
+  const cacheAtrib = new WeakMap();
+  function def(obj, nome, valor) {
+    const s = String(valor);
+    let m = cacheAtrib.get(obj);
+    if (m === undefined) { m = Object.create(null); cacheAtrib.set(obj, m); }
+    if (m[nome] === s) return;
+    m[nome] = s;
+    obj.setAttribute(nome, s);
+  }
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  const Som = (() => {
+    let ctx = null, mestre = null, ruido = null, timer = null;
+    let proxNota = 0, notaIdx = 0, mudo = false;
+    const MELODIA = [740, 880, 1108.73, 1318.51, 1108.73, 880, 740, 659.25];
+    const PASSO = 0.85;
+
+    function criarRuido(c) {
+      const b = c.createBuffer(1, Math.floor(c.sampleRate * 0.7), c.sampleRate);
+      const d = b.getChannelData(0);
+      let s = 0x2F6E2B1;
+      for (let i = 0; i < d.length; i++) {
+        s ^= s << 13; s ^= s >>> 17; s ^= s << 5;
+        d[i] = ((s >>> 0) / 4294967296) * 2 - 1;
+      }
+      return b;
+    }
+    function envelope(g, t0, pico, ataque, dur) {
+      const p = Math.max(0.0002, pico);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(p, t0 + Math.max(0.002, ataque));
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    }
+    function nota(t0, f, pico, dur, tipo) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = tipo || 'sine';
+      o.frequency.value = f;
+      const g = ctx.createGain();
+      envelope(g, t0, pico, Math.min(0.03, dur * 0.25), dur);
+      o.connect(g); g.connect(mestre);
+      o.start(t0); o.stop(t0 + dur + 0.05);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function ruidoFonte() {
+      const src = ctx.createBufferSource();
+      src.buffer = ruido;
+      src.loop = true;
+      return src;
+    }
+    function iniciarPad() {
+      const f = ctx.createBiquadFilter();
+      f.type = 'lowpass'; f.frequency.value = 560; f.Q.value = 0.5;
+      const g = ctx.createGain(); g.gain.value = 0.04;
+      f.connect(g); g.connect(mestre);
+      [110, 164.81, 220].forEach((fr, i) => {
+        const o = ctx.createOscillator();
+        o.type = i === 2 ? 'sine' : 'triangle';
+        o.frequency.value = fr;
+        o.detune.value = i === 0 ? -5 : i === 1 ? 5 : 0;
+        o.connect(f); o.start();
+      });
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.05;
+      const lg = ctx.createGain(); lg.gain.value = 150;
+      lfo.connect(lg); lg.connect(f.frequency); lfo.start();
+    }
+    function agendar() {
+      if (!ctx || ctx.state !== 'running' || mudo) return;
+      const limite = ctx.currentTime + 2;
+      while (proxNota < limite) {
+        nota(proxNota, MELODIA[notaIdx % MELODIA.length], 0.06, 1.4, 'sine');
+        proxNota += PASSO;
+        notaIdx++;
+      }
+    }
+    function novoContexto() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try {
+        const c = new AC();
+        const m = c.createGain();
+        m.gain.value = mudo ? 0.0001 : 0.251;
+        const l = c.createDynamicsCompressor();
+        l.threshold.value = -6;
+        l.knee.value = 0;
+        l.ratio.value = 20;
+        l.attack.value = 0.003;
+        l.release.value = 0.25;
+        m.connect(l); l.connect(c.destination);
+        ctx = c; mestre = m;
+        ruido = criarRuido(c);
+        iniciarPad();
+        proxNota = c.currentTime + 1.2;
+        timer = setInterval(agendar, 500);
+        return c;
+      } catch (e) { return null; }
+    }
+    function destravar() {
+      if (!ctx && !novoContexto()) return;
+      if (ctx.state === 'suspended') {
+        const p = ctx.resume();
+        if (p && p.catch) p.catch(() => {});
+      }
+    }
+    function agora() { return ctx ? ctx.currentTime : 0; }
+
+    function sopro() {
+      if (!ctx) return;
+      const t0 = agora();
+      const src = ruidoFonte();
+      const f = ctx.createBiquadFilter();
+      f.type = 'lowpass'; f.frequency.value = 800;
+      const g = ctx.createGain();
+      envelope(g, t0, 0.2, 0.01, 0.08);
+      src.connect(f); f.connect(g); g.connect(mestre);
+      src.start(t0); src.stop(t0 + 0.1);
+      src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function spin() {
+      if (!ctx) return;
+      const t0 = agora();
+      const o = ctx.createOscillator();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(500, t0);
+      o.frequency.exponentialRampToValueAtTime(1400, t0 + 0.12);
+      const g = ctx.createGain();
+      envelope(g, t0, 0.28, 0.008, 0.14);
+      o.connect(g); g.connect(mestre);
+      o.start(t0); o.stop(t0 + 0.16);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function disparo() {
+      if (!ctx) return;
+      const t0 = agora();
+      const src = ruidoFonte();
+      const f = ctx.createBiquadFilter();
+      f.type = 'bandpass'; f.Q.value = 0.7;
+      f.frequency.setValueAtTime(700, t0);
+      f.frequency.exponentialRampToValueAtTime(2200, t0 + 0.2);
+      f.frequency.exponentialRampToValueAtTime(900, t0 + 0.4);
+      const g = ctx.createGain();
+      envelope(g, t0, 0.38, 0.03, 0.42);
+      src.connect(f); f.connect(g); g.connect(mestre);
+      src.start(t0); src.stop(t0 + 0.46);
+      src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function freio() {
+      if (!ctx) return;
+      const t0 = agora();
+      const src = ruidoFonte();
+      const f = ctx.createBiquadFilter();
+      f.type = 'lowpass'; f.frequency.value = 500;
+      const g = ctx.createGain();
+      envelope(g, t0, 0.3, 0.004, 0.09);
+      src.connect(f); f.connect(g); g.connect(mestre);
+      src.start(t0); src.stop(t0 + 0.11);
+      src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(140, t0);
+      o.frequency.exponentialRampToValueAtTime(60, t0 + 0.08);
+      const g2 = ctx.createGain();
+      envelope(g2, t0, 0.35, 0.004, 0.1);
+      o.connect(g2); g2.connect(mestre);
+      o.start(t0); o.stop(t0 + 0.12);
+      o.onended = () => { try { o.disconnect(); g2.disconnect(); } catch (e) {} };
+    }
+    function estalo() {
+      if (!ctx) return;
+      const t0 = agora();
+      const src = ruidoFonte();
+      const f = ctx.createBiquadFilter();
+      f.type = 'highpass'; f.frequency.value = 1800;
+      const g = ctx.createGain();
+      envelope(g, t0, 0.3, 0.003, 0.06);
+      src.connect(f); f.connect(g); g.connect(mestre);
+      src.start(t0); src.stop(t0 + 0.08);
+      src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function ohoho() {
+      if (!ctx) return;
+      const q = agora() + 0.01;
+      [[988, 0], [1108.73, 0.1], [988, 0.2]].forEach(([f, d]) => {
+        nota(q + d, f, 0.16, 0.08, 'square');
+      });
+    }
+    function fungado(q) {
+      if (!ctx) return;
+      for (let i = 0; i < 2; i++) {
+        const src = ruidoFonte();
+        const f = ctx.createBiquadFilter();
+        f.type = 'bandpass'; f.frequency.value = 1100; f.Q.value = 1.4;
+        const g = ctx.createGain();
+        envelope(g, q + i * 0.07, 0.16, 0.008, 0.05);
+        src.connect(f); f.connect(g); g.connect(mestre);
+        src.start(q + i * 0.07); src.stop(q + i * 0.07 + 0.06);
+        src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+      }
+    }
+    function cervo(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(240, q);
+      o.frequency.linearRampToValueAtTime(200, q + 0.12);
+      const g = ctx.createGain();
+      envelope(g, q, 0.2, 0.015, 0.14);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.16);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function miau(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(760, q);
+      o.frequency.exponentialRampToValueAtTime(1080, q + 0.07);
+      o.frequency.exponentialRampToValueAtTime(820, q + 0.2);
+      o.frequency.exponentialRampToValueAtTime(690, q + 0.34);
+      const f = ctx.createBiquadFilter();
+      f.type = 'lowpass'; f.frequency.value = 2600;
+      const g = ctx.createGain();
+      envelope(g, q, 0.38, 0.02, 0.38);
+      o.connect(f); f.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.4);
+      o.onended = () => { try { o.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function ploc(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(300, q);
+      o.frequency.exponentialRampToValueAtTime(95, q + 0.09);
+      const g = ctx.createGain();
+      envelope(g, q, 0.45, 0.005, 0.11);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.13);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function latido(q) {
+      if (!ctx) return;
+      for (let i = 0; i < 2; i++) {
+        const t0 = q + i * 0.14;
+        const o = ctx.createOscillator();
+        o.type = 'square';
+        o.frequency.setValueAtTime(260, t0);
+        o.frequency.exponentialRampToValueAtTime(150, t0 + 0.07);
+        const f = ctx.createBiquadFilter();
+        f.type = 'lowpass'; f.frequency.value = 950;
+        const g = ctx.createGain();
+        envelope(g, t0, 0.32, 0.005, 0.08);
+        o.connect(f); f.connect(g); g.connect(mestre);
+        o.start(t0); o.stop(t0 + 0.1);
+        o.onended = () => { try { o.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+      }
+    }
+    function somPipa(q) {
+      if (!ctx) return;
+      const src = ruidoFonte();
+      const f = ctx.createBiquadFilter();
+      f.type = 'bandpass'; f.Q.value = 1.1;
+      f.frequency.setValueAtTime(1200, q);
+      f.frequency.exponentialRampToValueAtTime(2800, q + 0.16);
+      const g = ctx.createGain();
+      envelope(g, q, 0.3, 0.02, 0.17);
+      src.connect(f); f.connect(g); g.connect(mestre);
+      src.start(q); src.stop(q + 0.19);
+      src.onended = () => { try { src.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(1320, q + 0.06);
+      o.frequency.exponentialRampToValueAtTime(1980, q + 0.14);
+      o.frequency.exponentialRampToValueAtTime(1760, q + 0.22);
+      const g2 = ctx.createGain();
+      envelope(g2, q + 0.06, 0.16, 0.01, 0.18);
+      o.connect(g2); g2.connect(mestre);
+      o.start(q + 0.06); o.stop(q + 0.26);
+      o.onended = () => { try { o.disconnect(); g2.disconnect(); } catch (e) {} };
+    }
+    function somPatinho(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(620, q);
+      o.frequency.exponentialRampToValueAtTime(940, q + 0.05);
+      o.frequency.exponentialRampToValueAtTime(700, q + 0.1);
+      o.frequency.exponentialRampToValueAtTime(860, q + 0.15);
+      const f = ctx.createBiquadFilter();
+      f.type = 'bandpass'; f.frequency.value = 1200; f.Q.value = 0.9;
+      const g = ctx.createGain();
+      envelope(g, q, 0.28, 0.008, 0.15);
+      o.connect(f); f.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.17);
+      o.onended = () => { try { o.disconnect(); f.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function somBola(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(340, q);
+      o.frequency.exponentialRampToValueAtTime(620, q + 0.06);
+      o.frequency.exponentialRampToValueAtTime(360, q + 0.14);
+      const g = ctx.createGain();
+      envelope(g, q, 0.32, 0.005, 0.16);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.18);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function somSorvete(q) {
+      if (!ctx) return;
+      nota(q, 1568, 0.2, 0.14, 'sine');
+      nota(q, 2349.32, 0.12, 0.12, 'sine');
+    }
+    function gratidao(tom) {
+      if (!ctx) return;
+      const q = agora() + 0.01;
+      nota(q, tom, 0.16, 0.09, 'sine');
+      nota(q + 0.09, tom * 1.26, 0.14, 0.12, 'sine');
+    }
+    function festa() {
+      if (!ctx) return;
+      const q = agora() + 0.02;
+      const NOTAS = [523.25, 659.25, 783.99, 1046.5, 1318.51, 1046.5, 783.99, 1046.5];
+      nota(q, 261.63, 0.2, 0.8, 'sine');
+      NOTAS.forEach((f, i) => {
+        const t0 = q + i * 0.16;
+        nota(t0, f, 0.15, 0.44, 'triangle');
+        nota(t0, f * 2, 0.045, 0.3, 'sine');
+      });
+    }
+    function amigo(som) {
+      if (!ctx) return;
+      const q = agora() + 0.01;
+      if (som === 'cervo') cervo(q);
+      else if (som === 'fungado') fungado(q);
+      else if (som === 'miau') miau(q);
+      else if (som === 'ploc') ploc(q);
+      else if (som === 'latido') latido(q);
+      else if (som === 'pipa') somPipa(q);
+      else if (som === 'patinho') somPatinho(q);
+      else if (som === 'bola') somBola(q);
+      else if (som === 'sorvete') somSorvete(q);
+      else balidoFallback(q);
+    }
+    function balidoFallback(q) {
+      if (!ctx) return;
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(700, q);
+      o.frequency.linearRampToValueAtTime(580, q + 0.1);
+      const g = ctx.createGain();
+      envelope(g, q, 0.16, 0.01, 0.12);
+      o.connect(g); g.connect(mestre);
+      o.start(q); o.stop(q + 0.14);
+      o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (e) {} };
+    }
+    function definirMudo(on) {
+      mudo = !!on;
+      if (!ctx || !mestre) return;
+      const g = mestre.gain, t = ctx.currentTime;
+      try { g.cancelScheduledValues(t); } catch (e) {}
+      g.setValueAtTime(g.value, t);
+      g.linearRampToValueAtTime(mudo ? 0.0001 : 0.251, t + 0.03);
+    }
+    return { destravar, sopro, spin, disparo, freio, estalo, ohoho, gratidao, festa, amigo, definirMudo };
+  })();
+
+  const el = {
+    svg: $('palco'), mundo: $('mundo'), cenario: $('cenario'),
+    rachaduras: $('rachaduras'), obstaculo: $('obstaculo'), amigo: $('amigo'),
+    eggman: $('eggman'), linhas: [...document.querySelectorAll('#linhas line')],
+    rastro: [...document.querySelectorAll('#rastro circle')],
+    heroi: $('heroi'), obstArte: null, amigoArte: null, eggArte: null,
+    placar: $('placar'), placarFundo: null,
+    poeira: [...document.querySelectorAll('#poeira circle')],
+    estrelas: [...document.querySelectorAll('#estrelas .estrela')],
+    halos: [...document.querySelectorAll('#estrelas .halo')],
+    confete: $('confete'), aneisFesta: $('aneis-festa'), flash: $('flash'),
+    mudoIcone: $('mudo-icone'), mudoRisco: $('mudo-risco'),
+    metadeA: null, metadeB: null,
+  };
+
+  function clonarTemplate(id) {
+    const tpl = $(id);
+    if (!tpl) return null;
+    const svg = tpl.content.firstElementChild;
+    return svg ? svg.firstElementChild.cloneNode(true) : null;
+  }
+
+  function montarCenario(i) {
+    const c = CENARIOS[i];
+    c.visitas = (c.visitas || 0) + 1;
+    const cena = clonarTemplate('tpl-cena-' + c.id);
+    if (cena) el.cenario.replaceChildren(cena);
+    el.rachaduras.replaceChildren();
+    jogo.rachaduras = 0;
+    limparObstaculo();
+  }
+
+  function limparObstaculo() {
+    el.obstaculo.replaceChildren();
+    el.amigo.replaceChildren();
+    el.obstArte = null;
+    el.amigoArte = null;
+    el.metadeA = null;
+    el.metadeB = null;
+  }
+
+  function montarObstaculo() {
+    const c = cenarioAtual();
+    const cfg = c.amigos[((c.visitas || 1) - 1) % c.amigos.length];
+    const obst = clonarTemplate(c.obstTpl);
+    const amigo = clonarTemplate(cfg.tpl);
+    if (obst) el.obstaculo.replaceChildren(obst);
+    if (amigo) el.amigo.replaceChildren(amigo);
+    el.obstArte = obst;
+    el.amigoArte = amigo;
+    el.metadeA = obst ? obst.querySelector('.metade-a') : null;
+    el.metadeB = obst ? obst.querySelector('.metade-b') : null;
+    jogo.obstAtivo = true;
+    jogo.obstEntrou = jogo.t;
+    jogo.amigoFase = 'preso';
+    jogo.amigoId = cfg.id;
+    jogo.amigoTpl = cfg.tpl;
+    jogo.somAmigo = cfg.som;
+    jogo.reacaoAmigo = cfg.reacao;
+    jogo.tomGrato = cfg.tomGrato;
+    jogo.reacaoAtiva = false;
+    iniciarEggman();
+  }
+
+  // ---------- Eggman: sempre longe, de perfil, fugindo (L7) ----------
+  function iniciarEggman() {
+    const novo = clonarTemplate('tpl-eggman');
+    if (!novo) return;
+    novo.id = 'eggman-art';
+    el.eggman.replaceWith(novo);
+    el.eggArte = novo;
+    jogo.egg.ativo = true;
+    jogo.egg.inicio = jogo.t;
+    const o = posObstaculo();
+    const h = posHeroi();
+    // Foge na direção oposta ao herói, a partir de perto do amigo.
+    const olhar = o.x >= h.x ? 1 : -1;
+    jogo.egg.x0 = o.x + olhar * 180;
+    jogo.egg.y0 = 380;
+    jogo.egg.x1 = o.x + olhar * 620;
+    jogo.egg.y1 = 220;
+    // Garantia L7: |herói − eggman| ≥ 1152
+    if (Math.abs(jogo.egg.x0 - h.x) < 1152) {
+      jogo.egg.x0 = h.x + olhar * 1152;
+      jogo.egg.x1 = h.x + olhar * 1600;
+    }
+    Som.ohoho();
+  }
+  function desenharEggman() {
+    const d = jogo.egg;
+    if (!d.ativo || !el.eggArte) { if (el.eggArte) def(el.eggArte, 'opacity', 0); return; }
+    const p = clamp01((jogo.t - d.inicio) / EGG_DUR);
+    const e = easeInOutCubic(p);
+    const x = lerp(d.x0, d.x1, e);
+    const y = lerp(d.y0, d.y1, e) + Math.sin(p * Math.PI * 2) * 6;
+    const op = p < 0.08 ? p / 0.08 : p > 0.85 ? (1 - p) / 0.15 : 1;
+    const olhar = d.x1 >= d.x0 ? 1 : -1;
+    def(el.eggArte, 'transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${olhar} 1)`);
+    def(el.eggArte, 'opacity', Math.max(0, op).toFixed(3));
+    if (p >= 1) d.ativo = false;
+  }
+
+  const placarContagem = Object.create(null);
+  const placarLinhas = Object.create(null);
+  let placarN = 0;
+
+  function escalaPlacar() {
+    return (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ? PLACAR_ESCALA_TOQUE : 1;
+  }
+  function atualizarEscalaPlacar() {
+    const k = escalaPlacar();
+    if (k <= 1) { el.placar.removeAttribute('transform'); return; }
+    const ax = PLACAR.x + PLACAR.largura, ay = PLACAR.topo;
+    el.placar.setAttribute('transform', `translate(${ax} ${ay}) scale(${k}) translate(${-ax} ${-ay})`);
+  }
+  function montarPlacar() {
+    const fundo = svgNovo('rect', {
+      x: PLACAR.x, y: PLACAR.topo, width: PLACAR.largura, height: 0, rx: 18,
+      fill: '#1B1420', opacity: 0,
+    });
+    el.placar.appendChild(fundo);
+    el.placarFundo = fundo;
+    atualizarEscalaPlacar();
+  }
+  function atualizarFundoPlacar() {
+    def(el.placarFundo, 'height', PLACAR.pad * 2 + placarN * PLACAR.passo);
+    def(el.placarFundo, 'opacity', placarN > 0 ? 0.4 : 0);
+  }
+  function adicionarLinhaPlacar(id, tplId) {
+    const cy = PLACAR.topo + PLACAR.pad + placarN * PLACAR.passo + PLACAR.passo / 2;
+    const holder = svgNovo('g', { transform: `translate(${PLACAR.iconeX} ${cy.toFixed(1)}) scale(${PLACAR.escala})` });
+    const arte = clonarTemplate(tplId);
+    if (arte) holder.appendChild(arte);
+    const txt = svgNovo('text', {
+      x: PLACAR.numX, y: (cy + 15).toFixed(1), 'text-anchor': 'start',
+      'font-family': '"Arial Black","Segoe UI",system-ui,sans-serif',
+      'font-size': 42, 'font-weight': 800,
+      fill: '#FFF8E7', stroke: '#1B1420', 'stroke-width': 2.6,
+      'paint-order': 'stroke', 'stroke-linejoin': 'round',
+    });
+    txt.textContent = '1';
+    el.placar.appendChild(holder);
+    el.placar.appendChild(txt);
+    placarLinhas[id] = { txt };
+    placarN++;
+  }
+  function registrarSocorro() {
+    const id = jogo.amigoId;
+    if (!id) return;
+    const n = (placarContagem[id] || 0) + 1;
+    placarContagem[id] = n;
+    if (n === 1) adicionarLinhaPlacar(id, jogo.amigoTpl);
+    else placarLinhas[id].txt.textContent = String(n);
+    atualizarFundoPlacar();
+  }
+
+  const CORES_CONFETE = ['#FFD166', '#4A90E2', '#4ECDC4', '#FFF4E0', '#E23B4E'];
+  const confete = [];
+  for (let i = 0; i < 16; i++) {
+    const r = document.createElementNS(NS_SVG, 'rect');
+    r.setAttribute('width', 9 + (i % 3) * 3);
+    r.setAttribute('height', 15);
+    r.setAttribute('rx', 2);
+    r.setAttribute('fill', CORES_CONFETE[i % CORES_CONFETE.length]);
+    r.setAttribute('opacity', 0);
+    el.confete.appendChild(r);
+    confete.push({ el: r, x: 0, y: 0, vx: 0, vy: 0, r: 0, vr: 0, ativo: false });
+  }
+  const aneis = [];
+  for (let i = 0; i < 8; i++) {
+    const use = svgNovo('use', { href: '#anel', opacity: 0 });
+    el.aneisFesta.appendChild(use);
+    aneis.push({ el: use, x: 0, y: 0, vx: 0, vy: 0, r: 0, vr: 0, ativo: false });
+  }
+
+  const jogo = {
+    estado: S.ESPERANDO, t: 0, tEstado: 0,
+    cenario: 0, socorridos: 0, festas: 0,
+    somAmigo: null, amigoId: null, amigoTpl: null,
+    reacaoAmigo: null, tomGrato: 0, reacaoAtiva: false, reacaoEm: -1, reacaoDur: 0,
+    lado: 0,
+    obstAtivo: false, obstEntrou: 0, espera: 0,
+    origem: { x: 0, y: 0 }, destino: { x: 0, y: 0 },
+    obstCentro: { x: 0, y: 0 },
+    amigoFase: 'fora', amigoSaiuEm: -1,
+    poeiraAtiva: false, poeiraEm: -1, poeiraCentro: { x: 0, y: 0 },
+    flashEm: -1, flashPico: 0, flashDur: 700,
+    transicao: false,
+    ocioso: 0, demo: false, mudo: false, mudoAvisoEm: -1,
+    rachaduras: 0,
+    saindoDe: { x: 0, y: 0 }, saindoLado: 0,
+    egg: { ativo: false, inicio: 0, x0: 0, y0: 0, x1: 0, y1: 0 },
+  };
+  const estadoEstrelas = [0, 1, 2].map(() => ({ acesa: false, acendeuEm: -1, apagouEm: -1 }));
+
+  const cenarioAtual = () => CENARIOS[jogo.cenario];
+
+  function posHeroi() {
+    const c = cenarioAtual();
+    return jogo.lado === 0 ? c.esq.heroi : c.dir.heroi;
+  }
+  function posObstaculo() {
+    const c = cenarioAtual();
+    return jogo.lado === 0 ? c.dir.obst : c.esq.obst;
+  }
+  function posPouso() {
+    const c = cenarioAtual();
+    return jogo.lado === 0 ? c.dir.heroi : c.esq.heroi;
+  }
+
+  function acenderEstrela(i) {
+    const st = estadoEstrelas[i];
+    if (!st) return;
+    st.acesa = true;
+    st.acendeuEm = jogo.t;
+    st.apagouEm = -1;
+  }
+  function apagarEstrelas() {
+    for (const st of estadoEstrelas) {
+      if (st.acesa) st.apagouEm = jogo.t;
+      st.acesa = false;
+    }
+  }
+  function desenharEstrelas() {
+    for (let i = 0; i < 3; i++) {
+      const st = estadoEstrelas[i], node = el.estrelas[i], halo = el.halos[i];
+      let op = 0.36, haloOp = 0, esc = 1;
+      if (st.acesa) {
+        const p = clamp01((jogo.t - st.acendeuEm) / T.brilho);
+        const ep = easeOutCubic(p);
+        op = lerp(0.36, 1, ep);
+        haloOp = 0.85 * ep;
+        esc = 1 + 0.55 * (1 - ep);
+        if (jogo.estado === S.FESTA) {
+          const pulso = Math.sin(jogo.t * 0.008 + i * 1.4);
+          esc *= 1 + 0.07 * pulso;
+          haloOp *= 1 + 0.18 * pulso;
+        }
+      } else if (st.apagouEm >= 0) {
+        const p = clamp01((jogo.t - st.apagouEm) / 300);
+        op = lerp(1, 0.36, p);
+        haloOp = 0.85 * (1 - p);
+        if (p >= 1) st.apagouEm = -1;
+      }
+      def(node, 'opacity', op.toFixed(3));
+      def(node, 'transform', `translate(${960 + (i - 1) * 72} 1038) scale(${esc.toFixed(3)})`);
+      def(halo, 'opacity', Math.max(0, haloOp).toFixed(3));
+    }
+  }
+
+  function desenharPoeira() {
+    if (!jogo.poeiraAtiva) {
+      for (const p of el.poeira) def(p, 'opacity', 0);
+      return;
+    }
+    const p = clamp01((jogo.t - jogo.poeiraEm) / 420);
+    const cx = jogo.poeiraCentro.x, cy = jogo.poeiraCentro.y;
+    for (let i = 0; i < el.poeira.length; i++) {
+      const a = (i / el.poeira.length) * Math.PI * 2 + 0.4;
+      const dist = 10 + 70 * easeOutCubic(p);
+      const x = cx + Math.cos(a) * dist;
+      const y = cy + Math.sin(a) * dist * 0.45 - 18 * easeOutCubic(p);
+      const s = 0.5 + 1.1 * Math.sin(Math.PI * p);
+      def(el.poeira[i], 'transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${Math.max(0, s).toFixed(3)})`);
+      def(el.poeira[i], 'opacity', ((1 - p) * 0.8).toFixed(3));
+    }
+    if (p >= 1) jogo.poeiraAtiva = false;
+  }
+  function soltarPoeira(x, y) {
+    jogo.poeiraAtiva = true;
+    jogo.poeiraEm = jogo.t;
+    jogo.poeiraCentro = { x, y };
+  }
+
+  function marcarRachadura(x, y) {
+    if (jogo.rachaduras >= 3) return;
+    const d = 'M-46 8 Q-18 -6 0 4 Q20 -8 48 6 Q22 12 0 10 Q-20 12 -46 8 Z';
+    const path = svgNovo('path', {
+      d, fill: 'none', stroke: '#2A1A3A', 'stroke-width': 5,
+      'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.55,
+    });
+    path.setAttribute('transform', `translate(${x.toFixed(1)} ${(y + 52).toFixed(1)})`);
+    el.rachaduras.appendChild(path);
+    jogo.rachaduras++;
+  }
+
+  function flash(pico, dur) {
+    jogo.flashEm = jogo.t;
+    jogo.flashPico = pico;
+    jogo.flashDur = dur;
+  }
+  function iniciarFesta() {
+    jogo.festas++;
+    flash(0.13, 700);
+    Som.festa();
+    const rnd = mulberry32(0x51ED270B ^ (jogo.festas * 7919) ^ (jogo.cenario * 104729));
+    for (const c of confete) {
+      c.x = rnd() * W;
+      c.y = -30 - rnd() * 520;
+      c.vx = (rnd() - 0.5) * 140;
+      c.vy = 260 + rnd() * 280;
+      c.r = rnd() * 360;
+      c.vr = (rnd() - 0.5) * 440;
+      c.ativo = true;
+      def(c.el, 'opacity', 1);
+    }
+    for (const a of aneis) {
+      a.x = rnd() * W;
+      a.y = -40 - rnd() * 400;
+      a.vx = (rnd() - 0.5) * 90;
+      a.vy = 200 + rnd() * 220;
+      a.r = rnd() * 360;
+      a.vr = (rnd() > 0.5 ? 1 : -1) * (200 + rnd() * 200);
+      a.ativo = true;
+      def(a.el, 'opacity', 1);
+    }
+  }
+  function atualizarFesta(dt) {
+    const s = dt / 1000;
+    for (const c of confete) {
+      if (!c.ativo) continue;
+      c.vy += 260 * s;
+      c.x += (c.vx + Math.sin((jogo.t + c.r * 13) * 0.0018) * 34) * s;
+      c.y += c.vy * s;
+      c.r += c.vr * s;
+      if (c.y > 1120) { c.ativo = false; def(c.el, 'opacity', 0); continue; }
+      def(c.el, 'transform', `translate(${c.x.toFixed(1)} ${c.y.toFixed(1)}) rotate(${c.r.toFixed(1)})`);
+    }
+    for (const a of aneis) {
+      if (!a.ativo) continue;
+      a.vy += 200 * s;
+      a.x += a.vx * s;
+      a.y += a.vy * s;
+      a.r += a.vr * s;
+      if (a.y > 1120) { a.ativo = false; def(a.el, 'opacity', 0); continue; }
+      def(a.el, 'transform', `translate(${a.x.toFixed(1)} ${a.y.toFixed(1)}) rotate(${(a.r % 360).toFixed(1)})`);
+    }
+  }
+  function terminarFesta() {
+    apagarEstrelas();
+    for (const c of confete) { c.ativo = false; def(c.el, 'opacity', 0); }
+    for (const a of aneis) { a.ativo = false; def(a.el, 'opacity', 0); }
+    jogo.socorridos = 0;
+    jogo.transicao = false;
+    jogo.cenario = (jogo.cenario + 1) % CENARIOS.length;
+    jogo.obstAtivo = false;
+    jogo.espera = 0;
+    jogo.poeiraAtiva = false;
+    jogo.amigoFase = 'fora';
+    jogo.amigoSaiuEm = -1;
+    jogo.egg.ativo = false;
+    montarCenario(jogo.cenario);
+    entrar(S.ESPERANDO);
+  }
+
+  function nascerAmigo() {
+    montarObstaculo();
+    jogo.espera = 0;
+  }
+  function iniciarDisparo() {
+    const o = posObstaculo();
+    jogo.obstCentro = { x: o.x, y: o.y };
+    jogo.origem = { x: posHeroi().x, y: posHeroi().y };
+    const p = posPouso();
+    jogo.destino = { x: p.x, y: p.y };
+    Som.sopro();
+    entrar(S.GIRAR);
+  }
+  function concluir() {
+    jogo.demo = false;
+    if (jogo.socorridos >= 3) {
+      jogo.lado ^= 1;
+      limparObstaculo();
+      entrar(S.FESTA);
+    } else {
+      jogo.lado ^= 1;
+      jogo.obstAtivo = false;
+      jogo.espera = 0;
+      entrar(S.ESPERANDO);
+    }
+  }
+  function entrar(novo) {
+    jogo.estado = novo;
+    jogo.tEstado = 0;
+    if (novo === S.ESPERANDO) {
+      jogo.ocioso = 0;
+    } else if (novo === S.GIRAR) {
+      Som.sopro();
+      Som.spin();
+    } else if (novo === S.DISPARO) {
+      Som.disparo();
+    } else if (novo === S.CHEGADA) {
+      Som.freio();
+      soltarPoeira(jogo.destino.x, jogo.destino.y + 70);
+    } else if (novo === S.ABERTURA) {
+      jogo.socorridos++;
+      acenderEstrela(jogo.socorridos - 1);
+      Som.estalo();
+      Som.amigo(jogo.somAmigo);
+      registrarSocorro();
+      marcarRachadura(jogo.obstCentro.x, jogo.obstCentro.y);
+      jogo.amigoFase = 'livre';
+    } else if (novo === S.GRATIDAO) {
+      const rec = REACOES[jogo.reacaoAmigo];
+      jogo.reacaoEm = jogo.t;
+      jogo.reacaoDur = rec ? rec.dur : 0;
+      jogo.reacaoAtiva = !!rec;
+      Som.gratidao(jogo.tomGrato);
+    } else if (novo === S.FESTA) {
+      iniciarFesta();
+    }
+  }
+
+  function passo(dt) {
+    jogo.t += dt;
+    jogo.tEstado += dt;
+    const e = jogo.estado;
+    if (e === S.ESPERANDO) {
+      jogo.ocioso += dt;
+      if (!jogo.obstAtivo) {
+        jogo.espera += dt;
+        if (jogo.espera >= T.pausaObst) nascerAmigo();
+      } else if (jogo.ocioso >= 8000 && !jogo.demo) {
+        jogo.demo = true;
+        iniciarDisparo();
+      }
+    } else if (e === S.GIRAR) {
+      if (jogo.tEstado >= T.girar) entrar(S.DISPARO);
+    } else if (e === S.DISPARO) {
+      if (jogo.tEstado >= T.disparo) entrar(S.CHEGADA);
+    } else if (e === S.CHEGADA) {
+      if (jogo.tEstado >= T.chegada) entrar(S.ABERTURA);
+    } else if (e === S.ABERTURA) {
+      if (jogo.tEstado >= T.abertura) entrar(S.GRATIDAO);
+    } else if (e === S.GRATIDAO) {
+      if (jogo.tEstado >= T.gratidao) {
+        jogo.amigoFase = 'saindo';
+        jogo.amigoSaiuEm = jogo.t;
+        jogo.saindoDe = { x: jogo.obstCentro.x, y: jogo.obstCentro.y };
+        jogo.saindoLado = jogo.lado;
+        concluir();
+      }
+    } else if (e === S.FESTA) {
+      if (jogo.tEstado >= 2750 && !jogo.transicao) {
+        jogo.transicao = true;
+        flash(0.55, 500);
+      }
+      atualizarFesta(dt);
+      if (jogo.tEstado >= T.festa) terminarFesta();
+    }
+    desenhar();
+  }
+
+  function desenharLinhas(p, olhar) {
+    if (SEM_BORRAO || e_ !== S.DISPARO) {
+      def(el.svg.querySelector('#linhas'), 'opacity', 0);
+      for (const r of el.rastro) def(r, 'opacity', 0);
+      def(el.cenario, 'transform', '');
+      return;
+    }
+    // linhas de velocidade, contrárias ao disparo
+    def(el.svg.querySelector('#linhas'), 'opacity', (0.7 * Math.sin(Math.PI * p)).toFixed(3));
+    for (let i = 0; i < el.linhas.length; i++) {
+      const y = 300 + i * 90 + (i % 2) * 40;
+      const x = olhar > 0
+        ? lerp(jogo.origem.x - 200, jogo.destino.x - 400 * (1 - p), p) + i * 40
+        : lerp(jogo.origem.x + 200, jogo.destino.x + 400 * (1 - p), p) - i * 40;
+      const len = 140 + 80 * Math.sin(Math.PI * p);
+      const x1 = olhar > 0 ? x - len : x + len;
+      def(el.linhas[i], 'transform', `translate(${x1.toFixed(1)} ${y.toFixed(1)})`);
+      def(el.linhas[i], 'opacity', (0.8 * Math.sin(Math.PI * p)).toFixed(3));
+    }
+    // rastro azul atrás do herói
+    const hx = jogo.rastroX || jogo.origem.x;
+    for (let i = 0; i < el.rastro.length; i++) {
+      const back = (i + 1) * 36 * olhar;
+      def(el.rastro[i], 'transform', `translate(${(hx - back).toFixed(1)} ${(jogo.destino.y - 20).toFixed(1)})`);
+      def(el.rastro[i], 'opacity', (0.35 * (1 - i / 3) * Math.sin(Math.PI * p)).toFixed(3));
+    }
+    // cenário estica
+    const s = 1 + 0.06 * Math.sin(Math.PI * p);
+    def(el.cenario, 'transform', `translate(960 540) scale(${s.toFixed(4)} 1) translate(-960 -540)`);
+  }
+
+  let e_ = null;
+  function desenhar() {
+    const e = jogo.estado;
+    e_ = e;
+    desenharEstrelas();
+    desenharPoeira();
+    desenharEggman();
+
+    let reacaoP = -1;
+    if (jogo.reacaoAtiva) {
+      reacaoP = clamp01((jogo.t - jogo.reacaoEm) / jogo.reacaoDur);
+      if (reacaoP >= 1) { reacaoP = -1; jogo.reacaoAtiva = false; }
+    }
+
+    const espera = posHeroi();
+    let hx = espera.x, hy = espera.y, hr = 0, sx = 1, sy = 1;
+    const obstX = (jogo.obstAtivo || e !== S.ESPERANDO)
+      ? (jogo.obstCentro.x || posObstaculo().x)
+      : posObstaculo().x;
+    const olhar = obstX >= hx ? 1 : -1;
+
+    if (e === S.ESPERANDO) {
+      sy = 0.97 + 0.02 * Math.sin(jogo.t * 0.0023);
+      sx = 1 / sy;
+      hr = 1.2 * Math.sin(jogo.t * 0.0013);
+      // tapando o pé
+      hy += Math.abs(Math.sin(jogo.t * 0.006)) * 2;
+    } else if (e === S.GIRAR) {
+      const p = clamp01(jogo.tEstado / T.girar);
+      hx = jogo.origem.x;
+      hy = jogo.origem.y;
+      hr = 720 * easeInOutCubic(p) * olhar; // vira bola
+      sy = lerp(1, 0.86, Math.sin(Math.PI * p));
+      sx = lerp(1, 1.1, Math.sin(Math.PI * p));
+    } else if (e === S.DISPARO) {
+      const p = clamp01(jogo.tEstado / T.disparo);
+      const t = easeInOutQuart(p);
+      hx = lerp(jogo.origem.x, jogo.destino.x, t);
+      hy = jogo.origem.y - 6 * Math.abs(Math.sin(jogo.t * 0.02)); // passos rápidos
+      hr = 10 * olhar;
+      sx = 1.08; sy = 0.94;
+      jogo.rastroX = hx;
+    } else if (e === S.CHEGADA) {
+      const p = clamp01(jogo.tEstado / T.chegada);
+      hx = jogo.destino.x + 18 * olhar * (1 - easeOutCubic(p));
+      hy = jogo.destino.y;
+      hr = -12 * olhar * (1 - p); // derrapando
+      sx = 1.05; sy = 0.92;
+    } else if (e === S.ABERTURA) {
+      const p = clamp01(jogo.tEstado / T.abertura);
+      hx = jogo.destino.x;
+      hy = jogo.destino.y;
+      hr = lerp(-6, 4, easeOutCubic(p)) * olhar;
+      sy = lerp(0.92, 1, easeOutCubic(p));
+      sx = lerp(1.05, 1, easeOutCubic(p));
+    } else if (e === S.GRATIDAO) {
+      const p = clamp01(jogo.tEstado / T.gratidao);
+      hx = jogo.destino.x;
+      hy = jogo.destino.y;
+      hr = 10 * Math.sin(p * Math.PI * 2) * olhar;
+      if (reacaoP >= 0) {
+        hy += -30 * Math.sin(Math.PI * reacaoP);
+        hr += 8 * Math.sin(reacaoP * Math.PI * 2);
+      }
+    } else if (e === S.FESTA) {
+      const hop = Math.abs(Math.sin(Math.PI * jogo.tEstado / 1000));
+      hy = espera.y - 44 * hop;
+      hr = 5 * Math.sin(2 * Math.PI * jogo.tEstado / 1000);
+      sy = 1 + 0.04 * hop;
+    }
+
+    def(el.heroi, 'transform',
+      `translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(${hr.toFixed(2)}) scale(${(sx * olhar).toFixed(3)} ${sy.toFixed(3)})`);
+
+    desenharLinhas(e === S.DISPARO ? clamp01(jogo.tEstado / T.disparo) : 0, olhar);
+
+    const saindo = e === S.ESPERANDO && jogo.amigoFase === 'saindo';
+    if (jogo.obstAtivo || e === S.GIRAR || e === S.DISPARO || e === S.CHEGADA || e === S.ABERTURA || e === S.GRATIDAO || saindo) {
+      const o = (e === S.DISPARO || e === S.CHEGADA || e === S.ABERTURA || e === S.GRATIDAO)
+        ? jogo.obstCentro
+        : (saindo ? jogo.saindoDe : posObstaculo());
+      const ladoDesenho = saindo ? jogo.saindoLado : jogo.lado;
+      const entra = clamp01((jogo.t - jogo.obstEntrou) / 320);
+      const escO = 0.7 + 0.3 * entra;
+      const opO = clamp01(entra * 1.8);
+
+      let rotA = 0, rotB = 0, txA = 0, tyA = 0, txB = 0, tyB = 0, opMet = 1;
+      if (e === S.ABERTURA || e === S.GRATIDAO || e === S.FESTA) {
+        const p = e === S.ABERTURA ? clamp01(jogo.tEstado / T.abertura) : 1;
+        const ep = easeOutCubic(p);
+        txA = -110 * ep; tyA = -70 * ep - 40 * p * p;
+        txB = 110 * ep; tyB = -70 * ep - 40 * p * p;
+        rotA = -38 * ep; rotB = 38 * ep;
+        opMet = 1 - clamp01((p - 0.55) / 0.45);
+      }
+      if (el.obstArte) {
+        def(el.obstArte, 'transform',
+          `translate(${o.x.toFixed(2)} ${o.y.toFixed(2)}) scale(${(escO * (ladoDesenho === 0 ? 1 : -1)).toFixed(3)} ${escO.toFixed(3)})`);
+        def(el.obstArte, 'opacity', (saindo ? 0 : opO).toFixed(3));
+        if (el.metadeA) {
+          def(el.metadeA, 'transform', `translate(${txA.toFixed(1)} ${tyA.toFixed(1)}) rotate(${rotA.toFixed(1)})`);
+          def(el.metadeA, 'opacity', opMet.toFixed(3));
+        }
+        if (el.metadeB) {
+          def(el.metadeB, 'transform', `translate(${txB.toFixed(1)} ${tyB.toFixed(1)}) rotate(${rotB.toFixed(1)})`);
+          def(el.metadeB, 'opacity', opMet.toFixed(3));
+        }
+      }
+
+      if (el.amigoArte) {
+        const olharAmigo = ladoDesenho === 0 ? -1 : 1;
+        let ax = o.x + (ladoDesenho === 0 ? -74 : 74);
+        let ay = o.y + 18;
+        let ar = 10 * olharAmigo;
+        let asx = 0.9, asy = 0.9, aop = opO;
+        if (jogo.amigoFase === 'preso') {
+          ar = (10 + 4 * Math.sin(jogo.t * 0.004)) * olharAmigo;
+          asx = 0.88; asy = 0.88;
+        } else if (jogo.amigoFase === 'livre') {
+          ax = o.x + (ladoDesenho === 0 ? -96 : 96);
+          ay = o.y + 4;
+          ar = 0; asx = 1; asy = 1;
+          if (reacaoP >= 0) {
+            const rec = REACOES[jogo.reacaoAmigo];
+            if (rec) def(el.amigoArte, 'transform', rec.obj(reacaoP));
+          }
+        } else if (jogo.amigoFase === 'saindo' || jogo.amigoFase === 'fora') {
+          const ps = jogo.amigoSaiuEm >= 0 ? clamp01((jogo.t - jogo.amigoSaiuEm) / 360) : 1;
+          const dirFora = ladoDesenho === 0 ? -1 : 1;
+          ax = o.x + dirFora * (96 + 420 * easeOutCubic(ps));
+          ay = o.y + 4 - 80 * Math.abs(Math.sin(Math.PI * ps));
+          aop = 1 - ps;
+          asx = 1; asy = 1; ar = 0;
+          if (ps >= 1) { jogo.amigoFase = 'fora'; jogo.amigoSaiuEm = -1; }
+        }
+        if (!(jogo.amigoFase === 'livre' && reacaoP >= 0)) {
+          def(el.amigoArte, 'transform',
+            `translate(${ax.toFixed(2)} ${ay.toFixed(2)}) rotate(${ar.toFixed(2)}) scale(${(asx * olharAmigo).toFixed(3)} ${asy.toFixed(3)})`);
+        }
+        def(el.amigoArte, 'opacity', aop.toFixed(3));
+      }
+    } else {
+      if (el.obstArte) def(el.obstArte, 'opacity', 0);
+      if (el.amigoArte) def(el.amigoArte, 'opacity', 0);
+    }
+
+    if (jogo.flashEm >= 0) {
+      const p = clamp01((jogo.t - jogo.flashEm) / jogo.flashDur);
+      def(el.flash, 'opacity', (jogo.flashPico * Math.sin(Math.PI * p)).toFixed(3));
+      if (p >= 1) jogo.flashEm = -1;
+    } else {
+      def(el.flash, 'opacity', 0);
+    }
+
+    if (jogo.mudoAvisoEm >= 0) {
+      const p = clamp01((jogo.t - jogo.mudoAvisoEm) / 1000);
+      const op = p < 0.75 ? 1 : Math.max(0, 1 - (p - 0.75) / 0.25);
+      def(el.mudoIcone, 'opacity', op.toFixed(3));
+      if (p >= 1) jogo.mudoAvisoEm = -1;
+    } else {
+      def(el.mudoIcone, 'opacity', 0);
+    }
+    def(el.mudoRisco, 'opacity', jogo.mudo ? 1 : 0);
+  }
+
+  function paraVirtual(ev) {
+    const ctm = el.svg.getScreenCTM();
+    if (!ctm) return null;
+    const pt = el.svg.createSVGPoint();
+    pt.x = ev.clientX; pt.y = ev.clientY;
+    const p = pt.matrixTransform(ctm.inverse());
+    if (p.x < 0 || p.x > W || p.y < 0 || p.y > H) return null;
+    return p;
+  }
+  function centroAlvo() {
+    const o = posObstaculo();
+    return { x: o.x, y: o.y - 50 };
+  }
+  function aoClicar(ev) {
+    if (ev.button !== 0) return;
+    if (jogo.estado !== S.ESPERANDO || !jogo.obstAtivo) return;
+    const p = paraVirtual(ev);
+    if (!p) return;
+    const a = centroAlvo();
+    const noCirculo = Math.hypot(p.x - a.x, p.y - a.y) <= RAIO;
+    const noTerco = p.x >= TERCO.x1 && p.x <= TERCO.x2 && p.y >= TERCO.y1 && p.y <= TERCO.y2;
+    if (!noCirculo && !noTerco) return;
+    iniciarDisparo();
+  }
+
+  function cancelarDemo() {
+    if (!jogo.demo) return false;
+    jogo.demo = false;
+    if (jogo.estado !== S.ESPERANDO) {
+      jogo.obstAtivo = false;
+      jogo.espera = 0;
+      jogo.poeiraAtiva = false;
+      jogo.egg.ativo = false;
+      limparObstaculo();
+      entrar(S.ESPERANDO);
+    }
+    return true;
+  }
+  function aoEntrada() {
+    jogo.ocioso = 0;
+    cancelarDemo();
+  }
+  function alternarMudo() {
+    jogo.mudo = !jogo.mudo;
+    Som.definirMudo(jogo.mudo);
+    jogo.mudoAvisoEm = jogo.t;
+  }
+  function entrarTelaCheia() {
+    try {
+      if (document.fullscreenElement || document.webkitFullscreenElement) return;
+      const eld = document.documentElement;
+      const req = eld.requestFullscreen || eld.webkitRequestFullscreen;
+      if (!req) return;
+      const p = req.call(eld);
+      if (p && p.catch) p.catch(() => {});
+    } catch (e) {}
+  }
+  function alternarTela() {
+    try {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        entrarTelaCheia();
+      } else {
+        const p = document.exitFullscreen && document.exitFullscreen();
+        if (p && p.catch) p.catch(() => {});
+      }
+    } catch (e) {}
+  }
+  const ehCelular = () => !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  function aoToque(ev) {
+    if (ev.pointerType !== 'touch') return;
+    entrarTelaCheia();
+  }
+
+  montarCenario(0);
+  montarPlacar();
+  if (ehCelular()) entrarTelaCheia();
+
+  el.svg.addEventListener('pointerdown', (ev) => {
+    Som.destravar();
+    aoEntrada();
+    aoToque(ev);
+    aoClicar(ev);
+  });
+  window.addEventListener('keydown', (ev) => {
+    const k = ev.key;
+    if (k === 'm' || k === 'M') { alternarMudo(); }
+    else if (k === 'f' || k === 'F') { alternarTela(); }
+  });
+  window.addEventListener('resize', atualizarEscalaPlacar);
+  window.addEventListener('orientationchange', atualizarEscalaPlacar);
+
+  let ultimo = performance.now();
+  function quadro(agora) {
+    const dt = Math.min(100, agora - ultimo);
+    ultimo = agora;
+    passo(dt);
+    requestAnimationFrame(quadro);
+  }
+  requestAnimationFrame(quadro);
+})();
+</script>
+</body>
+</html>

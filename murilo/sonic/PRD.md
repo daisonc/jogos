@@ -4,7 +4,7 @@
 - **Escopo do produto**: v1.0 — três cenários, disparo horizontal, Eggman de longe, placar desde o primeiro dia, anéis como enfeite
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
 - **Jogos irmãos**: [`../PRD.md`](../PRD.md) (Teia), [`../hulk/PRD.md`](../hulk/PRD.md) (Força)
-- **Status**: design aprovado pelo operador em 2026-11-03. Implementação não começou.
+- **Status**: design aprovado pelo operador em 2026-11-03. **v1.0 implementada em 2026-11-03** (F1 e F2 concluídas; smoke test em Node/jsdom: ciclo completo, zero erros, pico de 159 nós). F3 pendente: medições oficiais de NF3/NF6/NF12 e sessão observacional (K1/K2) pelo operador.
 
 > `TEMA.md` responde *por que*; este PRD responde *o que sai e como se mede*.
 
@@ -246,15 +246,15 @@ Zero rede, zero dado, zero supply chain. LGPD: não há dado a tratar.
 
 | Fase | Entrega | Critério |
 | --- | --- | --- |
-| **F1 — Disparo** | FSM, 1 cenário, arte provisória, sem áudio, sem placar | Clicar produz disparo e abertura; herói fica |
-| **F2 — Voz e HUD** | 3 cenários, áudio, Eggman, placar, anéis, voltar, attract, `M`/`F` | Zero erros; NF4 ≤ 240 |
-| **F3 — v1.0** | Regressão NF1–NF12, sessão com o Murilo | Pendente |
+| **F1 — Disparo** | FSM, 1 cenário, arte provisória, sem áudio, sem placar | **Concluída** (implementada junto com a F2) |
+| **F2 — Voz e HUD** | 3 cenários, áudio, Eggman, placar, anéis, voltar, attract, `M`/`F` | **Concluída em 2026-11-03** — smoke test jsdom: zero erros, pico de 159 nós |
+| **F3 — v1.0** | Regressão NF1–NF12, sessão com o Murilo | **Pendente** — técnicos oficiais (NF3/NF6/NF12) e K1/K2 pelo operador |
 
 ### Definição de pronto
 
 Arquivo único abre offline, Murilo aponta e um socorro acontece em menos de 2,8 s, o borrão não assusta, Eggman não chega perto, placar mostra os amigos, NF1–NF12 verificados, nenhuma lei violada.
 
-**Situação:** pendente. Nada implementado.
+**Situação:** F1 e F2 implementadas. Pendente F3 (K1/K2 e medições oficiais).
 
 ---
 

@@ -1,6 +1,6 @@
 # Veloz do Murilo — Tema
 
-- **Versão**: 0.1 (design aprovado em 2026-11-03; jogo não implementado)
+- **Versão**: 0.2 (v1.0 implementada em 2026-11-03; pendente K1/K2 e medições oficiais)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, o **primeiro toque** entra em tela cheia (padrão da casa `PADRAES.md`). O alvo jogável continua sendo notebook com mouse.
@@ -187,6 +187,6 @@ K1 (rir) e K2 (pedir "de novo"). K3/K4/K5 herdam.
 
 ## Pendências
 
-- Implementar `veloz-do-murilo.html`.
-- Adicionar o cartão na vitrine só quando o arquivo existir.
+- ~~Implementar `veloz-do-murilo.html`~~ — **feito** (v1.0, 2026-11-03).
+- ~~Adicionar o cartão na vitrine~~ — **feito**.
 - Testar com o Murilo (K1/K2) antes de chamar de pronto.
