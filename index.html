@@ -84,7 +84,7 @@
   /* ------------------------------ conteúdo -------------------------------- */
   .wrap {
     position: relative; z-index: 1;
-    max-width: 1080px; margin: 0 auto;
+    max-width: 1180px; margin: 0 auto;
     padding: clamp(28px, 6vw, 64px) clamp(18px, 4vw, 40px) clamp(90px, 16vh, 150px);
     display: flex; flex-direction: column; align-items: center;
     min-height: 100dvh;
@@ -131,9 +131,9 @@
   /* ------------------------------ prateleira ------------------------------ */
   .prateleira {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 300px));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
     justify-content: center;
-    gap: clamp(20px, 4vw, 40px);
+    gap: clamp(16px, 2.4vw, 28px);
     width: 100%;
   }
 
@@ -366,6 +366,113 @@
   </template>
 
   <!-- =================================================================== -->
+  <!-- ARTE — Raio do Murilo. Cena em miniatura (SVG inline, sem imagem).   -->
+  <!-- =================================================================== -->
+  <template id="arte-raio">
+    <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="raio-ceu" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4FA9DE"/>
+          <stop offset=".62" stop-color="#9FD6F0"/>
+          <stop offset="1" stop-color="#E4F5FB"/>
+        </linearGradient>
+        <radialGradient id="raio-sol">
+          <stop offset="0" stop-color="#FFF8DC"/>
+          <stop offset=".6" stop-color="#FFE3A8"/>
+          <stop offset="1" stop-color="#FFC97E"/>
+        </radialGradient>
+        <radialGradient id="raio-halo">
+          <stop offset="0" stop-color="#FFF3B0" stop-opacity=".95"/>
+          <stop offset=".5" stop-color="#FFE066" stop-opacity=".4"/>
+          <stop offset="1" stop-color="#FFE066" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <rect width="300" height="400" fill="url(#raio-ceu)"/>
+      <circle cx="252" cy="70" r="34" fill="url(#raio-sol)"/>
+
+      <!-- torres ao fundo -->
+      <path fill="#9FBED4" opacity=".5" d="M0 300 L0 196 L34 196 L34 168 L74 168 L74 300 Z M96 300 L96 214 L140 214 L140 300 Z M268 300 L268 206 L300 206 L300 300 Z"/>
+
+      <!-- nuvens -->
+      <g fill="#FFFFFF" opacity=".92">
+        <ellipse cx="58" cy="330" rx="34" ry="17"/>
+        <ellipse cx="86" cy="322" rx="26" ry="14"/>
+        <ellipse cx="230" cy="352" rx="38" ry="18"/>
+      </g>
+
+      <!-- brinquedo (bola colorida) com halo -->
+      <circle cx="240" cy="132" r="42" fill="url(#raio-halo)"/>
+      <g transform="translate(240 132) scale(.40)">
+        <circle r="40" fill="#F8F1E3" stroke="#2A1A3A" stroke-width="5"/>
+        <path fill="#E23B4E" d="M0 0 L0 -40 A40 40 0 0 1 34.64 20 Z"/>
+        <path fill="#F2C14E" d="M0 0 L34.64 20 A40 40 0 0 1 -34.64 20 Z"/>
+        <path fill="#3FB8AF" d="M0 0 L-34.64 20 A40 40 0 0 1 0 -40 Z"/>
+      </g>
+
+      <!-- raio duplo: dois feixes que se abrem e convergem na bola -->
+      <path fill="none" stroke="#FF9AA4" stroke-width="9" stroke-linecap="round" opacity=".5" d="M90 156 Q165 118 240 132"/>
+      <path fill="none" stroke="#FF9AA4" stroke-width="9" stroke-linecap="round" opacity=".5" d="M110 156 Q172 138 240 132"/>
+      <path fill="none" stroke="#FF2A3C" stroke-width="3.2" stroke-linecap="round" d="M90 156 Q165 118 240 132"/>
+      <path fill="none" stroke="#FF2A3C" stroke-width="3.2" stroke-linecap="round" d="M110 156 Q172 138 240 132"/>
+      <circle cx="240" cy="132" r="9" fill="#FF2A3C" opacity=".5"/>
+      <circle cx="240" cy="132" r="4" fill="#FFF3C4"/>
+
+      <!-- Super Homem voando, caixa no braço esquerdo -->
+      <g transform="translate(100 238) scale(.86) rotate(-5)">
+        <path fill="#E23B4E" stroke="#8B1E2D" stroke-width="5" stroke-linejoin="round"
+              d="M-24 -66 C-72 -74 -116 -34 -122 18 C-108 10 -96 24 -82 18 C-70 40 -54 30 -42 40 L-24 4 Z"/>
+        <path fill="#B72236" opacity=".6" d="M-46 -46 C-84 -44 -106 -12 -108 20 C-96 8 -80 26 -62 18 Z"/>
+
+        <path fill="none" stroke="#1A4A9E" stroke-width="24" stroke-linecap="round" d="M-16 6 L-34 50"/>
+        <path fill="none" stroke="#2E6BD6" stroke-width="16" stroke-linecap="round" d="M-16 6 L-34 50"/>
+        <path fill="none" stroke="#1A4A9E" stroke-width="24" stroke-linecap="round" d="M16 6 L34 46"/>
+        <path fill="none" stroke="#2E6BD6" stroke-width="16" stroke-linecap="round" d="M16 6 L34 46"/>
+        <path fill="none" stroke="#8B1E2D" stroke-width="30" stroke-linecap="round" d="M-34 50 L-44 62"/>
+        <path fill="none" stroke="#E23B4E" stroke-width="21" stroke-linecap="round" d="M-34 50 L-44 62"/>
+        <path fill="none" stroke="#8B1E2D" stroke-width="30" stroke-linecap="round" d="M34 46 L44 58"/>
+        <path fill="none" stroke="#E23B4E" stroke-width="21" stroke-linecap="round" d="M34 46 L44 58"/>
+
+        <path fill="#2E6BD6" stroke="#1A4A9E" stroke-width="5" stroke-linejoin="round"
+              d="M-34 -66 Q0 -80 34 -66 L28 6 Q0 18 -28 6 Z"/>
+        <path fill="#F2C14E" stroke="#B8860B" stroke-width="3" d="M-28 -2 L28 -2 L27 10 L-27 10 Z"/>
+        <path fill="#E23B4E" stroke="#8B1E2D" stroke-width="3" d="M-27 8 L27 8 L22 24 Q0 30 -22 24 Z"/>
+        <path fill="#FFE066" stroke="#E23B4E" stroke-width="4" stroke-linejoin="round" d="M0 -56 L26 -26 L0 4 L-26 -26 Z"/>
+        <path fill="#E23B4E" d="M0 -45 L15 -26 L0 -7 L-15 -26 Z"/>
+
+        <path fill="none" stroke="#1A4A9E" stroke-width="22" stroke-linecap="round" d="M30 -56 Q56 -58 72 -38"/>
+        <path fill="none" stroke="#2E6BD6" stroke-width="14" stroke-linecap="round" d="M30 -56 Q56 -58 72 -38"/>
+        <circle cx="76" cy="-34" r="13" fill="#FFF6E6" stroke="#1A4A9E" stroke-width="4"/>
+
+        <path fill="none" stroke="#1A4A9E" stroke-width="22" stroke-linecap="round" d="M-32 -54 Q-60 -26 -68 8"/>
+        <path fill="none" stroke="#2E6BD6" stroke-width="14" stroke-linecap="round" d="M-32 -54 Q-60 -26 -68 8"/>
+        <circle cx="-68" cy="14" r="13" fill="#FFF6E6" stroke="#1A4A9E" stroke-width="4"/>
+
+        <circle cx="0" cy="-96" r="31" fill="#F6C9A0" stroke="#8B5A3C" stroke-width="4"/>
+        <path fill="#14213D" d="M-31 -100 Q-30 -130 0 -130 Q30 -130 31 -100 Q22 -114 0 -114 Q-22 -114 -31 -100 Z"/>
+        <path fill="#14213D" d="M-31 -102 Q-38 -96 -31 -88 L-24 -98 Z"/>
+        <ellipse cx="-11" cy="-96" rx="7" ry="8.5" fill="#FFFFFF" stroke="#1A4A9E" stroke-width="2.2"/>
+        <ellipse cx="11" cy="-96" rx="7" ry="8.5" fill="#FFFFFF" stroke="#1A4A9E" stroke-width="2.2"/>
+        <circle cx="-11" cy="-96" r="4.2" fill="#FF2A3C"/>
+        <circle cx="11" cy="-96" r="4.2" fill="#FF2A3C"/>
+        <path fill="none" stroke="#8B5A3C" stroke-width="3" stroke-linecap="round" d="M-9 -80 Q0 -74 9 -80"/>
+
+        <g transform="translate(-68 44)">
+          <rect x="-34" y="-16" width="68" height="46" rx="5" fill="#C98A5B" stroke="#6B4526" stroke-width="4"/>
+          <path fill="none" stroke="#A9703F" stroke-width="3" opacity=".75" d="M-26 -2 L26 -2 M-26 12 L26 12"/>
+          <g>
+            <animateTransform attributeName="transform" type="rotate"
+              values="0 -37 -27; -34 -37 -27; 0 -37 -27" dur="3s" repeatCount="indefinite"
+              calcMode="spline" keyTimes="0;.5;1" keySplines=".42 0 .58 1;.42 0 .58 1"/>
+            <rect x="-37" y="-27" width="74" height="13" rx="5" fill="#A9703F" stroke="#6B4526" stroke-width="3.5"/>
+            <rect x="-9" y="-30" width="18" height="9" rx="3" fill="#F2C14E" stroke="#B8860B" stroke-width="2.5"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </template>
+
+  <!-- =================================================================== -->
   <!-- ARTE — Força do Murilo. Cena em miniatura (SVG inline, sem imagem).  -->
   <!-- =================================================================== -->
   <template id="arte-forca">
@@ -554,6 +661,15 @@
         href: 'murilo/sonic/veloz-do-murilo.html',
         arte: 'arte-veloz',
         cor: '#2E6BD6',
+      },
+      {
+        id: 'raio',
+        titulo: 'Raio do Murilo',
+        dono: 'Murilo',
+        sub: 'voo, raio dos olhos e caixa',
+        href: 'murilo/super/raio-do-murilo.html',
+        arte: 'arte-raio',
+        cor: '#E23B4E',
       },
     ];
 
