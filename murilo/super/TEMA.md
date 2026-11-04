@@ -1,6 +1,6 @@
 # Raio do Murilo — Tema
 
-- **Versão**: 1.0 (implementado em 2026-11-03; falta a sessão K1/K2)
+- **Versão**: 1.0 (concluído e homologado em 2026-11-03 — K1/K2 e NF1–NF12 confirmados)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, o **primeiro toque** entra em tela cheia (padrão da casa `../PADRAES.md`). O alvo jogável continua sendo notebook com mouse.
@@ -189,5 +189,5 @@ K1 (rir) e K2 (pedir "de novo"). K3/K4/K5 herdam.
 
 ## Pendências
 
-- Testar com o Murilo (K1/K2) antes de chamar de pronto.
-- Cartão na vitrine: adicionar quando a sessão confirmar (hoje o arquivo existe e abre direto pelo caminho).
+- ~~Testar com o Murilo (K1/K2)~~ — **feito e homologado** (2026-11-03).
+- ~~Cartão na vitrine~~ — **feito**: quarto cartão na prateleira (`arte-raio`).

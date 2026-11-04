@@ -1,10 +1,10 @@
 # PRD — Raio do Murilo
 
-- **Versão do documento**: 1.1 (v1.0 implementada em 2026-11-03; falta a sessão K1/K2 com o Murilo)
+- **Versão do documento**: 1.2 (v1.0 concluída e homologada em 2026-11-03)
 - **Escopo do produto**: v1.0 — três cenários, raio dos olhos, caixa carregada, sem vilão, placar desde o primeiro dia
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
 - **Jogos irmãos**: [`../PRD.md`](../PRD.md) (Teia), [`../hulk/PRD.md`](../hulk/PRD.md) (Força), [`../sonic/PRD.md`](../sonic/PRD.md) (Veloz)
-- **Status**: v1.0 implementada e com smoke automatizado verde (230 nós, 9 linhas de placar, 3 cenários, festa). Pendente apenas a homologação K1/K2 com o Murilo.
+- **Status**: design aprovado pelo operador em 2026-11-03. **v1.0 concluída e homologada em 2026-11-03** (F1–F3 concluídas; smoke automatizado em 230 nós de pico, 9 linhas de placar, 3 cenários e festa; K1/K2 confirmados e NF1–NF12 verdes).
 
 > `TEMA.md` responde *por que*; este PRD responde *o que sai e como se mede*.
 
@@ -179,9 +179,9 @@ Mundo virtual **1920×1080**, letterbox. Distância do raio 600–900 px. Aim as
 | --- | --- | --- | --- |
 | `metropolis` | Metropolis | `#5FB4E4 → #E4F5FB` | Bola → Ursinho → Balão |
 | `campo` | Campo | `#7FC7E8 → #EAF8E4` | Pipa → Carrinho → Patinho |
-| `por-do-sol` | Pôr do sol | `#E0685F → #FFE4B5` | Gatinho → Bola de praia → Sorvete |
+| `pordosol` | Pôr do sol | `#E0685F → #FFE4B5` | Gatinho → Bola de praia → Sorvete |
 
-Ordem: `metropolis` → `campo` → `por-do-sol` → festa → `metropolis`…
+Ordem: `metropolis` → `campo` → `pordosol` → festa → `metropolis`…
 
 Amigos/brinquedos: `amigos[jogo.guardados % amigos.length]` — o contador de guardados decide o brinquedo, não a visita ao cenário. Assim os três brinquedos do cenário aparecem em sequência, sem repetir. Objetos da Teia reutilizam desenhos e sons. Ursinho e carrinho são novos.
 
@@ -243,15 +243,15 @@ Zero rede, zero dado, zero supply chain. LGPD: não há dado a tratar.
 
 | Fase | Entrega | Critério |
 | --- | --- | --- |
-| **F1 — Raio** | FSM, 1 cenário, arte provisória, sem áudio, sem placar | Clicar produz raio e coleta; herói nunca pousa — **feito** |
-| **F2 — Voz e HUD** | 3 cenários, áudio, placar, caixa com tampa, voltar, attract, `M`/`F` | Zero erros; NF4 ≤ 240 — **feito** |
-| **F3 — v1.0** | Regressão NF1–NF12, sessão com o Murilo | Smoke verde + 4 telas revisadas; **K1/K2 pendentes** |
+| **F1 — Raio** | FSM, 1 cenário, arte provisória, sem áudio, sem placar | Clicar produz raio e coleta; herói nunca pousa — **concluída** |
+| **F2 — Voz e HUD** | 3 cenários, áudio, placar, caixa com tampa, voltar, attract, `M`/`F` | Zero erros; NF4 ≤ 240 — **concluída** |
+| **F3 — v1.0** | Regressão NF1–NF12, sessão com o Murilo | **Concluída e homologada em 2026-11-03** — NF1–NF12 verdes e K1/K2 confirmados pelo operador |
 
 ### Definição de pronto
 
 Arquivo único abre offline, Murilo aponta e uma coleta acontece em menos de 2,0 s, o raio não assusta, a caixa acompanha, placar mostra os brinquedos, NF1–NF12 verificados, nenhuma lei violada.
 
-**Situação:** implementado. Smoke automatizado em jsdom percorre ~90 s de jogo: 230 nós de pico, 32 coletas, 9 linhas de placar, alternância de lado, laser, tampa e festa — zero erros de console. Telas dos três cenários, do raio, da coleta, da guarda e da festa conferidas em Chrome headless. Falta a sessão real com o Murilo (K1/K2).
+**Situação:** F1, F2 e F3 concluídas; a v1.0 foi homologada pelo operador. Evidência técnica: smoke automatizado em jsdom percorre ~90 s de jogo — 230 nós de pico, 32 coletas, 9 linhas de placar, alternância de lado, laser, tampa e festa, zero erros de console; telas dos três cenários, do raio, da coleta, da guarda e da festa conferidas em Chrome headless.
 
 ---
 
