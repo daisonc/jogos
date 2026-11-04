@@ -744,6 +744,24 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 
 ---
 
+## 9. Navegação de volta à vitrine (v1.5)
+
+**Contexto.** Com a vitrine (`index.html`), o jogo passou a ser aberto a partir dela. O Murilo não usa o botão "voltar" do navegador; sem uma saída visível dentro do jogo, ele fica preso na partida.
+
+**Decisão.** Um **botão fixo e colorido** no canto superior esquerdo da tela do jogo leva de volta à vitrine (`../index.html`). Sem texto: um ícone de seta. Registrado no `ADR 0005`.
+
+**Critérios de aceite**
+
+- Botão sempre visível na tela do jogo, no canto superior esquerdo, alvo ≥ 56 px.
+- É um elemento **HTML** (`<a class="voltar">`), fora do `<svg id="palco">`: não escala com a cena e não soma nós SVG (NF4 segue **240**).
+- Aponta para `../index.html` (a vitrine), por URL relativa — funciona em `file://` e em hospedagem.
+- Sem texto e sem diálogo; respeita `env(safe-area-inset-*)` e `prefers-reduced-motion`.
+- O **indicador de mudo** migra para o topo-centro, para não coincidir com o botão.
+
+**Verificação (2026-11-03).** `jsdom`: botão presente, `href` resolvido para a vitrine, zero erros, loop intacto (placar e resgate funcionando); NF4 inalterado (240 nós).
+
+---
+
 ## Rastreabilidade
 
 | Requisito | Origem |
@@ -765,3 +783,4 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 | Inversão de lado (feature 2) | `TEMA.md` § *Placar e lado* + `ADR 0004` + §8 deste PRD |
 | Exceção nominal a L3/L8 | `ADR 0004` |
 | Balanço em pêndulo (pivô alto) | `TEMA.md` § *O loop* + §8.9 deste PRD |
+| Voltar à vitrine | `ADR 0005` + §9 deste PRD |

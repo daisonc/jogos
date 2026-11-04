@@ -2,7 +2,7 @@
 
 Jogos para o Pedro e Murilo
 
-**Vitrine:** abra [`index.html`](./index.html) — a criança escolhe o jogo pela figura, sem precisar ler. Arquivo único, offline, sem dependência.
+**Vitrine:** abra [`index.html`](./index.html) — a criança escolhe o jogo pela figura, sem precisar ler. Arquivo único, offline, sem dependência. Cada jogo tem um botão colorido no canto superior esquerdo para voltar à vitrine.
 
 ## Jogos
 

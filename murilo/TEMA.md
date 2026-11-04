@@ -1,9 +1,10 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.4.1 (v1.0, v1.1, v1.2 e v1.3 homologadas em 2026-11-03; v1.4 — placar e inversão de lado — entregue em 2026-11-03; v1.4.1 — correção do balanço, que passou a ser um pêndulo em ferradura ancorado num ponto alto)
+- **Versão**: 1.5 (v1.0–v1.3 homologadas em 2026-11-03; v1.4 — placar e inversão de lado; v1.4.1 — balanço em pêndulo ancorado num ponto alto; v1.4.2 — placar ampliado no celular; v1.5 — botão de voltar para a vitrine)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, dois toques rápidos alternam a tela cheia (a tecla `F` exige teclado). O alvo jogável continua sendo notebook com mouse — toque não é mecânica suportada.
+- **Voltar à vitrine**: um botão fixo e colorido no canto superior esquerdo da tela do jogo leva de volta à vitrine (`../index.html`). É a única UI persistente do jogo — sem texto, só uma seta (`ADR 0005`).
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
 - **Herói**: Homem-Aranha, identidade oficial, referência do desenho clássico
 - **Travesso**: Duende Verde, suavizado em tom, nunca em close

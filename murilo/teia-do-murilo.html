@@ -12,6 +12,30 @@
   html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
   body { display: flex; align-items: center; justify-content: center; user-select: none; -webkit-user-select: none; overscroll-behavior: none; }
   #palco { display: block; width: min(100vw, calc(100vh * 1.77778)); height: min(100vh, calc(100vw * 0.5625)); background: #000; cursor: default; touch-action: none; overflow: hidden; }
+
+  /* v1.5 — botão de voltar para a vitrine (a criança não usa o voltar do navegador).
+     Elemento HTML fixo: não escala com a cena, então continua grande e clicável. */
+  .voltar {
+    position: fixed;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    z-index: 50;
+    width: 64px; height: 64px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(160deg, #FF7A59 0%, #E23B4E 100%);
+    border: 5px solid #FFF6E6;
+    box-shadow: 0 7px 0 rgba(27,20,32,.45), 0 14px 24px rgba(0,0,0,.38);
+    text-decoration: none;
+    transition: transform .16s ease, box-shadow .16s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .voltar svg { width: 36px; height: 36px; display: block; filter: drop-shadow(0 2px 0 rgba(0,0,0,.3)); }
+  .voltar:hover, .voltar:focus-visible { transform: scale(1.08) rotate(-3deg); box-shadow: 0 9px 0 rgba(27,20,32,.45), 0 18px 30px rgba(0,0,0,.42); }
+  .voltar:active { transform: scale(.95); box-shadow: 0 4px 0 rgba(27,20,32,.45), 0 8px 14px rgba(0,0,0,.35); }
+  .voltar:focus-visible { outline: none; box-shadow: 0 0 0 5px #FFE066, 0 7px 0 rgba(27,20,32,.45); }
+  @media (max-width: 560px) { .voltar { width: 56px; height: 56px; border-width: 4px; } .voltar svg { width: 31px; height: 31px; } }
+  @media (prefers-reduced-motion: reduce) { .voltar { transition: none; } }
 </style>
 </head>
 <body>
@@ -103,13 +127,19 @@
 
   <g id="placar"></g>
 
-  <g id="mudo-icone" opacity="0">
+  <g id="mudo-icone" opacity="0" transform="translate(899 0)">
     <path fill="#FFFFFF" stroke="#2A1A3A" stroke-width="3" stroke-linejoin="round" d="M44 50 L58 50 L76 34 L76 86 L58 70 L44 70 Z"/>
     <line id="mudo-risco" x1="38" y1="94" x2="84" y2="26" stroke="#E23B4E" stroke-width="5" stroke-linecap="round" opacity="0"/>
   </g>
 
   <rect id="flash" width="1920" height="1080" fill="#FFE9B0" opacity="0"/>
 </svg>
+
+<a class="voltar" href="../index.html" aria-label="Voltar para a vitrine" title="Voltar para a vitrine (escolher outro jogo)">
+  <svg viewBox="0 0 48 48" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30 9 L15 24 L30 39" fill="none" stroke="#FFFFFF" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
 
 <template id="tpl-cena-telhados">
   <svg xmlns="http://www.w3.org/2000/svg">
