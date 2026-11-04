@@ -186,14 +186,15 @@ Dois observacionais (sessão real com o Murilo, protocolo em `TEMA.md` § *Como 
 
 #### US12 — Tela cheia no celular (cortesia)
 
-*Como adulto, quero colocar em tela cheia sem teclado, para aproveitar o jogo quando ele for aberto no celular.*
+*Como adulto, quero o jogo em tela cheia no celular sem gesto especial, para aproveitar sem teclado e sem duplo-toque.*
 
-**Critérios de aceite**
+**Critérios de aceite** *(padrão da casa `PADRAES.md`)*
 
-- A tecla `F` continua valendo no desktop, inalterada.
-- No toque, **dois toques rápidos** (≤ 320 ms) em área vazia alternam a tela cheia via `requestFullscreen`; um toque no alvo continua sendo socorro (o segundo toque chega com a FSM fora de `ESPERANDO` e não conta).
-- Um toque único **não** alterna; o mouse é ignorado pelo gesto.
-- Metatags `mobile-web-app-capable`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`.
+- A tecla `F` continua valendo no desktop, inalterada. Mouse não alterna tela cheia.
+- No carregamento, se o ponteiro primário é grosso (`(pointer: coarse)`), o jogo **tenta** entrar em tela cheia.
+- No **primeiro toque** (`pointerdown` de `pointerType: 'touch'`), se ainda não estiver em tela cheia, entra. O mesmo toque continua sendo socorro.
+- **Duplo-toque sai.**
+- Metatags `mobile-web-app-capable`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style` e `viewport-fit=cover`.
 - Onde a API de tela cheia não existe (ex.: iPhone), o gesto é inócuo — nada quebra e nenhum diálogo aparece.
 - Toque **não** é mecânica jogável: o alvo continua sendo notebook com mouse.
 
@@ -201,7 +202,7 @@ Dois observacionais (sessão real com o Murilo, protocolo em `TEMA.md` § *Como 
 
 Explicitamente **fora** do escopo da v1.0:
 
-- Toque, celular e tablet como alvo jogável (única exceção: duplo-toque para tela cheia, `US12`).
+- Toque, celular e tablet como alvo jogável (única exceção: tela cheia no primeiro toque, `US12`).
 - Controle por teclado para a criança. O teclado é do adulto.
 - Travesso, vilão, Duende-equivalente, Abominável, Líder (`ADR 0001`).
 - Bruce Banner, transformação, fúria, "modo raiva" (`ADR 0002`).

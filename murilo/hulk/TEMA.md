@@ -1,9 +1,9 @@
 # Força do Murilo — Tema
 
-- **Versão**: 0.2 (design aprovado e v1.0 implementada em 2026-11-03; pendente K1/K2 e medições oficiais)
+- **Versão**: 0.3 (v1.0 implementada em 2026-11-03; tela cheia no celular no primeiro toque — padrão da casa `PADRAES.md`; pendente K1/K2)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
-- **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, dois toques rápidos alternam a tela cheia. O alvo jogável continua sendo notebook com mouse.
+- **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, o **primeiro toque** entra em tela cheia (sem duplo-toque). O alvo jogável continua sendo notebook com mouse. Onde a API não existe (iPhone), o gesto é inócuo (`ADR 0005`).
 - **Voltar à vitrine**: botão fixo e colorido no canto superior esquerdo, sem texto, só uma seta — mesma solução da Teia (`../index.html` da Teia virou `../../index.html` aqui, porque este jogo vive um nível abaixo).
 - **Arquivo**: `murilo/hulk/forca-do-murilo.html`, arquivo único
 - **Herói**: Incrível Hulk, identidade oficial, referência do desenho clássico — **sempre Hulk, sem Bruce** (`ADR 0002`)
@@ -200,7 +200,8 @@ A Teia levou várias versões para aprender isto. Aqui não é para refazer o ca
 | Identidade | Sempre Hulk, sem Bruce | `ADR 0002` deste jogo |
 | Travesso | Nenhum; o Obstáculo é a causa | `ADR 0001` deste jogo |
 | Herói no cenário | Fica onde pousa; não volta | `ADR 0003` deste jogo |
-| Placar | Desde a v1.0, igual ao da Teia | `ADR 0004` deste jogo |
+| Placar | Desde a v1.0, igual ao da Teia | `ADR 0004` deste jogo + `PADRAES.md` |
+| Tela cheia no celular | Primeiro toque entra; sem duplo-toque | `docs/adr/0005-tela-cheia-no-primeiro-toque.md` + `PADRAES.md` |
 | Estilo | Vetor chapado, SVG inline | herda a Teia |
 | Áudio | Thud + whoosh; sem rugido | este documento |
 | Progressão | Rodadas de 3 amigos + festa | herda a Teia |

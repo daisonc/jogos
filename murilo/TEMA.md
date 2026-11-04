@@ -1,9 +1,9 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.5 (v1.0–v1.5 homologadas em 2026-11-03 — v1.4 placar e inversão de lado; v1.4.1 balanço em pêndulo ancorado num ponto alto; v1.4.2 placar ampliado no celular; v1.5 botão de voltar para a vitrine)
+- **Versão**: 1.6 (v1.0–v1.5 homologadas em 2026-11-03; v1.6 — tela cheia no celular no primeiro toque, padrão da casa `PADRAES.md`)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
-- **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, dois toques rápidos alternam a tela cheia (a tecla `F` exige teclado). O alvo jogável continua sendo notebook com mouse — toque não é mecânica suportada.
+- **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, o **primeiro toque** entra em tela cheia (sem duplo-toque; a tecla `F` exige teclado). O alvo jogável continua sendo notebook com mouse — toque não é mecânica suportada. Onde a API não existe (iPhone), o gesto é inócuo; o caminho é "Adicionar à Tela de Início" (`ADR 0006`).
 - **Voltar à vitrine**: um botão fixo e colorido no canto superior esquerdo da tela do jogo leva de volta à vitrine (`../index.html`). É a única UI persistente do jogo — sem texto, só uma seta (`ADR 0005`).
 - **Arquivo**: `murilo/teia-do-murilo.html`, arquivo único
 - **Herói**: Homem-Aranha, identidade oficial, referência do desenho clássico
@@ -165,6 +165,7 @@ Tema de jogo infantil que não foi testado com a criança é ficção. Protocolo
 | Placar | Desenho do item salvo + número de salvamentos, cumulativo na sessão | `docs/adr/0004-placar-e-inversao-de-lado.md` |
 | Lado | Invertido a cada resgate, de forma contínua (cenário espelhado) | `docs/adr/0004-placar-e-inversao-de-lado.md` |
 | Estrutura | Uma pasta por criança | este documento |
+| Tela cheia no celular | Primeiro toque entra; sem duplo-toque | `docs/adr/0006-tela-cheia-no-primeiro-toque.md` + `PADRAES.md` |
 
 ## Pendências para a v1.1
 

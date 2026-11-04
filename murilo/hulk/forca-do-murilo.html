@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -1268,34 +1268,48 @@
     Som.definirMudo(jogo.mudo);
     jogo.mudoAvisoEm = jogo.t;
   }
+  // Padrão da casa (PADRAES.md): no celular o jogo entra em tela cheia no
+  // primeiro toque — sem duplo-toque. A API de fullscreen exige gesto do
+  // usuário: o carregamento tenta (funciona em PWA/"Adicionar à Tela de
+  // Início" e onde o navegador permitir sem gesto) e o primeiro pointerdown
+  // de toque garante. Desktop (mouse) continua com a tecla `F`. Onde a API
+  // não existe (iPhone), o gesto é inócuo — nada quebra.
+  const ehCelular = () => !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+
+  function entrarTelaCheia() {
+    try {
+      if (document.fullscreenElement || document.webkitFullscreenElement) return;
+      const el = document.documentElement;
+      const req = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (!req) return;
+      const p = req.call(el);
+      if (p && p.catch) p.catch(() => {});
+    } catch (e) {}
+  }
   function alternarTela() {
     try {
-      if (!document.fullscreenElement) {
-        const p = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
-        if (p && p.catch) p.catch(() => {});
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        entrarTelaCheia();
       } else {
         const p = document.exitFullscreen && document.exitFullscreen();
         if (p && p.catch) p.catch(() => {});
       }
     } catch (e) {}
   }
-  let ultimoToque = -1;
-  function aoToqueRapido(ev) {
+  function aoToque(ev) {
     if (ev.pointerType !== 'touch') return;
-    if (jogo.estado !== S.ESPERANDO) { ultimoToque = -1; return; }
-    const agora = performance.now();
-    if (ultimoToque >= 0 && agora - ultimoToque <= 320) { ultimoToque = -1; alternarTela(); }
-    else ultimoToque = agora;
+    entrarTelaCheia();
   }
 
   // ---------- init ----------
   montarCenario(0);
   montarPlacar();
+  if (ehCelular()) entrarTelaCheia();
 
   el.svg.addEventListener('pointerdown', (ev) => {
     Som.destravar();
     aoEntrada();
-    aoToqueRapido(ev);
+    aoToque(ev);
     aoClicar(ev);
   });
   window.addEventListener('keydown', (ev) => {
@@ -1303,7 +1317,8 @@
     if (k === 'm' || k === 'M') { alternarMudo(); }
     else if (k === 'f' || k === 'F') { alternarTela(); }
   });
-  window.addEventListener('blur', () => { ultimoToque = -1; });
+  window.addEventListener('resize', atualizarEscalaPlacar);
+  window.addEventListener('orientationchange', atualizarEscalaPlacar);
 
   let ultimo = performance.now();
   function quadro(agora) {

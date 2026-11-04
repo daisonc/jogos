@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.8 (v1.0, v1.1, v1.2, v1.3, v1.4, v1.4.1, v1.4.2 e v1.5 homologadas; v2.0 fora deste PRD, §5)
-- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia); v1.4 — placar de resgates e inversão de lado (§8); v1.4.1 — balanço em pêndulo (§8.9); v1.4.2 — placar ampliado no celular (§8.10); v1.5 — botão de voltar à vitrine (§9)
+- **Versão do documento**: 1.9 (v1.0–v1.5 homologadas; v1.6 — tela cheia no celular no primeiro toque, §10; v2.0 fora deste PRD, §5)
+- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia); v1.4 — placar de resgates e inversão de lado (§8); v1.4.1 — balanço em pêndulo (§8.9); v1.4.2 — placar ampliado no celular (§8.10); v1.5 — botão de voltar à vitrine (§9); v1.6 — tela cheia no celular no primeiro toque (§10)
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 concluída e homologada em 2026-11-03** (quarto cenário — Praia; §7): F6.1 e F6.2 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.3.md`), Praia em 138/150 nós, e K1/K2 reconfirmados pelo operador. **v1.4 concluída e homologada em 2026-11-03** (placar de resgates + inversão de lado; §8): F7.1, F7.2 e F7.3 concluídas; NF1–NF12 verdes com NF4 rebaselinado para 240 nós (regressão em `docs/regressao-v1.4.md`) e K1/K2 reconfirmados pelo operador. **v1.4.1 concluída e homologada em 2026-11-03** (balanço em pêndulo com pivô alto; §8.9). **v1.4.2 concluída e homologada em 2026-11-03** (placar ampliado 1,5× no celular; §8.10). **v1.5 concluída e homologada em 2026-11-03** (botão de voltar à vitrine; §9; `ADR 0005`). Com a v1.5, o roadmap deste PRD está completo; a v2.0 (`pedro/`) fica fora deste documento.
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 concluída e homologada em 2026-11-03** (quarto cenário — Praia; §7): F6.1 e F6.2 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.3.md`), Praia em 138/150 nós, e K1/K2 reconfirmados pelo operador. **v1.4 concluída e homologada em 2026-11-03** (placar de resgates + inversão de lado; §8): F7.1, F7.2 e F7.3 concluídas; NF1–NF12 verdes com NF4 rebaselinado para 240 nós (regressão em `docs/regressao-v1.4.md`) e K1/K2 reconfirmados pelo operador. **v1.4.1 concluída e homologada em 2026-11-03** (balanço em pêndulo com pivô alto; §8.9). **v1.4.2 concluída e homologada em 2026-11-03** (placar ampliado 1,5× no celular; §8.10). **v1.5 concluída e homologada em 2026-11-03** (botão de voltar à vitrine; §9; `ADR 0005`). **v1.6 implementada em 2026-11-03** (tela cheia no celular no primeiro toque; §10; `ADR 0006`; padrão da casa `PADRAES.md`). A v2.0 (`pedro/`) fica fora deste documento.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -648,14 +648,15 @@ A v1.4 adiciona **um HUD de leitura sem leitura** (o placar) e **variedade de mo
 
 #### US15 — Abrir em tela cheia no celular (cortesia)
 
-*Como adulto, quero colocar em tela cheia sem teclado, para aproveitar o jogo quando ele for aberto no celular.*
+*Como adulto, quero o jogo em tela cheia no celular sem gesto especial, para aproveitar sem teclado e sem duplo-toque.*
 
-**Critérios de aceite**
+**Critérios de aceite** *(atualizados na v1.6; padrão da casa `PADRAES.md`)*
 
-- A tecla `F` continua valendo no desktop, inalterada.
-- No toque, **dois toques rápidos** (≤ 320 ms) em área vazia alternam a tela cheia via `requestFullscreen`; um toque no alvo continua sendo resgate (o segundo toque chega com a FSM fora de `ESPERANDO` e não conta).
-- Um toque único **não** alterna; o mouse é ignorado pelo gesto.
-- As metatags de instalação (`mobile-web-app-capable`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) permitem que "Adicionar à Tela de Início" abra sem a barra de endereço.
+- A tecla `F` continua valendo no desktop, inalterada. Mouse não alterna tela cheia.
+- No carregamento, se o ponteiro primário é grosso (`(pointer: coarse)`), o jogo **tenta** entrar em tela cheia.
+- No **primeiro toque** (`pointerdown` de `pointerType: 'touch'`), se ainda não estiver em tela cheia, entra. O mesmo toque continua sendo resgate.
+- **Duplo-toque sai.** Não há gesto alternativo de dois toques.
+- As metatags de instalação (`mobile-web-app-capable`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) e `viewport-fit=cover` permitem que "Adicionar à Tela de Início" abra sem a barra de endereço.
 - Onde a API de tela cheia não existe (ex.: iPhone), o gesto é inócuo — nada quebra e nenhum diálogo aparece.
 
 ### 8.3 Non-goals da v1.4
@@ -664,7 +665,7 @@ A v1.4 adiciona **um HUD de leitura sem leitura** (o placar) e **variedade de mo
 - Texto, letra ou qualquer outro número fora do placar.
 - Terceira feature, novo cenário, nova mecânica, novo estado de FSM, novos resgatáveis ou travessos.
 - Mudar o aim assist, os tempos do loop, a festa ou a estrutura de três estrelas.
-- Toque, celular e tablet como alvo jogável continuam fora de escopo; a única exceção é o **duplo-toque para tela cheia** (`US15`), sem mecânica de toque nova.
+- Toque, celular e tablet como alvo jogável continuam fora de escopo; a única exceção é **tela cheia no primeiro toque** (`US15`), sem mecânica de toque nova.
 - Dependência, biblioteca, build, rede, armazenamento.
 
 ### 8.4 Especificação técnica
@@ -768,6 +769,18 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 
 ---
 
+## 10. Tela cheia no celular no primeiro toque (v1.6)
+
+**Contexto.** Padrão da casa (`../../PADRAES.md`). Até a v1.5, o celular entrava em tela cheia com duplo-toque. O operador pediu que o jogo já abra em tela cheia no celular, sem duplo-toque.
+
+**Decisão.** O carregamento tenta se o ponteiro é grosso; o primeiro toque garante. Registrado no `ADR 0006`. Placar desde a v1.0/1.4 já é o outro padrão da casa.
+
+**Critérios de aceite** — os de `US15` (atualizada).
+
+**Verificação (2026-11-03).** JS dos dois jogos parseado; `aoToqueRapido`/`ultimoToque` removidos; `entrarTelaCheia` + tentativa no carregamento presentes; `viewport-fit=cover` nos dois.
+
+---
+
 ## Rastreabilidade
 
 | Requisito | Origem |
@@ -790,3 +803,4 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 | Exceção nominal a L3/L8 | `ADR 0004` |
 | Balanço em pêndulo (pivô alto) | `TEMA.md` § *O loop* + §8.9 deste PRD |
 | Voltar à vitrine | `ADR 0005` + §9 deste PRD |
+| Tela cheia no celular no primeiro toque | `ADR 0006` + §10 deste PRD + `PADRAES.md` |
