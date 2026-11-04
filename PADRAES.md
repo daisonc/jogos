@@ -14,6 +14,7 @@ Todo jogo nasce com o **placar** no canto superior direito: uma linha por ser/ob
 | Força do Murilo | `murilo/hulk/docs/adr/0004-placar-desde-a-v1.md` (nasce com o placar) |
 | Veloz do Murilo | `murilo/sonic/docs/adr/0004-placar-desde-a-v1.md` (nasce com o placar) |
 | Raio do Murilo | `murilo/super/docs/adr/0004-placar-desde-a-v1.md` (nasce com o placar) |
+| Aranha do Murilo | `murilo/aranha/docs/adr/0004-placar-desde-a-v1.md` (nasce com o placar) |
 
 ## 2. Tela cheia no celular no primeiro toque
 
@@ -32,3 +33,4 @@ A API de fullscreen exige gesto do usuário. Então:
 | Força do Murilo | `murilo/hulk/docs/adr/0005-tela-cheia-no-primeiro-toque.md` |
 | Veloz do Murilo | `murilo/sonic/docs/adr/0005-tela-cheia-no-primeiro-toque.md` |
 | Raio do Murilo | `murilo/super/docs/adr/0005-tela-cheia-no-primeiro-toque.md` |
+| Aranha do Murilo | `murilo/aranha/docs/adr/0005-tela-cheia-no-primeiro-toque.md` |
