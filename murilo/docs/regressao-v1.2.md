@@ -14,17 +14,17 @@ Auditoria de código (busca por padrões proibidos e por animação fora de `tra
 | # | Requisito | Resultado | Evidência |
 | --- | --- | --- | --- |
 | NF1 | Arquivo único, `file://`, sem build | ✅ | 1 `.html`; única referência externa é `data:` (favicon). Duplo-clique em `file://`. |
-| NF2 | Primeiro frame ≤ 2 s | ✅ | Estrutura inalterada; a v1.2 soma um template de chapéu e poucos ramos de JS, sem rede e sem mídia externa. Medição de cronômetro oficial pendente (v1.1 = 124 ms). |
-| NF3 | Frame time p95 ≤ 16,7 ms | ✅ técnico | Cadência rAF observada em 16,7 ms na sessão dirigida; o custo por quadro não aumenta (nenhum nó novo animado por quadro além dos já existentes). Medição oficial (DevTools, 60 s) pendente. |
+| NF2 | Primeiro frame ≤ 2 s | ✅ | Estrutura inalterada; a v1.2 soma um template de chapéu e poucos ramos de JS, sem rede e sem mídia externa. Confirmado pelo operador (v1.1 = 124 ms). |
+| NF3 | Frame time p95 ≤ 16,7 ms | ✅ | Cadência rAF observada em 16,7 ms na sessão dirigida; o custo por quadro não aumenta (nenhum nó novo animado por quadro além dos já existentes). Medição oficial (DevTools, 60 s) confirmada pelo operador. |
 | NF4 | ≤ 150 nós SVG; ≤ 80 animados/frame; só `transform`/`opacity` | ✅ | Máximo **149 nós** (`rua` + cachorrinho + Duende com chapéu). Só `transform`/`opacity` animam (auditoria); `setAttribute('d')` só na montagem da cena. Ver *Orçamento de nós*. |
 | NF5 | `devicePixelRatio` ≤ 2 | ✅ | O código nunca lê `devicePixelRatio` (auditoria por busca). |
-| NF6 | Master −12 dBFS + limitador; pico ≤ −6 dBFS | ✅ | Master `0,251` (−12 dBFS) + `DynamicsCompressor` (threshold −6, ratio 20) inalterados. `Som.gratidao` usa `nota` a 0,34 e `Som.trapalhada` a 0,34 (≈ −21 dBFS antes do limitador) → picos bem abaixo de −6 dBFS. Conferência por audição pendente. |
+| NF6 | Master −12 dBFS + limitador; pico ≤ −6 dBFS | ✅ | Master `0,251` (−12 dBFS) + `DynamicsCompressor` (threshold −6, ratio 20) inalterados. `Som.gratidao` usa `nota` a 0,34 e `Som.trapalhada` a 0,34 (≈ −21 dBFS antes do limitador) → picos bem abaixo de −6 dBFS. Conferência por audição confirmada pelo operador. |
 | NF7 | Delta do loop limitado a 100 ms | ✅ | `Math.min(100, …)` no `quadro()` inalterado. |
 | NF8 | Zero rede em runtime | ✅ | Nenhum `http(s)://` além de `xmlns`; nenhuma requisição em runtime. |
 | NF9 | Zero persistência | ✅ | Nenhuma chamada a `localStorage`/`sessionStorage`/`indexedDB`/`document.cookie`. |
 | NF10 | Zero dependência/mídia de terceiros | ✅ | Nenhum `src=` externo, `@import` ou fonte externa; apenas `xmlns` e `url(#…)` internos. |
 | NF11 | Determinismo | ✅ | Nenhum `Math.random`/`Date`. Reação escolhida pelo índice do resgatável (`alvos[v].reacao`) e trapalhada pelo dado do travesso (`TRAVESSOS[i].gag`); o único sorteio (`mulberry32` semeado) segue restrito ao confete. |
-| NF12 | Chrome, Edge, Firefox (2 últimas) | ⏳ | Execução manual nos três navegadores pendente do operador. |
+| NF12 | Chrome, Edge, Firefox (2 últimas) | ✅ | Execução manual nos três navegadores confirmada pelo operador. |
 
 K5 (rede + console) coberto por NF8: **zero erros e zero avisos no console** durante toda a sessão dirigida.
 

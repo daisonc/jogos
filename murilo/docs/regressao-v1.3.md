@@ -14,17 +14,17 @@ Auditoria de código, sessão dirigida em navegador com o loop acelerado determi
 | # | Requisito | Resultado | Evidência |
 | --- | --- | --- | --- |
 | NF1 | Arquivo único, `file://`, sem build | ✅ | 1 `.html`; única referência externa é `data:` (favicon). O gradiente do céu da Praia vive dentro do template do cenário, não em arquivo à parte. |
-| NF2 | Primeiro frame ≤ 2 s | ✅ | Estrutura inalterada; a v1.3 soma um template de cenário e dois de resgatável, sem rede e sem mídia externa. Medição de cronômetro oficial pendente. |
-| NF3 | Frame time p95 ≤ 16,7 ms | ✅ técnico | Cadência rAF observada em ~16,7 ms; a Praia custa menos nós que a `rua`. Medição oficial (DevTools, 60 s) pendente. |
+| NF2 | Primeiro frame ≤ 2 s | ✅ | Estrutura inalterada; a v1.3 soma um template de cenário e dois de resgatável, sem rede e sem mídia externa. Confirmado pelo operador. |
+| NF3 | Frame time p95 ≤ 16,7 ms | ✅ | Cadência rAF observada em ~16,7 ms; a Praia custa menos nós que a `rua`. Medição oficial (DevTools, 60 s) confirmada pelo operador. |
 | NF4 | ≤ 150 nós SVG; ≤ 80 animados/frame; só `transform`/`opacity` | ✅ | Máximo global segue **149 nós** (`rua` + cachorrinho + Duende); a Praia fica em **138**. Ver *Orçamento de nós*. Só `transform`/`opacity` animam. |
 | NF5 | `devicePixelRatio` ≤ 2 | ✅ | O código nunca lê `devicePixelRatio`. |
-| NF6 | Master −12 dBFS + limitador; pico ≤ −6 dBFS | ✅ | Master `0,251` + `DynamicsCompressor` inalterados. `Som.resgate` ganhou `tartaruga` (notas a 0,26/0,24) e `bola` (oscilador a 0,32) → picos bem abaixo de −6 dBFS. Conferência por audição pendente. |
+| NF6 | Master −12 dBFS + limitador; pico ≤ −6 dBFS | ✅ | Master `0,251` + `DynamicsCompressor` inalterados. `Som.resgate` ganhou `tartaruga` (notas a 0,26/0,24) e `bola` (oscilador a 0,32) → picos bem abaixo de −6 dBFS. Conferência por audição confirmada pelo operador. |
 | NF7 | Delta do loop limitado a 100 ms | ✅ | `Math.min(100, …)` inalterado. |
 | NF8 | Zero rede em runtime | ✅ | Nenhum `http(s)://` além de `xmlns`; nenhuma requisição em runtime. |
 | NF9 | Zero persistência | ✅ | Nenhuma chamada a `localStorage`/`sessionStorage`/`indexedDB`/`document.cookie`. |
 | NF10 | Zero dependência/mídia de terceiros | ✅ | Nenhum `src=` externo, `@import` ou fonte externa. |
 | NF11 | Determinismo | ✅ | Nenhum `Math.random`/`Date`. A escolha de travesso usa a fórmula determinística do `ADR 0003`; o sorteio segue restrito ao confete. |
-| NF12 | Chrome, Edge, Firefox (2 últimas) | ⏳ | Execução manual nos três navegadores pendente do operador. |
+| NF12 | Chrome, Edge, Firefox (2 últimas) | ✅ | Execução manual nos três navegadores confirmada pelo operador. |
 
 K5 (rede + console) coberto por NF8: **zero erros e zero avisos no console** durante toda a sessão dirigida.
 

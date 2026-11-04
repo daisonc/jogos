@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.5 (v1.0–v1.3 homologadas em 2026-11-03; v1.4 — placar e inversão de lado; v1.4.1 — balanço em pêndulo ancorado num ponto alto; v1.4.2 — placar ampliado no celular; v1.5 — botão de voltar para a vitrine)
+- **Versão**: 1.5 (v1.0–v1.5 homologadas em 2026-11-03 — v1.4 placar e inversão de lado; v1.4.1 balanço em pêndulo ancorado num ponto alto; v1.4.2 placar ampliado no celular; v1.5 botão de voltar para a vitrine)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, dois toques rápidos alternam a tela cheia (a tecla `F` exige teclado). O alvo jogável continua sendo notebook com mouse — toque não é mecânica suportada.

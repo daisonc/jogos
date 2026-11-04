@@ -1,9 +1,9 @@
 # PRD — Teia do Murilo
 
-- **Versão do documento**: 1.7 (v1.0, v1.1, v1.2, v1.3 e v1.4 homologadas; v2.0 fora deste PRD, §5)
-- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia); v1.4 — placar de resgates e inversão de lado (§8)
+- **Versão do documento**: 1.8 (v1.0, v1.1, v1.2, v1.3, v1.4, v1.4.1, v1.4.2 e v1.5 homologadas; v2.0 fora deste PRD, §5)
+- **Escopo do produto**: v1.0 — três cenários, loop completo; v1.1 — variações de resgatável e segundo travesso; v1.2 — gratidão do resgatado e travesso trapalhão; v1.3 — quarto cenário (Praia); v1.4 — placar de resgates e inversão de lado (§8); v1.4.1 — balanço em pêndulo (§8.9); v1.4.2 — placar ampliado no celular (§8.10); v1.5 — botão de voltar à vitrine (§9)
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
-- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 concluída e homologada em 2026-11-03** (quarto cenário — Praia; §7): F6.1 e F6.2 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.3.md`), Praia em 138/150 nós, e K1/K2 reconfirmados pelo operador. **v1.4 entregue em 2026-11-03** (placar de resgates + inversão de lado; §8) — implementada; NF1–NF12 verdes salvo o rebaseline de NF4 (pico de 240 nós, ver §8.4), K1/K2 pendentes de sessão observacional. Com a v1.4, o roadmap original deste PRD está completo; a v2.0 (`pedro/`) fica fora deste documento.
+- **Status**: v1.0 concluída e homologada em 2026-11-03 — F1–F3 implementados, K1/K2 observados, NF1–NF12 verificados e conferência visual aprovada pelo operador. **v1.1 concluída e homologada em 2026-11-03** (variações de resgatável + Abutre; §6): F4.1, F4.2 e F4.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.1.md`) e K1/K2 reconfirmados pelo operador. **v1.2 concluída e homologada em 2026-11-03** (gratidão do resgatado + travesso trapalhão; §7): F5.1, F5.2 e F5.3 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.2.md`), teto de 149/150 nós, e K1/K2 reconfirmados pelo operador. **v1.3 concluída e homologada em 2026-11-03** (quarto cenário — Praia; §7): F6.1 e F6.2 concluídas; NF1–NF12 verdes (regressão em `docs/regressao-v1.3.md`), Praia em 138/150 nós, e K1/K2 reconfirmados pelo operador. **v1.4 concluída e homologada em 2026-11-03** (placar de resgates + inversão de lado; §8): F7.1, F7.2 e F7.3 concluídas; NF1–NF12 verdes com NF4 rebaselinado para 240 nós (regressão em `docs/regressao-v1.4.md`) e K1/K2 reconfirmados pelo operador. **v1.4.1 concluída e homologada em 2026-11-03** (balanço em pêndulo com pivô alto; §8.9). **v1.4.2 concluída e homologada em 2026-11-03** (placar ampliado 1,5× no celular; §8.10). **v1.5 concluída e homologada em 2026-11-03** (botão de voltar à vitrine; §9; `ADR 0005`). Com a v1.5, o roadmap deste PRD está completo; a v2.0 (`pedro/`) fica fora deste documento.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -252,6 +252,10 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 | **v1.1** | Variações de resgatável (pipa, patinho, sorvete) e Abutre como 2º travesso — ver §6 | **Concluída e homologada em 2026-11-03** — F4.1–F4.3 concluídas; K1/K2 reconfirmados e NF1–NF12 verdes |
 | **v1.2** | Gratidão do resgatado e travesso trapalhão — ver §7 | **Concluída e homologada em 2026-11-03** — F5.1–F5.3 concluídas; NF1–NF12 verdes; K1/K2 reconfirmados pelo operador |
 | **v1.3** | Quarto cenário (Praia) — ver §7 | **Concluída e homologada em 2026-11-03** — F6.1–F6.2 concluídas; NF1–NF12 verdes; Praia em 138/150 nós; K1/K2 reconfirmados. Emenda ao non-goal "novos cenários" registrada no `ADR 0003` |
+| **v1.4** | Placar de resgates e inversão de lado — ver §8 | **Concluída e homologada em 2026-11-03** — F7.1–F7.3 concluídas; NF1–NF12 verdes (NF4 rebaselinado para 240 nós); K1/K2 reconfirmados. Exceção nominal a L3/L8 registrada no `ADR 0004` |
+| **v1.4.1** | Balanço em pêndulo com pivô alto — ver §8.9 | **Concluída e homologada em 2026-11-03** — teia esticada do pivô ao herói; raio constante; zero erros |
+| **v1.4.2** | Placar ampliado 1,5× no celular — ver §8.10 | **Concluída e homologada em 2026-11-03** — `scale(1.5)` só em toque; desktop inalterado |
+| **v1.5** | Botão de voltar à vitrine — ver §9 | **Concluída e homologada em 2026-11-03** — `<a class="voltar">` fora do SVG; NF4 inalterado; `ADR 0005` |
 | **v2.0** | `pedro/` — o jogo do irmão, com as próprias leis | Fora deste PRD |
 
 ### Definição de pronto
@@ -595,7 +599,7 @@ O aceno do herói é feito por `transform` do grupo do herói, sem nó novo. O s
 
 ## 8. Planejamento da v1.4
 
-> Emenda de planejamento. A v1.0–v1.3 permanecem homologadas; esta seção descreve o que a v1.4 acrescenta: **placar de resgates** (feature 1) e **inversão de lado a cada salvamento** (feature 2), ambas pedidas pelo operador.
+> Emenda de planejamento. A v1.0–v1.3 permanecem homologadas; esta seção descreve o que a v1.4 acrescenta: **placar de resgates** (feature 1) e **inversão de lado a cada salvamento** (feature 2), ambas pedidas pelo operador. **v1.4 homologada em 2026-11-03** (F7.1–F7.3).
 
 ### 8.1 Escopo e decisões
 
@@ -692,13 +696,15 @@ A v1.4 adiciona **um HUD de leitura sem leitura** (o placar) e **variedade de mo
 | --- | --- | --- |
 | **F7.1 — Placar** | `PLACAR`, `#placar`, `registrarResgate`, `jogo.alvoId/alvoTpl` | Uma linha por item salvo; número correto; cumulativo; 0 erros |
 | **F7.2 — Inversão de lado** | `jogo.lado`, `espelharLayout`/`layoutAtual`, VOLTA no lado novo | Lado alterna a cada resgate; L7/US4 respeitadas nos dois lados |
-| **F7.3 — Regressão e observação** | Reexecutar NF1–NF12 (NF4 rebaselinado); sessão com o Murilo | Técnicos verdes (ressalva NF4); K1/K2 reconfirmados; reversível |
+| **F7.3 — Regressão e observação** | Reexecutar NF1–NF12 (NF4 rebaselinado); sessão com o Murilo | **Concluída em 2026-11-03** — técnicos verdes (NF4 rebaselinado); K1/K2 reconfirmados pelo operador; reversível |
 
-**Situação em 2026-11-03:** F7.1 e F7.2 implementadas e verificadas (sessão dirigida em Node/jsdom, ciclo completo dos quatro cenários, 14 resgates, 8 itens no placar, zero erros de console, alternância de lado confirmada; pico de nós 240). **F7.3 pendente** da medição oficial de NF3/NF6/NF12 e da sessão observacional (K1/K2) pelo operador.
+**Situação em 2026-11-03:** F7.1, F7.2 e F7.3 concluídas — F7.1 e F7.2 implementadas e verificadas (sessão dirigida em Node/jsdom, ciclo completo dos quatro cenários, 14 resgates, 8 itens no placar, zero erros de console, alternância de lado confirmada; pico de nós 240). F7.3 concluída — K1/K2 e as medições oficiais (NF3/NF6/NF12) reconfirmadas pelo operador. **v1.4 homologada.**
 
 ### 8.7 Definição de pronto
 
 A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenho e o número de salvamentos, cumulativo na sessão; o lado em que o herói começa inverte a cada resgate, continuamente, com o travesso sempre a ≥ 60% de distância nos dois lados; NF1–NF12 seguem verdes (com o rebaseline de NF4 para 240 nós); K1/K2 são reconfirmados em sessão observacional; e nenhuma outra lei do `TEMA.md` foi violada além da exceção nominal registrada.
+
+**Situação em 2026-11-03:** todos os critérios acima foram atendidos; a v1.4 foi homologada pelo operador.
 
 **Reversão:** o conteúdo é aditivo. Remover o bloco do placar e a inversão de lado (`jogo.lado`, `espelharLayout`/`layoutAtual`) restaura a v1.3 sem tocar no loop.
 
@@ -725,7 +731,7 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 - Determinístico (`ancoraTeia` usa só geometria), sem `Math.random`.
 - O `splat` da teia passa a marcar o **pivô** (onde a teia gruda), não o objeto.
 
-**Verificação (2026-11-03).** Sessão dirigida em Node/jsdom: pivô em `(940, 70)`, raio constante, herói desce a `y = 610` e termina em `(1281, 499)` = o objeto; ciclo completo dos quatro cenários com **14 resgates**, **zero erros** e pico de nós inalterado (**240**).
+**Verificação (2026-11-03).** Sessão dirigida em Node/jsdom: pivô em `(940, 70)`, raio constante, herói desce a `y = 610` e termina em `(1281, 499)` = o objeto; ciclo completo dos quatro cenários com **14 resgates**, **zero erros** e pico de nós inalterado (**240**). **v1.4.1 homologada pelo operador.**
 
 ### 8.10 Placar legível no celular (v1.4.2)
 
@@ -740,7 +746,7 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 - A borda esquerda ampliada fica em `x ≈ 1626`, à direita do herói (limite ~1626) e do travesso (nasce em `x ≈ 1600`).
 - Nenhum nó novo (pico segue **240**); determinístico; sem rede.
 
-**Verificação (2026-11-03).** Sessão dirigida em Node/jsdom com `matchMedia('(pointer: coarse)')` forçado: transform presente, **8 itens**, **14 resgates**, zero erros, pico de nós **240**. No modo desktop: nenhum transform.
+**Verificação (2026-11-03).** Sessão dirigida em Node/jsdom com `matchMedia('(pointer: coarse)')` forçado: transform presente, **8 itens**, **14 resgates**, zero erros, pico de nós **240**. No modo desktop: nenhum transform. **v1.4.2 homologada pelo operador.**
 
 ---
 
@@ -758,7 +764,7 @@ A v1.4 está pronta quando: o placar mostra, por resgatável já salvo, o desenh
 - Sem texto e sem diálogo; respeita `env(safe-area-inset-*)` e `prefers-reduced-motion`.
 - O **indicador de mudo** migra para o topo-centro, para não coincidir com o botão.
 
-**Verificação (2026-11-03).** `jsdom`: botão presente, `href` resolvido para a vitrine, zero erros, loop intacto (placar e resgate funcionando); NF4 inalterado (240 nós).
+**Verificação (2026-11-03).** `jsdom`: botão presente, `href` resolvido para a vitrine, zero erros, loop intacto (placar e resgate funcionando); NF4 inalterado (240 nós). **v1.5 homologada pelo operador.**
 
 ---
 
