@@ -1,6 +1,6 @@
 # Teia do Murilo — Tema
 
-- **Versão**: 1.6 (v1.0–v1.5 homologadas em 2026-11-03; v1.6 — tela cheia no celular no primeiro toque, padrão da casa `PADRAES.md`)
+- **Versão**: 1.6 (v1.0–v1.6 homologadas em 2026-11-03 — v1.6 tela cheia no celular no primeiro toque, padrão da casa `PADRAES.md`)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, o **primeiro toque** entra em tela cheia (sem duplo-toque; a tecla `F` exige teclado). O alvo jogável continua sendo notebook com mouse — toque não é mecânica suportada. Onde a API não existe (iPhone), o gesto é inócuo; o caminho é "Adicionar à Tela de Início" (`ADR 0006`).

@@ -4,7 +4,7 @@
 - **Escopo do produto**: v1.0 — três cenários, disparo horizontal, Eggman de longe, placar desde o primeiro dia, anéis como enfeite
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
 - **Jogos irmãos**: [`../PRD.md`](../PRD.md) (Teia), [`../hulk/PRD.md`](../hulk/PRD.md) (Força)
-- **Status**: design aprovado pelo operador em 2026-11-03. **v1.0 implementada em 2026-11-03** (F1 e F2 concluídas; smoke test em Node/jsdom: ciclo completo, zero erros, pico de 159 nós). F3 pendente: medições oficiais de NF3/NF6/NF12 e sessão observacional (K1/K2) pelo operador.
+- **Status**: design aprovado pelo operador em 2026-11-03. **v1.0 concluída e homologada em 2026-11-03** (F1–F3 concluídas; disparo em 700 ms; K1/K2 reconfirmados e NF1–NF12 verdes).
 
 > `TEMA.md` responde *por que*; este PRD responde *o que sai e como se mede*.
 
@@ -248,13 +248,13 @@ Zero rede, zero dado, zero supply chain. LGPD: não há dado a tratar.
 | --- | --- | --- |
 | **F1 — Disparo** | FSM, 1 cenário, arte provisória, sem áudio, sem placar | **Concluída** (implementada junto com a F2) |
 | **F2 — Voz e HUD** | 3 cenários, áudio, Eggman, placar, anéis, voltar, attract, `M`/`F` | **Concluída em 2026-11-03** — smoke test jsdom: zero erros, pico de 159 nós |
-| **F3 — v1.0** | Regressão NF1–NF12, sessão com o Murilo | **Pendente** — técnicos oficiais (NF3/NF6/NF12) e K1/K2 pelo operador |
+| **F3 — v1.0** | Regressão NF1–NF12, sessão com o Murilo | **Concluída e homologada em 2026-11-03** — técnicos oficiais (NF3/NF6/NF12) e K1/K2 confirmados pelo operador |
 
 ### Definição de pronto
 
 Arquivo único abre offline, Murilo aponta e um socorro acontece em menos de 2,6 s, o borrão não assusta, Eggman não chega perto, placar mostra os amigos, NF1–NF12 verificados, nenhuma lei violada.
 
-**Situação:** F1 e F2 implementadas. Pendente F3 (K1/K2 e medições oficiais).
+**Situação:** F1, F2 e F3 concluídas; a v1.0 foi homologada pelo operador.
 
 ---
 

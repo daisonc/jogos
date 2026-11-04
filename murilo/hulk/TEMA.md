@@ -1,6 +1,6 @@
 # Força do Murilo — Tema
 
-- **Versão**: 0.4 (v1.0 implementada em 2026-11-03; v1.1 — amigos alternam por rodada, com objetos da Teia; tela cheia no celular no primeiro toque; pendente K1/K2)
+- **Versão**: 0.5 (v1.0 e v1.1 homologadas em 2026-11-03 — v1.1 amigos alternam por rodada, com objetos da Teia; tela cheia no celular no primeiro toque)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, o **primeiro toque** entra em tela cheia (sem duplo-toque). O alvo jogável continua sendo notebook com mouse. Onde a API não existe (iPhone), o gesto é inócuo (`ADR 0005`).
@@ -214,4 +214,4 @@ Não são dúvidas de design — são o que vem depois:
 - ~~Escrever o PRD~~ — **feito** ([`PRD.md`](./PRD.md), 2026-11-03).
 - ~~Implementar `forca-do-murilo.html`~~ — **feito** (v1.0, 2026-11-03).
 - ~~Adicionar o cartão na vitrine~~ — **feito**.
-- Testar com o Murilo (K1/K2) antes de chamar de pronto.
+- ~~Testar com o Murilo (K1/K2)~~ — **feito e homologado** (2026-11-03).
