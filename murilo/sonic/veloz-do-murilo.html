@@ -420,7 +420,7 @@
   });
   const T = Object.freeze({
     girar: 250,
-    disparo: 900,
+    disparo: 700,
     chegada: 250,
     abertura: 500,
     gratidao: 600,
@@ -1336,16 +1336,16 @@
       return;
     }
     // linhas de velocidade, contrárias ao disparo
-    def(el.svg.querySelector('#linhas'), 'opacity', (0.7 * Math.sin(Math.PI * p)).toFixed(3));
+    def(el.svg.querySelector('#linhas'), 'opacity', (0.9 * Math.sin(Math.PI * p)).toFixed(3));
     for (let i = 0; i < el.linhas.length; i++) {
       const y = 300 + i * 90 + (i % 2) * 40;
       const x = olhar > 0
         ? lerp(jogo.origem.x - 200, jogo.destino.x - 400 * (1 - p), p) + i * 40
         : lerp(jogo.origem.x + 200, jogo.destino.x + 400 * (1 - p), p) - i * 40;
-      const len = 140 + 80 * Math.sin(Math.PI * p);
+      const len = 170 + 110 * Math.sin(Math.PI * p);
       const x1 = olhar > 0 ? x - len : x + len;
       def(el.linhas[i], 'transform', `translate(${x1.toFixed(1)} ${y.toFixed(1)})`);
-      def(el.linhas[i], 'opacity', (0.8 * Math.sin(Math.PI * p)).toFixed(3));
+      def(el.linhas[i], 'opacity', (0.95 * Math.sin(Math.PI * p)).toFixed(3));
     }
     // rastro azul atrás do herói
     const hx = jogo.rastroX || jogo.origem.x;
@@ -1355,7 +1355,7 @@
       def(el.rastro[i], 'opacity', (0.35 * (1 - i / 3) * Math.sin(Math.PI * p)).toFixed(3));
     }
     // cenário estica
-    const s = 1 + 0.06 * Math.sin(Math.PI * p);
+    const s = 1 + 0.09 * Math.sin(Math.PI * p);
     def(el.cenario, 'transform', `translate(960 540) scale(${s.toFixed(4)} 1) translate(-960 -540)`);
   }
 
@@ -1397,9 +1397,9 @@
       const p = clamp01(jogo.tEstado / T.disparo);
       const t = easeInOutQuart(p);
       hx = lerp(jogo.origem.x, jogo.destino.x, t);
-      hy = jogo.origem.y - 6 * Math.abs(Math.sin(jogo.t * 0.02)); // passos rápidos
-      hr = 10 * olhar;
-      sx = 1.08; sy = 0.94;
+      hy = jogo.origem.y - 8 * Math.abs(Math.sin(jogo.t * 0.035)); // passos ainda mais rápidos
+      hr = 14 * olhar;
+      sx = 1.12; sy = 0.9;
       jogo.rastroX = hx;
     } else if (e === S.CHEGADA) {
       const p = clamp01(jogo.tEstado / T.chegada);

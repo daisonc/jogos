@@ -86,13 +86,13 @@ esperando ──clique no amigo──▶ girar ──▶ disparo ──▶ chega
 | --- | --- | --- | --- |
 | Esperando | indefinida | Sonic tapando o pé; amigo mexendo; halo no alvo | Ambiente suave |
 | Girar | 0,25 s | Sonic vira bola girando no lugar | Sopro curto + `spin` |
-| Disparo | 0,9 s | **O espetáculo:** rastro azul, linhas de velocidade, cenário estica; arrancada e chegada com easing | `whoosh` longo |
+| Disparo | 0,7 s | **O espetáculo:** rastro azul, linhas de velocidade, cenário estica; arrancada e chegada com easing | `whoosh` longo |
 | Chegada | 0,25 s | Pouso derrapando, poeira azul | `thud` curto + freio |
 | Abertura | 0,5 s | Gaiola/obstáculo se abre; amigo levanta | Estalo + som do amigo |
 | Gratidão | 0,6 s | Amigo pula; Sonic acena | Duas notas |
 | Festa (a cada 3) | 3 s | Confete **+ anéis dourados girando** (visual, sem número) | Jingle de 8 notas |
 
-**Uma ação completa dura ~2,5 s.**
+**Uma ação completa dura ~2,3 s.**
 
 **O que torna este jogo um jogo (não uma skin):**
 

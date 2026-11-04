@@ -56,7 +56,7 @@ Anotação qualitativa (não é KPI): ri do Eggman ou desvia o olhar? o borrão 
 #### US2 — O socorro acontece sozinho
 *Como Murilo, quero que o Sonic dispare, chegue e abra a jaula, sem precisar fazer mais nada.*
 
-- Sequência `GIRAR → DISPARO → CHEGADA → ABERTURA → GRATIDÃO` completa em **2,4 s a 2,8 s**.
+- Sequência `GIRAR → DISPARO → CHEGADA → ABERTURA → GRATIDÃO` completa em **2,2 s a 2,6 s**.
 - Cliques durante a sequência são ignorados.
 - Ao fim da gratidão, o amigo sai da cena e o próximo entra após 0,4 s, **do outro lado**.
 - O disparo é reta horizontal com easing de arrancada e chegada. Nunca linear. Nunca sobe no céu.
@@ -166,7 +166,7 @@ SVG no DOM, não Canvas. Só `transform` e `opacity` animam. Botão de voltar é
 | --- | --- | --- |
 | `ESPERANDO` | indefinida | clique válido ou 8 s |
 | `GIRAR` | 250 ms | automática |
-| `DISPARO` | 900 ms | automática |
+| `DISPARO` | 700 ms | automática |
 | `CHEGADA` | 250 ms | automática |
 | `ABERTURA` | 500 ms | automática |
 | `GRATIDÃO` | 600 ms | automática; amigo sai; próximo em 400 ms |
@@ -233,7 +233,7 @@ Zero rede, zero dado, zero supply chain. LGPD: não há dado a tratar.
 | --- | --- | --- | --- | --- | --- |
 | R1 | Eggman assusta | Média | Alto | L7 integral; K1/K2; risada aguda curta | Remover Eggman |
 | R2 | Borrão assusta | Baixa | Alto | Estica ≤ 1,08; `prefers-reduced-motion`; amigo sempre visível | Tirar o estica, manter o disparo |
-| R3 | Disparo longo demais | Baixa | Médio | 900 ms; total 2,4–2,8 s | Encurtar para 750 ms |
+| R3 | Disparo longo demais | Baixa | Médio | 700 ms; total 2,2–2,6 s | Encurtar para 600 ms |
 | R4 | Autoplay bloqueia áudio | Média | Baixo | Destravar no pointerdown | Ícone piscando |
 | R5 | Notebook antigo < 60 fps | Baixa | Médio | Só transform/opacity; DPR ≤ 2 | Menos confete/anéis |
 | R6 | Escopo cresce (esmeralda, loop, spring) | Alta | Médio | Non-goals | Disciplina |
@@ -252,7 +252,7 @@ Zero rede, zero dado, zero supply chain. LGPD: não há dado a tratar.
 
 ### Definição de pronto
 
-Arquivo único abre offline, Murilo aponta e um socorro acontece em menos de 2,8 s, o borrão não assusta, Eggman não chega perto, placar mostra os amigos, NF1–NF12 verificados, nenhuma lei violada.
+Arquivo único abre offline, Murilo aponta e um socorro acontece em menos de 2,6 s, o borrão não assusta, Eggman não chega perto, placar mostra os amigos, NF1–NF12 verificados, nenhuma lei violada.
 
 **Situação:** F1 e F2 implementadas. Pendente F3 (K1/K2 e medições oficiais).
 
