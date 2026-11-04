@@ -4,7 +4,7 @@
 - **Escopo do produto**: v1.0 — três cenários, loop completo sem volta, placar desde o primeiro dia, botão de voltar à vitrine
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
 - **Jogo irmão**: [`../PRD.md`](../PRD.md) (Teia do Murilo) — herda leis, arquitetura e lições; **não herda** vocabulário nem features que aqui não existem (travesso, inversão de tela, Bruce)
-- **Status**: design aprovado pelo operador em 2026-11-03. Implementação não começou. Este PRD é o contrato do que sai.
+- **Status**: design aprovado pelo operador em 2026-11-03. **v1.0 implementada em 2026-11-03** (F1 e F2 concluídas; smoke test em Node/jsdom: ciclo completo, zero erros, pico de 136 nós). F3 pendente: medições oficiais de NF3/NF6/NF12 e sessão observacional (K1/K2) pelo operador.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -380,15 +380,15 @@ Vetor de risco residual: nenhum conhecido além da integridade do próprio arqui
 
 | Fase | Entrega | Critério de saída |
 | --- | --- | --- |
-| **F1 — Salto** | FSM completa sem `VOLTA`, 1 cenário (`montanha`), arte provisória, sem áudio, sem placar | Clicar produz salto, rompimento e amigo; K3 e K4 verdes; herói fica onde pousou |
-| **F2 — Voz e HUD** | Arte final dos 3 cenários, áudio, estrelas, festa, placar, botão de voltar, attract mode, `M`/`F`, rachaduras, tremor | K5 verde; duração da festa e timings dentro da tolerância; placar correto; NF4 ≤ 240 |
-| **F3 — v1.0** | Arquivo único final, regressão NF1–NF12, sessão com o Murilo | **Pendente** — técnicos verdes; K1/K2 observados; nenhuma lei violada |
+| **F1 — Salto** | FSM completa sem `VOLTA`, 1 cenário (`montanha`), arte provisória, sem áudio, sem placar | **Concluída** (implementada junto com a F2) |
+| **F2 — Voz e HUD** | Arte final dos 3 cenários, áudio, estrelas, festa, placar, botão de voltar, attract mode, `M`/`F`, rachaduras, tremor | **Concluída em 2026-11-03** — smoke test jsdom: zero erros, pico de 136 nós, festa e placar funcionando |
+| **F3 — v1.0** | Arquivo único final, regressão NF1–NF12, sessão com o Murilo | **Pendente** — técnicos oficiais (NF3/NF6/NF12) e K1/K2 pelo operador |
 
 ### Definição de pronto
 
 A v1.0 está pronta quando: um arquivo `.html` abre por duplo-clique em notebook offline, o Murilo aponta e um socorro acontece em menos de 2,8 s, três socorros produzem uma festa, o amigo esteve visível o tempo todo, o estrondo não assusta (tremor dentro do limite), o adulto muta com uma tecla e volta à vitrine, o placar mostra os amigos já salvos, **NF1–NF12 estão verificados**, e nenhuma das dez leis do `TEMA.md` foi violada.
 
-**Situação:** pendente. Nada implementado.
+**Situação:** F1 e F2 implementadas. Pendente F3 (K1/K2 e medições oficiais).
 
 **Reversão / descarte:** o jogo é um arquivo novo em pasta própria. Remover `murilo/hulk/` e o cartão da vitrine restaura o estado anterior sem tocar na Teia.
 

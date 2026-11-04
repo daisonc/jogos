@@ -1,6 +1,6 @@
 # Força do Murilo — Tema
 
-- **Versão**: 0.1 (design aprovado em 2026-11-03; PRD 1.0 escrito; jogo não implementado)
+- **Versão**: 0.2 (design aprovado e v1.0 implementada em 2026-11-03; pendente K1/K2 e medições oficiais)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, dois toques rápidos alternam a tela cheia. O alvo jogável continua sendo notebook com mouse.
@@ -208,9 +208,9 @@ A Teia levou várias versões para aprender isto. Aqui não é para refazer o ca
 
 ## Pendências
 
-Não são dúvidas de design — são o que vem depois do design aprovado:
+Não são dúvidas de design — são o que vem depois:
 
-- ~~Escrever o PRD (US, NF, KPIs, rollout)~~ — **feito** ([`PRD.md`](./PRD.md), 2026-11-03).
-- Implementar `forca-do-murilo.html`.
-- Adicionar o cartão na vitrine (`index.html`, array `JOGOS`) só quando o arquivo existir.
+- ~~Escrever o PRD~~ — **feito** ([`PRD.md`](./PRD.md), 2026-11-03).
+- ~~Implementar `forca-do-murilo.html`~~ — **feito** (v1.0, 2026-11-03).
+- ~~Adicionar o cartão na vitrine~~ — **feito**.
 - Testar com o Murilo (K1/K2) antes de chamar de pronto.
