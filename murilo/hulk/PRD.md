@@ -4,7 +4,7 @@
 - **Escopo do produto**: v1.0 — três cenários, loop completo sem volta, placar desde o primeiro dia, botão de voltar à vitrine
 - **Fonte de verdade de design**: [`TEMA.md`](./TEMA.md), [`GLOSSARY.md`](./GLOSSARY.md), [`docs/adr/`](./docs/adr/)
 - **Jogo irmão**: [`../PRD.md`](../PRD.md) (Teia do Murilo) — herda leis, arquitetura e lições; **não herda** vocabulário nem features que aqui não existem (travesso, inversão de tela, Bruce)
-- **Status**: design aprovado pelo operador em 2026-11-03. **v1.0 implementada em 2026-11-03** (F1 e F2 concluídas; smoke test em Node/jsdom: ciclo completo, zero erros, pico de 136 nós). F3 pendente: medições oficiais de NF3/NF6/NF12 e sessão observacional (K1/K2) pelo operador.
+- **Status**: design aprovado pelo operador em 2026-11-03. **v1.0 implementada em 2026-11-03** (F1 e F2 concluídas). **v1.1 implementada em 2026-11-03** (amigos alternam por rodada, com objetos da Teia). F3 pendente: medições oficiais de NF3/NF6/NF12 e sessão observacional (K1/K2) pelo operador.
 
 > Este documento **não repete** a doutrina de design. Ele a referencia. `TEMA.md` responde *por que o jogo é assim*; este PRD responde *o que sai e como se mede*. Se os dois divergirem, o `TEMA.md` ganha na intenção e este PRD ganha na entrega até a divergência ser resolvida.
 
@@ -114,7 +114,7 @@ Dois observacionais (sessão real com o Murilo, protocolo em `TEMA.md` § *Como 
 **Critérios de aceite**
 
 - Em todo socorro, uma reação do amigo e do herói começa no início de `GRATIDÃO` e termina em **≤ 600 ms**. Nenhuma etapa da FSM é alongada (a faixa de 2,4 s a 2,8 s de `US2` se mantém).
-- Cada um dos três amigos tem reação própria, reconhecível sem texto (cabritinho espreguiça, cervinho pulinho, coelhinho orelha).
+- Cada amigo da lista do cenário tem reação própria, reconhecível sem texto (espreguiça, giro, pendulo, quiques, abana, orelha, quica).
 - Um som curto de gratidão (**≤ 150 ms**) toca no início da reação. Ele **não substitui** o som do amigo no rompimento.
 - Só `transform` e `opacity` animam, em nós existentes.
 - Cliques durante `GRATIDÃO` continuam ignorados (`TEMA.md` L6).
@@ -146,7 +146,7 @@ Dois observacionais (sessão real com o Murilo, protocolo em `TEMA.md` § *Como 
 - Só `transform` e `opacity` animam; o placar é **estático** (não soma animados/frame).
 - É a **única** exceção a L3 e L8; nenhum outro texto, letra ou número aparece no jogo.
 - No celular, o placar é ampliado **1,5×** (lição da Teia v1.4.2), ancorado no próprio canto; no desktop, nenhum transform.
-- Com três amigos na v1.0, o placar tem no máximo **três linhas** — e é o esperado, não um defeito.
+- Com três amigos por cenário × três cenários, o placar tem no máximo **nove linhas** (três por rodada de cada cenário).
 
 #### US9 — Abrir, calar e sair, sem manual
 
@@ -207,7 +207,7 @@ Explicitamente **fora** do escopo da v1.0:
 - Travesso, vilão, Duende-equivalente, Abominável, Líder (`ADR 0001`).
 - Bruce Banner, transformação, fúria, "modo raiva" (`ADR 0002`).
 - Inversão de lado com espelhamento do cenário (a Teia v1.4 feature 2). Aqui quem troca de lado é o próximo obstáculo, por contador (`US3`).
-- Variações de amigo (pipa-equivalente). Um amigo por cenário.
+- Mais de três amigos por cenário; quinto cenário.
 - Quinto cenário, cidade, água/praia/rio, caverna.
 - Combate, inimigo, vida, dano, game over, cronômetro, dificuldade.
 - Dois jogadores, o jogo do Pedro.
@@ -280,11 +280,13 @@ Mundo virtual fixo de **1920×1080**, escalado por `min(largura/1920, altura/108
 
 Data-driven: os três cenários são configuração, não código. Nenhum comportamento é hard-coded por cenário.
 
-| id | Nome | Céu | Amigo | Obstáculo | Som do amigo |
-| --- | --- | --- | --- | --- | --- |
-| `montanha` | Montanha | `#87CEEB → #E8F4F8` | Cabritinho | Pedregulho | balido curto |
-| `floresta` | Floresta | `#C9E9F6 → #DFF6E4` | Cervinho | Tronco caído | grunhido leve de veado |
-| `campo` | Campo seco | `#A8DADC → #FFF3D6` | Coelhinho | Rocha rachada | fungadinho rápido |
+| id | Nome | Céu | Amigos (alternam por rodada) | Obstáculo |
+| --- | --- | --- | --- | --- |
+| `montanha` | Montanha | `#87CEEB → #E8F4F8` | Cabritinho → Gatinho → Pipa | Pedregulho |
+| `floresta` | Floresta | `#C9E9F6 → #DFF6E4` | Cervinho → Balão → Patinho | Tronco caído |
+| `campo` | Campo seco | `#A8DADC → #FFF3D6` | Coelhinho → Cachorrinho → Bola | Rocha rachada |
+
+Cada cenário define `amigos[]` (id, template, som, reação, tom). A rodada (visita ao cenário) escolhe `amigos[(visitas-1) % amigos.length]`. Dentro da rodada, o amigo é sempre o mesmo. Objetos da Teia reutilizam desenhos e sons do jogo do Aranha.
 
 *(Céu: cores do topo para a base da tela.)*
 

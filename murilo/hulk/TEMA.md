@@ -1,6 +1,6 @@
 # Força do Murilo — Tema
 
-- **Versão**: 0.3 (v1.0 implementada em 2026-11-03; tela cheia no celular no primeiro toque — padrão da casa `PADRAES.md`; pendente K1/K2)
+- **Versão**: 0.4 (v1.0 implementada em 2026-11-03; v1.1 — amigos alternam por rodada, com objetos da Teia; tela cheia no celular no primeiro toque; pendente K1/K2)
 - **Jogador**: Murilo, 3 anos
 - **Plataforma**: navegador de notebook — mouse e teclado obrigatórios
 - **Celular (cortesia)**: o arquivo também abre no navegador do celular; lá, o **primeiro toque** entra em tela cheia (sem duplo-toque). O alvo jogável continua sendo notebook com mouse. Onde a API não existe (iPhone), o gesto é inócuo (`ADR 0005`).
@@ -117,13 +117,13 @@ Desde a v1.0 (`ADR 0004`). Igual ao da Teia, porque o Murilo já conhece:
 
 **Herói — Hulk.** Pele verde chapada, calça roxa, contorno escuro, sem sombreamento. Reconhecível pela silhueta em 200 ms, a 1 metro, sem detalhe nenhum. Três poses apenas: **agachado**, **no ar**, **pousado/rompendo**. Grande na tela, mas nunca cobre o amigo nem o obstáculo ativo. Cara de esforço, nunca de raiva.
 
-**Amigos.** Um por cenário na v1.0. Bichos do mato, não domésticos — a Teia já usou gatinho, cachorrinho e balão. Sempre visíveis, presos, mexendo devagar. Cada um com som próprio no rompimento e reação de gratidão própria (pulinho, espreguiçada ou orelha).
+**Amigos.** Uma lista por cenário. A **rodada** (visita ao cenário) escolhe um: a 1ª visita mostra a base (bicho do mato); as seguintes alternam com os **objetos da Teia** (gatinho, pipa, balão, patinho, cachorrinho, bola) — os mesmos desenhos e sons do jogo do Aranha. Sempre visíveis, presos, mexendo devagar. Cada um com som próprio no rompimento e reação de gratidão própria. Determinístico (`visitas` do cenário), sem sorteio. Dentro de uma rodada, o amigo é sempre o mesmo (os três socorros daquela visita).
 
-| Cenário | Amigo | Som do amigo |
-| --- | --- | --- |
-| Montanha | Cabritinho | balido curto |
-| Floresta | Cervinho | grunhido leve de veado |
-| Campo seco | Coelhinho | fungadinho rápido |
+| Cenário | Base (1ª rodada) | 2ª rodada | 3ª rodada |
+| --- | --- | --- | --- |
+| Montanha | Cabritinho (`balido`) | Gatinho (`miau`) | Pipa (sopro de papel) |
+| Floresta | Cervinho (`cervo`) | Balão (`ploc`) | Patinho (`patinho`) |
+| Campo seco | Coelhinho (`fungado`) | Cachorrinho (`latido`) | Bola (`bola`) |
 
 **Obstáculos.** A causa do resgate. Não são inimigos, não são armadilhas de ninguém. Um tipo por cenário, como dado do cenário:
 
@@ -154,7 +154,7 @@ Três, nesta ordem. Cada um reconhecível em 1 segundo, sem texto. Natureza, nã
 
 ## O que este jogo não tem
 
-Sem vilão. Sem Bruce Banner. Sem transformação. Sem rugido. Sem fúria. Sem combate. Sem cidade. Sem água. Sem derrota. Sem tempo. Sem menu. Sem texto — só os dígitos do placar. Sem inversão de lado (a tela não espelha; quem muda de lado é o próximo obstáculo, por contador). Sem fifth cenário. Sem variações de amigo na v1.0.
+Sem vilão. Sem Bruce Banner. Sem transformação. Sem rugido. Sem fúria. Sem combate. Sem cidade. Sem água. Sem derrota. Sem tempo. Sem menu. Sem texto — só os dígitos do placar. Sem inversão de lado (a tela não espelha; quem muda de lado é o próximo obstáculo, por contador). Sem quinto cenário.
 
 Cada ausência desta lista é uma decisão registrada, não um esquecimento.
 

@@ -9,8 +9,12 @@ O Incrível Hulk controlado pelo jogador. Sempre Hulk, nunca Bruce.
 _Avoid_: personagem, player, sprite, Bruce, Banner
 
 **Amigo**:
-O ser preso que o herói liberta. O resgatável deste jogo.
+O ser ou objeto preso que o herói liberta. O resgatável deste jogo. Alterna a cada rodada (visita ao cenário) entre a base e os objetos da Teia.
 _Avoid_: resgatável (palavra da Teia), bicho, animal, NPC, refém, coisinho
+
+**Variação**:
+A forma do amigo de um cenário que entra na rodada seguinte à base — pode ser um objeto da Teia (gatinho, pipa, balão, patinho, cachorrinho, bola).
+_Avoid_: skin, versão alternativa, item raro, desbloqueável
 
 **Obstáculo**:
 O que prende o Amigo e se parte no Rompimento. É a causa, não um inimigo.
